@@ -1,0 +1,175 @@
+{
+  "Vacuum": {
+    "name": "Vacuum",
+    "category": "Reference",
+    "type": "constant",
+    "n": 1.0,
+    "range": [100, 10000],
+    "ref": "Definition",
+    "manufacturer": "N/A"
+  },
+  "Air": {
+    "name": "Air (dry, 1 atm, 15°C)",
+    "category": "Gaseous",
+    "type": "ciddor",
+    "range": [230, 1690],
+    "ref": "Ciddor 1996 / Peck & Reeder 1972",
+    "manufacturer": "Standard Atmosphere",
+    "params": {
+      "a0": 0.05792105,
+      "b0": 238.0185,
+      "a1": 0.00167917,
+      "b1": 57.362
+    }
+  },
+  "Fused_Silica": {
+    "name": "Fused Silica (SiO2)",
+    "category": "Glasses",
+    "type": "sellmeier_1",
+    "range": [210, 3710],
+    "ref": "Malitson 1965 (JOSA 55, 1205)",
+    "manufacturer": "Corning / Heraeus",
+    "B": [0.6961663, 0.4079426, 0.8974794],
+    "C": [0.00467914826, 0.0135120631, 97.9340025]
+  },
+  "N-BK7": {
+    "name": "N-BK7 (Borosilicate Crown)",
+    "category": "Glasses",
+    "type": "sellmeier_1",
+    "range": [300, 2500],
+    "ref": "SCHOTT Optical Glass Data",
+    "manufacturer": "SCHOTT",
+    "B": [1.03961212, 0.231792344, 1.01046945],
+    "C": [0.00600069867, 0.0200179144, 103.560653]
+  },
+  "SF11": {
+    "name": "SF11 (Dense Flint)",
+    "category": "Glasses",
+    "type": "sellmeier_1",
+    "range": [370, 2500],
+    "ref": "SCHOTT Optical Glass Data",
+    "manufacturer": "SCHOTT",
+    "B": [1.73759695, 0.313747346, 1.89878101],
+    "C": [0.013188707, 0.0623068142, 155.23629]
+  },
+  "SF10": {
+    "name": "SF10",
+    "category": "Glasses",
+    "type": "sellmeier_1",
+    "range": [380, 2500],
+    "ref": "SCHOTT Optical Glass Data",
+    "manufacturer": "SCHOTT",
+    "B": [1.61625977, 0.259229334, 1.07762317],
+    "C": [0.012507957, 0.0594559109, 114.492225]
+  },
+  "N-SF11": {
+    "name": "N-SF11",
+    "category": "Glasses",
+    "type": "sellmeier_1",
+    "range": [370, 2500],
+    "ref": "SCHOTT Optical Glass Data",
+    "manufacturer": "SCHOTT",
+    "B": [1.7347009, 0.31160568, 1.17490871],
+    "C": [0.0130932224, 0.061902257, 121.922416]
+  },
+  "Sapphire_o": {
+    "name": "Sapphire (Al2O3) - Ordinary",
+    "category": "Crystals",
+    "type": "sellmeier_1",
+    "range": [200, 5000],
+    "ref": "Malitson 1962 (JOSA 52, 1377)",
+    "manufacturer": "Crystal Systems",
+    "B": [1.4313493, 0.65054713, 5.3414021],
+    "C": [0.0052799261, 0.0142382647, 325.017834]
+  },
+  "Sapphire_e": {
+    "name": "Sapphire (Al2O3) - Extra-ordinary",
+    "category": "Crystals",
+    "type": "sellmeier_1",
+    "range": [200, 5000],
+    "ref": "Malitson 1962 (JOSA 52, 1377)",
+    "manufacturer": "Crystal Systems",
+    "B": [1.5039759, 0.55069141, 6.5927379],
+    "C": [0.0054804114, 0.0147994281, 402.89514]
+  },
+  "CaF2": {
+    "name": "Calcium Fluoride (CaF2)",
+    "category": "Crystals",
+    "type": "sellmeier_1",
+    "range": [150, 9000],
+    "ref": "Malitson 1963 (Applied Optics 2, 1103)",
+    "manufacturer": "Crystran / Thorlabs",
+    "B": [0.5675888, 0.4710914, 3.8484723],
+    "C": [0.00252643, 0.01007833, 1200.556]
+  },
+  "MgF2_o": {
+    "name": "Magnesium Fluoride (MgF2) - Ordinary",
+    "category": "Crystals",
+    "type": "sellmeier_1",
+    "range": [150, 7000],
+    "ref": "Dodge 1984 (Applied Optics 23, 1980)",
+    "manufacturer": "Crystran",
+    "B": [0.48755708, 0.39875031, 2.3120353],
+    "C": [0.001882178, 0.008951357, 566.13559]
+  },
+  "ZnSe": {
+    "name": "Zinc Selenide (ZnSe)",
+    "category": "IR Materials",
+    "type": "sellmeier_1",
+    "range": [540, 18000],
+    "ref": "Marple 1964 (J. Appl. Phys. 35, 539)",
+    "manufacturer": "II-VI / Thorlabs",
+    "B": [4.458134, 0.4672163, 2.895662],
+    "C": [0.042909, 0.158612, 2184.236]
+  },
+  "Diamond": {
+    "name": "Diamond (C)",
+    "category": "Crystals",
+    "type": "sellmeier_1",
+    "range": [230, 25000],
+    "ref": "Peter 1923 / Edwards & Ochoa 1980",
+    "manufacturer": "Element Six",
+    "B": [4.3356, 0.3306],
+    "C": [0.010609, 0.030625]
+  },
+  "BBO_o": {
+    "name": "BBO (Beta-Barium Borate) - Ordinary",
+    "category": "Nonlinear Crystals",
+    "type": "sellmeier_custom_bbo",
+    "range": [220, 1064],
+    "ref": "Kato 1986 (IEEE J. Quant. Electron. QE-22)",
+    "manufacturer": "Castech",
+    "B": [2.7359, 0.01878, 0.01822, 0.01354],
+    "C": [0.01822, 0.01354]
+  },
+  "BBO_e": {
+    "name": "BBO (Beta-Barium Borate) - Extra-ordinary",
+    "category": "Nonlinear Crystals",
+    "type": "sellmeier_custom_bbo_e",
+    "range": [220, 1064],
+    "ref": "Kato 1986 (IEEE J. Quant. Electron. QE-22)",
+    "manufacturer": "Castech",
+    "B": [2.3753, 0.01224, 0.01667, 0.01516],
+    "C": [0.01667, 0.01516]
+  },
+  "LBO_o": {
+    "name": "LBO (Lithium Triborate) - nz (o-like)",
+    "category": "Nonlinear Crystals",
+    "type": "sellmeier_custom_lbo",
+    "range": [160, 2600],
+    "ref": "Kato 1994 (IEEE J. Quant. Electron. 30)",
+    "manufacturer": "Castech",
+    "B": [2.45414, 0.011249, 0.01135, 0.0145],
+    "C": [0.01135]
+  },
+  "KDP_o": {
+    "name": "KDP - Ordinary",
+    "category": "Nonlinear Crystals",
+    "type": "sellmeier_1",
+    "range": [200, 1500],
+    "ref": "Zernike 1964 (JOSA 54, 1215)",
+    "manufacturer": "Castech",
+    "B": [1.255419, 0.941002, 0.244344],
+    "C": [0.008453, 0.018449, 98.4632]
+  }
+}

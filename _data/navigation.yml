@@ -1,0 +1,9 @@
+main:
+  - title: "Home"
+    url: "/"
+  - title: "LWFA Calculator"
+    url: "/calculators/lwfa/"
+  - title: "Laser Spot Size"
+    url: "/calculators/laser-spot-size/"
+  - title: "Focal Spot Analysis"
+    url: "/calculators/focal-spot-calculator/"

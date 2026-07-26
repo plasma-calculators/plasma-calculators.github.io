@@ -1,0 +1,395 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+search: false
+---
+
+@charset "utf-8";
+
+$doc-font-size: 10pt;
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+/* Custom Styles for Plasma Calculators */
+
+.hero-banner-placeholder {
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: #f3f4f6;
+  border-radius: 8px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 1px solid #374151;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.45);
+}
+
+.hero-banner-placeholder h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+  color: #f3f4f6 !important;
+}
+
+.hero-banner-placeholder p {
+  color: #9ca3af;
+  font-size: 1.1rem;
+}
+
+.section-title {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 1100px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.calculator-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none !important;
+  color: #1f2937 !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calculator-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-color: #d1d5db;
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.card-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.calculator-card:hover .card-image-wrapper img {
+  opacity: 0.9;
+}
+
+.card-caption {
+  padding: 1.25rem;
+}
+
+.card-caption h3 {
+  margin: 0 0 0.5rem 0 !important;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.card-caption p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.calculator-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .calculator-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calculator-sidebar {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  height: fit-content;
+}
+
+.calculator-sidebar h3 {
+  margin-top: 0 !important;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  color: #111827;
+}
+
+.form-group {
+  margin-bottom: 0.85rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #ffffff;
+  font-size: 0.9rem;
+  color: #111827;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.input-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.explanation-link-container {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.25rem;
+}
+
+.explanation-btn {
+  display: block;
+  text-align: center;
+  background: #4b5563;
+  color: #ffffff !important;
+  padding: 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: background 0.15s ease;
+}
+
+.explanation-btn:hover {
+  background: #374151;
+}
+
+.calculator-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 680px;
+  width: 100%;
+}
+
+.results-group {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.results-group h3 {
+  margin-top: 0 !important;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.5rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 0.75rem;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+}
+
+.result-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.result-val {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.font-highlight {
+  color: #1d4ed8;
+}
+
+/* Comparison Table styles */
+.comparison-table {
+  display: table !important;
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.comparison-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.025em;
+}
+
+.comparison-table tr:hover {
+  background: #f9fafb;
+}
+
+.comparison-table td strong {
+  color: #111827;
+}
+
+.comparison-table td {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.comparison-table td:nth-child(2), .comparison-table td:nth-child(3), .comparison-table td[id^="res-"] {
+  font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+/* Compact Mode Overrides (10pt default) */
+.calculator-container.compact-mode {
+  font-size: 10pt;
+}
+
+.calculator-container.compact-mode .calculator-sidebar {
+  padding: 1rem;
+}
+
+.calculator-container.compact-mode .input-section-title {
+  margin: 0.85rem 0 0.4rem 0 !important;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #556172;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.15rem;
+}
+
+.calculator-container.compact-mode .form-group {
+  margin-bottom: 0.65rem;
+}
+
+.calculator-container.compact-mode .form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: #4b5563;
+}
+
+.calculator-container.compact-mode .form-group input.small-input {
+  padding: 0.25rem 0.4rem;
+  font-size: 0.82rem;
+  max-width: 130px;
+  border-radius: 3px;
+}
+
+.calculator-container.compact-mode .radio-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.calculator-container.compact-mode .radio-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+}
+
+.calculator-container.compact-mode .radio-label input {
+  margin-right: 0.25rem;
+  width: auto;
+}
+
+.calculator-container.compact-mode .results-group {
+  padding: 1rem;
+}
+
+.calculator-container.compact-mode .results-group h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.calculator-container.compact-mode .comparison-table {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.calculator-container.compact-mode .comparison-table th, 
+.calculator-container.compact-mode .comparison-table td {
+  padding: 0.35rem 0.5rem;
+}
+
+.calculator-container.compact-mode .comparison-table th:first-child,
+.calculator-container.compact-mode .comparison-table td:first-child {
+  white-space: nowrap;
+  width: 44%;
+  min-width: 260px;
+}
