@@ -224,6 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadedImages = [];
     currentImageIdx = 0;
     currentPostIdx = 0;
+    if (resultsContainer) resultsContainer.style.display = "none";
 
     for (let file of files) {
       try {
@@ -618,22 +619,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     mainCtx.putImageData(imgData, 0, 0);
 
+    let rect = mainCanvas.getBoundingClientRect();
+    let displayScale = rect.width > 0 ? (mainCanvas.width / rect.width) : 1;
+
     // Draw Yellow ROI Rectangle & Corner Handles
-    drawRoiBox(mainCtx, roi);
+    drawRoiBox(mainCtx, roi, displayScale);
   }
 
-  function drawRoiBox(ctx, roiBox) {
+  function drawRoiBox(ctx, roiBox, displayScale = 1) {
     ctx.save();
     ctx.strokeStyle = "#facc15"; // Vibrant yellow
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 * displayScale;
     ctx.setLineDash([]);
     ctx.strokeRect(roiBox.x, roiBox.y, roiBox.w, roiBox.h);
 
     // Draw 4 corner handles
-    const handleSize = 8;
+    const handleSize = 8 * displayScale;
     ctx.fillStyle = "#facc15";
     ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.5 * displayScale;
 
     let corners = [
       { x: roiBox.x, y: roiBox.y }, // TL
@@ -662,8 +666,8 @@ document.addEventListener("DOMContentLoaded", function () {
       let clientX = e.touches ? e.touches[0].clientX : e.clientX;
       let clientY = e.touches ? e.touches[0].clientY : e.clientY;
       return {
-        x: (clientX - rect.left) * scaleX,
-        y: (clientY - rect.top) * scaleY
+        x: Math.round((clientX - rect.left) * scaleX),
+        y: Math.round((clientY - rect.top) * scaleY)
       };
     }
 
@@ -707,6 +711,8 @@ document.addEventListener("DOMContentLoaded", function () {
         else mainCanvas.style.cursor = 'default';
         return;
       }
+
+      if (resultsContainer) resultsContainer.style.display = "none";
 
       let pos = getCanvasCoords(e);
       let dx = pos.x - dragStartPos.x;
@@ -811,14 +817,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function fit2DGaussianROI(imgObj, roiBox, calibX, calibY, isPulsed, energyJ, durationFs, wavelengthNm) {
     let imgW = imgObj.width;
     let imgH = imgObj.height;
+    let rx = Math.floor(Math.max(0, Math.min(imgW - 1, roiBox.x)));
+    let ry = Math.floor(Math.max(0, Math.min(imgH - 1, roiBox.y)));
+    let rw = Math.floor(Math.max(5, Math.min(imgW - rx, roiBox.w)));
+    let rh = Math.floor(Math.max(5, Math.min(imgH - ry, roiBox.h)));
+
     let data = imgObj.data;
-
-    let rx = Math.max(0, Math.min(imgW - 1, roiBox.x));
-    let ry = Math.max(0, Math.min(imgH - 1, roiBox.y));
-    let rw = Math.max(5, Math.min(imgW - rx, roiBox.w));
-    let rh = Math.max(5, Math.min(imgH - ry, roiBox.h));
-
-    // Extract sub-array for ROI
     let roiData = new Float64Array(rw * rh);
     let minVal = Infinity, maxVal = -Infinity;
     let maxPx = 0, maxPy = 0;
@@ -961,7 +965,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function cost(pVec) {
         let [amp, xo, yo, sigX, sigY, theta, offset] = pVec;
-        if (sigX <= 0.1 || sigY <= 0.1) return 1e18;
+        if (sigX <= 0.05 || sigY <= 0.05) return 1e18;
         let cosT = Math.cos(theta);
         let sinT = Math.sin(theta);
         let a = (cosT * cosT) / (2 * sigX * sigX) + (sinT * sinT) / (2 * sigY * sigY);
@@ -1069,7 +1073,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let fwhmMajArr = [], fwhmMinArr = [], rmsArr = [], qFactorArr = [];
       let rmsMajArr = [], rmsMinArr = [];
+      let devXArr = [], devYArr = [];
       let iGaussArr = [], a0GaussArr = [];
+      
+      let calibX = parseFloat(calibXInput.value);
+      let calibY = calibSameCheckbox.checked ? calibX : parseFloat(calibYInput.value);
       
       let isPulsedEnabled = document.getElementById('enable-pulsed').checked;
 
@@ -1081,6 +1089,9 @@ document.addEventListener("DOMContentLoaded", function () {
         rmsMajArr.push(img.fitResult.RMS_maj);
         rmsMinArr.push(img.fitResult.RMS_min);
         qFactorArr.push(img.fitResult.qFactor);
+        
+        devXArr.push(img.fitResult.xo * calibX);
+        devYArr.push(img.fitResult.yo * calibY);
 
         if (isPulsedEnabled && img.fitResult.intensityGauss !== undefined) {
           iGaussArr.push(img.fitResult.intensityGauss);
@@ -1127,6 +1138,29 @@ document.addEventListener("DOMContentLoaded", function () {
           <td>${qFactorStats.std.toFixed(3)}</td>
         </tr>
       `;
+
+      // Pointing Stability (Jitter)
+      const pointingStabilityBody = document.getElementById("pointing-stability-body");
+      if (pointingStabilityBody) {
+        let pointingStdX = calcStats(devXArr).std;
+        let pointingStdY = calcStats(devYArr).std;
+        let pointingStdR = Math.sqrt(pointingStdX * pointingStdX + pointingStdY * pointingStdY);
+        
+        pointingStabilityBody.innerHTML = `
+          <tr>
+            <td><strong>X-axis Stability</strong></td>
+            <td class="font-highlight">${pointingStdX.toFixed(2)} μm</td>
+          </tr>
+          <tr>
+            <td><strong>Y-axis Stability</strong></td>
+            <td class="font-highlight">${pointingStdY.toFixed(2)} μm</td>
+          </tr>
+          <tr>
+            <td><strong>Radial Stability (2D)</strong></td>
+            <td class="font-highlight">${pointingStdR.toFixed(2)} μm</td>
+          </tr>
+        `;
+      }
 
       if (isPulsedEnabled && iGaussArr.length > 0) {
         let iGaussStats = calcStats(iGaussArr);

@@ -180,8 +180,8 @@
     "semantic_hash": ""
   },
   "_data/navigation.yml": {
-    "mtime": 1785052161.206115,
-    "ast_hash": "a5a8110f6ebeba88965abff1fc140d4a",
+    "mtime": 1785063875.472068,
+    "ast_hash": "f196276b6ae5b19c3db32c594163ed1f",
     "semantic_hash": ""
   },
   "_data/ui-text.yml": {
@@ -1615,8 +1615,8 @@
     "semantic_hash": ""
   },
   "index.md": {
-    "mtime": 1785052163.3759906,
-    "ast_hash": "2a4a44f88b7a96955e4d337980449d10",
+    "mtime": 1785063870.4774015,
+    "ast_hash": "81ea6d5be375deb72a7bf4bad2c79331",
     "semantic_hash": ""
   },
   "staticman.yml": {
@@ -3497,6 +3497,51 @@
   "scratch/verify_fit.py": {
     "mtime": 1785052655.404465,
     "ast_hash": "93d8cf05f58db9c78a2fa4e8cf7b9aba",
+    "semantic_hash": ""
+  },
+  "assets/js/ebeam-pointing.js": {
+    "mtime": 1785064699.825233,
+    "ast_hash": "54df9a6f4f9cfd9d7728d0fd5921831b",
+    "semantic_hash": ""
+  },
+  "calculators/ebeam-pointing-explanation.md": {
+    "mtime": 1785063844.849496,
+    "ast_hash": "cb87cb3180ce12061418ba537c553de6",
+    "semantic_hash": ""
+  },
+  "calculators/ebeam-pointing.md": {
+    "mtime": 1785064081.0097492,
+    "ast_hash": "a405b4a53c98625dd5f125dd927af3f6",
+    "semantic_hash": ""
+  },
+  "assets/images/ebeam_pointing_card.jpg": {
+    "mtime": 1785063823.6753721,
+    "ast_hash": "65152eef08885cbb98230d23738fba92",
+    "semantic_hash": ""
+  },
+  "example_files/ebeam_pointing/386_LWFA_Zelle_He5N2_Pointing_ESpeklow_182542_.png": {
+    "mtime": 1785061772.6150753,
+    "ast_hash": "a5cbb807fb36d847c91483c72310e473",
+    "semantic_hash": ""
+  },
+  "example_files/ebeam_pointing/394_LWFA_Zelle_He5N2_Pointing_ESpeklow_182635_.png": {
+    "mtime": 1785061774.5904417,
+    "ast_hash": "4d17a031cc18d7d6ca31ba4e0138d060",
+    "semantic_hash": ""
+  },
+  "example_files/ebeam_pointing/400_LWFA_Zelle_He5N2_Pointing_ESpeklow_182703_.png": {
+    "mtime": 1785061776.2844634,
+    "ast_hash": "c6201da846365a6e057dfcc918d5b02c",
+    "semantic_hash": ""
+  },
+  "example_files/ebeam_pointing/421_LWFA_Zelle_He5N2_Pointing_ESpeklow_182846_.png": {
+    "mtime": 1785061778.5987487,
+    "ast_hash": "76298066d037ff4c2ddb4fb4591e9a7d",
+    "semantic_hash": ""
+  },
+  "example_files/ebeam_pointing/422_LWFA_Zelle_He5N2_Pointing_ESpeklow_182851_.png": {
+    "mtime": 1785061780.6591544,
+    "ast_hash": "8f3f84eb173f5a135ce0c4525a64be00",
     "semantic_hash": ""
   }
 }

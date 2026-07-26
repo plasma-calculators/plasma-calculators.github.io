@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "Focal Spot Size & Focus Intensity Calculator"
-permalink: /calculators/focal-spot-calculator/
+title: "Electron Beam Pointing & Divergence Calculator"
+permalink: /calculators/ebeam-pointing/
 author_profile: false
 share: false
 comments: false
@@ -18,12 +18,12 @@ classes: wide
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 <script src="/assets/js/vendor/utif.js"></script>
-<script src="/assets/js/focal-spot-calculator.js" defer></script>
+<script src="/assets/js/ebeam-pointing.js" defer></script>
 
 <div class="calculator-container compact-mode">
   <div class="calculator-sidebar">
     <h3>Input Parameters</h3>
-    <form id="focal-form" onsubmit="return false;">
+    <form id="ebeam-form" onsubmit="return false;">
       <h4 class="input-section-title">Image Upload</h4>
       <div class="form-group">
         <label for="image-upload" style="display: block; margin-bottom: 0.25rem;">
@@ -43,33 +43,51 @@ classes: wide
 
       <div class="form-group">
         <label for="calib-x">Calibration X (μm/pixel)</label>
-        <input type="number" id="calib-x" value="0.4" min="0.0001" step="0.01" class="small-input" required>
+        <input type="number" id="calib-x" value="92.59" min="0.0001" step="0.01" class="small-input" required>
       </div>
 
       <div id="calib-y-group" class="form-group" style="display: none;">
         <label for="calib-y">Calibration Y (μm/pixel)</label>
-        <input type="number" id="calib-y" value="0.4" min="0.0001" step="0.01" class="small-input" required>
+        <input type="number" id="calib-y" value="92.59" min="0.0001" step="0.01" class="small-input" required>
       </div>
 
-      <h4 class="input-section-title">Pulse Parameters (Optional)</h4>
+      <h4 class="input-section-title">Divergence parameters</h4>
+      <div class="form-group">
+        <label for="dist-source-screen">Distance Source to Screen (mm)</label>
+        <input type="number" id="dist-source-screen" value="1870" min="1" step="1" class="small-input" required>
+      </div>
+
+      <h4 class="input-section-title">Charge Parameters (Optional)</h4>
       <div class="form-group" style="margin-bottom: 0.4rem;">
         <label class="radio-label" style="font-size: 0.78rem; font-weight: 600;">
-          <input type="checkbox" id="enable-pulsed" style="width: auto; margin-right: 0.35rem;"> Include Energy & Pulse Duration
+          <input type="checkbox" id="enable-charge" style="width: auto; margin-right: 0.35rem;"> Include Charge Calculation
         </label>
       </div>
 
-      <div id="pulsed-inputs" style="display: none;">
+      <div id="charge-inputs" style="display: none;">
         <div class="form-group">
-          <label for="pulse-energy">Pulse Energy, $E_L$ (J)</label>
-          <input type="number" id="pulse-energy" value="0.60" min="0.0001" step="0.01" class="small-input">
+          <label for="screen-yield">Screen Yield (photons/pC/sr)</label>
+          <input type="number" id="screen-yield" value="8.25e9" min="1" step="1e7" class="small-input">
         </div>
         <div class="form-group">
-          <label for="pulse-duration">Pulse Duration FWHM, $\tau$ (fs)</label>
-          <input type="number" id="pulse-duration" value="30" min="0.1" step="1" class="small-input">
+          <label for="dist-cam-screen">Distance Screen to Camera (mm)</label>
+          <input type="number" id="dist-cam-screen" value="400" min="1" step="10" class="small-input">
         </div>
         <div class="form-group">
-          <label for="wavelength">Wavelength, $\lambda$ (nm)</label>
-          <input type="number" id="wavelength" value="800" min="1" step="1" class="small-input">
+          <label for="camera-calib">Camera Calibration (photons/counts)</label>
+          <input type="number" id="camera-calib" value="6.7" min="0.01" step="0.1" class="small-input">
+        </div>
+        <div class="form-group">
+          <label for="lens-focal">Lens Focal Length (mm)</label>
+          <input type="number" id="lens-focal" value="25" min="1" step="1" class="small-input">
+        </div>
+        <div class="form-group">
+          <label for="lens-fnumber">Lens F-number</label>
+          <input type="number" id="lens-fnumber" value="4.0" min="0.5" step="0.1" class="small-input">
+        </div>
+        <div class="form-group">
+          <label for="transmission-loss">Transmission (dimensionless, 0-1)</label>
+          <input type="number" id="transmission-loss" value="1.0" min="0.0001" max="1.0" step="0.01" class="small-input">
         </div>
       </div>
     </form>
@@ -95,14 +113,14 @@ classes: wide
     </div>
 
     <div class="explanation-link-container">
-      <a href="/calculators/focal-spot-explanation/" class="explanation-btn">View Equations & Explanation</a>
+      <a href="/calculators/ebeam-pointing-explanation/" class="explanation-btn">View Equations & Explanation</a>
     </div>
   </div>
 
   <div class="calculator-results" style="max-width: 720px;">
     <!-- Interactive Image & ROI Selector Box -->
     <div class="results-group" style="padding: 1rem;">
-      <h3 style="margin-bottom: 0.75rem;">1. Image ROI Selection & Visualization</h3>
+      <h3>1. Image ROI & Background Selection</h3>
       
       <div id="canvas-wrapper" style="position: relative; width: 100%; background: #111827; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 250px;">
         <canvas id="main-canvas" style="max-width: 100%; height: auto; display: block;"></canvas>
@@ -145,7 +163,7 @@ classes: wide
 
       <div style="margin-top: 1rem; text-align: right;">
         <button id="calculate-btn" style="background: #2563eb; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 5px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.15s ease;">
-          Calculate 2D Fits & Intensity
+          Calculate 2D Fits & Divergence
         </button>
       </div>
     </div>
@@ -158,9 +176,9 @@ classes: wide
         <table class="comparison-table">
           <thead>
             <tr>
-              <th style="width: 50%;">Parameter</th>
-              <th style="width: 25%;">Average</th>
-              <th style="width: 25%;">RMS (Std Dev)</th>
+              <th style="width: 40%;">Parameter</th>
+              <th style="width: 30%;">Average</th>
+              <th style="width: 30%;">RMS (Std Dev)</th>
             </tr>
           </thead>
           <tbody id="summary-table-body">
@@ -172,24 +190,25 @@ classes: wide
         <table class="comparison-table">
           <thead>
             <tr>
-              <th style="width: 50%;">Axis</th>
-              <th style="width: 50%;">Std Dev (Jitter) (<span style="text-transform: lowercase;">μm</span>)</th>
+              <th style="width: 40%;">Axis</th>
+              <th style="width: 30%;">Std Dev (Jitter) (<span style="text-transform: lowercase;">mm</span>)</th>
+              <th style="width: 30%;">Std Dev (Jitter) (<span style="text-transform: lowercase;">mrad</span>)</th>
             </tr>
           </thead>
           <tbody id="pointing-stability-body">
           </tbody>
         </table>
 
-        <div id="pulsed-summary-group" style="margin-top: 1rem; display: none;">
-          <h4 style="font-size: 0.88rem; margin: 0.75rem 0 0.4rem 0; text-transform: uppercase; color: #4b5563;">Pulsed Beam Intensity & a<sub>0</sub> Summary</h4>
+        <div id="charge-summary-group" style="margin-top: 1rem; display: none;">
+          <h4 style="font-size: 0.88rem; margin: 0.75rem 0 0.4rem 0; text-transform: uppercase; color: #4b5563;">Electron Beam Charge Summary</h4>
           <table class="comparison-table">
             <thead>
               <tr>
-                <th style="width: 50%;">Parameter</th>
-                <th style="width: 50%;">Value</th>
+                <th style="width: 40%;">Parameter</th>
+                <th style="width: 60%;">Value</th>
               </tr>
             </thead>
-            <tbody id="pulsed-summary-body">
+            <tbody id="charge-summary-body">
             </tbody>
           </table>
         </div>
@@ -211,6 +230,7 @@ classes: wide
           </div>
         </div>
 
+        <!-- Post-Processing Sliders -->
         <div style="display: flex; align-items: center; gap: 0.25rem; margin-top: 1rem; flex-wrap: wrap;">
           <label for="post-image-slider" style="font-weight: 600; font-size: 0.8rem; white-space: nowrap; margin: 0; margin-right: 0.25rem;">ROI Image:</label>
           <button type="button" id="post-image-prev" style="background: transparent; border: none; font-size: 0.75rem; color: #4b5563; cursor: pointer; width: 22px; height: 22px; margin: 0; padding: 0; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1; transition: background 0.15s, color 0.15s;" onmouseover="this.style.color='#111827'; this.style.backgroundColor='#e5e7eb';" onmouseout="this.style.color='#4b5563'; this.style.backgroundColor='transparent';">◀</button>
