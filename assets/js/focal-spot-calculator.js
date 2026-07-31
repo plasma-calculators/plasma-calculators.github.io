@@ -95,6 +95,29 @@ document.addEventListener("DOMContentLoaded", function () {
     imageUploadInput.addEventListener("change", handleImageUpload);
   }
 
+  const exampleSelect = document.getElementById("example-select");
+  if (exampleSelect) {
+    exampleSelect.addEventListener("change", handleExampleSelect);
+  }
+
+  const gpuChk = document.getElementById("gpu-chk");
+  const calcEngineLabel = document.getElementById("calc-engine-label");
+  if (gpuChk && calcEngineLabel) {
+    gpuChk.addEventListener("change", function() {
+      if (gpuChk.checked) {
+        calcEngineLabel.innerHTML = "GPU<br>(WebGL 2D FFT)";
+        calcEngineLabel.style.color = "#2563eb";
+      } else {
+        calcEngineLabel.innerHTML = "CPU<br>(2D Canvas)";
+        calcEngineLabel.style.color = "#4b5563";
+      }
+      renderMainCanvas();
+      renderPostRoiCanvas();
+    });
+    // Trigger initial state
+    gpuChk.dispatchEvent(new Event("change"));
+  }
+
   if (imageSlider) {
     imageSlider.addEventListener("input", function () {
       currentImageIdx = parseInt(imageSlider.value, 10);
@@ -258,6 +281,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderMainCanvas();
     updateMemoryDiagnostics();
+  }
+
+  async function handleExampleSelect(e) {
+    const url = e.target.value;
+    if (!url) return;
+
+    showError("");
+    const selectEl = e.target;
+    selectEl.disabled = true;
+
+    try {
+      loadedImages = [];
+      currentImageIdx = 0;
+      currentPostIdx = 0;
+      if (resultsContainer) resultsContainer.style.display = "none";
+
+      let response = await fetch(url);
+      if (!response.ok) throw new Error("Failed to fetch " + url);
+      let blob = await response.blob();
+      let filename = url.split('/').pop();
+      let file = new File([blob], filename, { type: blob.type });
+      
+      let imgData = await parseImageFile(file);
+      if (imgData) loadedImages.push(imgData);
+
+      if (loadedImages.length === 0) {
+        showError("Could not load example image.");
+        return;
+      }
+
+      // Initialize UI controls
+      imageSlider.min = 0;
+      imageSlider.max = loadedImages.length - 1;
+      imageSlider.value = 0;
+      imageSliderLabel.innerText = `1 / ${loadedImages.length}`;
+
+      if (postImageSlider) {
+        postImageSlider.min = 0;
+        postImageSlider.max = loadedImages.length - 1;
+        postImageSlider.value = 0;
+        if (postImageSliderLabel) postImageSliderLabel.innerText = `1 / ${loadedImages.length}`;
+      }
+
+      // Set initial ROI
+      initDefaultRoi(loadedImages[0]);
+
+      renderMainCanvas();
+      updateMemoryDiagnostics();
+    } catch (err) {
+      console.error(err);
+      showError("Error loading example: " + err.message);
+    } finally {
+      selectEl.disabled = false;
+    }
   }
 
   function initDefaultRoi(imgObj) {

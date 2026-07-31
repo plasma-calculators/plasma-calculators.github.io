@@ -3019,7 +3019,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const engineEl = document.getElementById("calculation-engine");
     if (engineEl) {
       const useGPU = gpuChk && gpuChk.checked && webglPropagator && webglPropagator.available;
-      engineEl.innerText = useGPU ? "GPU (WebGL 2D FFT)" : "CPU (JS 2D FFT)";
+      engineEl.innerHTML = useGPU ? "GPU<br>(WebGL 2D FFT)" : "CPU<br>(JS 2D FFT)";
     }
 
     const monitorEl = document.getElementById("memory-monitor");

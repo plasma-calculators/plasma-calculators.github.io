@@ -26,8 +26,20 @@ classes: wide
     <form id="ebeam-form" onsubmit="return false;">
       <h4 class="input-section-title">Image Upload</h4>
       <div class="form-group">
+        <label for="example-select">Load Example Image</label>
+        <select id="example-select" style="padding: 0.25rem; font-size: 0.8rem; border-radius: 4px; width: 100%; border: 1px solid #d1d5db; background: #fff; margin-bottom: 0.5rem;">
+          <option value="">-- Choose Example --</option>
+          <option value="/example_files/ebeam_pointing/386_LWFA_Zelle_He5N2_Pointing_ESpeklow_182542_.png">E-Beam 386</option>
+          <option value="/example_files/ebeam_pointing/394_LWFA_Zelle_He5N2_Pointing_ESpeklow_182635_.png">E-Beam 394</option>
+          <option value="/example_files/ebeam_pointing/400_LWFA_Zelle_He5N2_Pointing_ESpeklow_182703_.png">E-Beam 400</option>
+          <option value="/example_files/ebeam_pointing/421_LWFA_Zelle_He5N2_Pointing_ESpeklow_182846_.png">E-Beam 421</option>
+          <option value="/example_files/ebeam_pointing/422_LWFA_Zelle_He5N2_Pointing_ESpeklow_182851_.png">E-Beam 422</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="image-upload" style="display: block; margin-bottom: 0.25rem;">
-          <span style="display: block;">Upload Beam Images</span>
+          <span style="display: block;">Or Upload Beam Images</span>
           <span style="display: block; font-weight: normal; font-size: 0.85em; color: #4b5563;">(PNG, JPEG, TIF, TIFF)</span>
         </label>
         <input type="file" id="image-upload" accept=".png,.jpg,.jpeg,.tif,.tiff" multiple style="font-size: 0.8rem; padding: 0.2rem; width: 100%;">
@@ -100,13 +112,17 @@ classes: wide
       <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; color: #374151;">
         <div style="display: flex; justify-content: space-between; align-items: center;" title="Estimated RAM used by the raw uploaded image files and their pixel data buffers.">
           <span>Loaded Image Assets:</span>
-          <strong id="memory-assets" style="font-family: monospace;">0.00 MB</strong>
+          <strong id="memory-assets" style="font-family: monospace; white-space: nowrap;">0.00 MB</strong>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;" title="Total browser tab memory usage. (Note: Only supported in Chromium-based browsers like Chrome/Edge).">
           <span>Tab Memory:</span>
-          <strong id="memory-tab" style="font-family: monospace;">N/A</strong>
+          <strong id="memory-tab" style="font-family: monospace; white-space: nowrap;">N/A</strong>
         </div>
-        <div style="font-size: 0.65rem; color: #9ca3af; text-align: right; margin-top: -0.25rem; font-style: italic;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Calculation Engine:</span>
+          <strong id="calc-engine-label" style="font-family: monospace; color: #2563eb; font-size: 0.75rem; text-align: right; white-space: nowrap;">GPU<br>(WebGL 2D FFT)</strong>
+        </div>
+        <div style="font-size: 0.65rem; color: #9ca3af; text-align: right; margin-top: 0.15rem; font-style: italic;">
           (Only supported in Chrome/Edge)
         </div>
       </div>
@@ -161,10 +177,15 @@ classes: wide
         </div>
       </div>
 
-      <div style="margin-top: 1rem; text-align: right;">
-        <button id="calculate-btn" style="background: #2563eb; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 5px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.15s ease;">
-          Calculate 2D Fits & Divergence
-        </button>
+      <div style="margin-top: 1rem; display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <label style="font-size: 0.82rem; font-weight: 600; color: #374151; cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
+            <input type="checkbox" id="gpu-chk" style="width: auto; margin-right: 0.35rem;" checked> Use WebGL / GPU Acceleration
+          </label>
+          <button id="calculate-btn" class="btn" style="background: #2563eb; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 5px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.15s ease;">
+            Calculate 2D Fits & Divergence
+          </button>
+        </div>
       </div>
     </div>
 

@@ -231,15 +231,15 @@ classes: wide
       <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; color: #374151;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span>Loaded Image Assets:</span>
-          <strong id="memory-assets" style="font-family: monospace;">0.00 MB</strong>
+          <strong id="memory-assets" style="font-family: monospace; white-space: nowrap;">0.00 MB</strong>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span>Tab Memory:</span>
-          <strong id="memory-tab" style="font-family: monospace;">N/A</strong>
+          <strong id="memory-tab" style="font-family: monospace; white-space: nowrap;">N/A</strong>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span>Calculation Engine:</span>
-          <strong id="calculation-engine" style="font-family: monospace; color: #2563eb;">CPU (JS)</strong>
+          <strong id="calculation-engine" style="font-family: monospace; color: #2563eb; font-size: 0.75rem; text-align: right; white-space: nowrap;">GPU<br>(WebGL 2D FFT)</strong>
         </div>
       </div>
     </div>
@@ -291,13 +291,15 @@ classes: wide
           <label style="font-size: 0.82rem; font-weight: 600; color: #374151; cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
             <input type="checkbox" id="farfield-only-chk" style="width: auto; margin-right: 0.35rem;" checked> Focus spot only (Far-Field)
           </label>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
           <label style="font-size: 0.82rem; font-weight: 600; color: #374151; cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
             <input type="checkbox" id="gpu-chk" style="width: auto; margin-right: 0.35rem;" checked> Use WebGL / GPU Acceleration
           </label>
+          <button id="calculate-btn" class="btn" style="background: #2563eb; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 5px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.15s ease;">
+            Calculate
+          </button>
         </div>
-        <button id="calculate-btn" class="btn" style="background: #2563eb; color: #ffffff; border: none; padding: 0.55rem 1.25rem; border-radius: 5px; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.15s ease;">
-          Calculate
-        </button>
       </div>
 
       <!-- Progress Bar -->
@@ -350,8 +352,8 @@ classes: wide
             <h4 style="margin-top: 0; margin-bottom: 0.1rem; color: #111827;">Focal Spot Parameters</h4>
             
             <div style="display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.15rem;">
-              <label class="radio-label" style="font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
-                <input type="checkbox" id="fit-gaussian-chk" style="width: auto; margin-right: 0.35rem;" checked> Fit 2D Gaussian &amp; FWHM Contour
+              <label class="radio-label" style="font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; margin: 0; white-space: nowrap;">
+                <input type="checkbox" id="fit-gaussian-chk" style="width: auto; margin-right: 0.35rem;" checked> Fit 2D Gaussian
               </label>
             </div>
 
