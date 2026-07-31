@@ -41,6 +41,16 @@ classes: wide
         <p>Calculate focused spot diameter (1/e², FWHM, RMS), Rayleigh range, peak power, intensity & a₀</p>
       </div>
     </a>
+
+    <a href="/calculators/laser-propagation/" class="calculator-card">
+      <div class="card-image-wrapper">
+        <img src="/assets/images/propagation_card.png" alt="NF/FF Calculator">
+      </div>
+      <div class="card-caption">
+        <h3>NF/FF Calculator</h3>
+        <p>Propagate near-field intensity/phase to focus, simulate Zernike aberrations, fit 3D caustics, and characterize M² & Rayleigh range</p>
+      </div>
+    </a>
   </div>
 </div>
 

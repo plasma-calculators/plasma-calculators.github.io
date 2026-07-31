@@ -34,36 +34,6 @@
       "norm_label": "plugin"
     },
     {
-      "label": "package.json",
-      "file_type": "code",
-      "source_file": ".opencode/package.json",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "opencode_package",
-      "community": 247,
-      "norm_label": "package.json"
-    },
-    {
-      "label": "dependencies",
-      "file_type": "code",
-      "source_file": ".opencode/package.json",
-      "source_location": "L2",
-      "_origin": "ast",
-      "id": "opencode_package_dependencies",
-      "community": 247,
-      "norm_label": "dependencies"
-    },
-    {
-      "label": "@opencode-ai/plugin",
-      "file_type": "code",
-      "source_file": ".opencode/package.json",
-      "source_location": "L3",
-      "_origin": "ast",
-      "id": "opencode_package_dependencies_opencode_ai_plugin",
-      "community": 247,
-      "norm_label": "@opencode-ai/plugin"
-    },
-    {
       "label": "graphify.js",
       "file_type": "code",
       "source_file": ".opencode/plugins/graphify.js",
@@ -317,7 +287,7 @@
       "label": "parseImageFile()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L279",
+      "source_location": "L280",
       "_origin": "ast",
       "id": "js_ebeam_pointing_parseimagefile",
       "community": 140,
@@ -327,7 +297,7 @@
       "label": "parsePNG16bitAsync()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L378",
+      "source_location": "L379",
       "_origin": "ast",
       "id": "js_ebeam_pointing_parsepng16bitasync",
       "community": 118,
@@ -337,7 +307,7 @@
       "label": "renderMainCanvas()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L492",
+      "source_location": "L493",
       "_origin": "ast",
       "id": "js_ebeam_pointing_rendermaincanvas",
       "community": 140,
@@ -347,7 +317,7 @@
       "label": "drawSquareHandles()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L537",
+      "source_location": "L538",
       "_origin": "ast",
       "id": "js_ebeam_pointing_drawsquarehandles",
       "community": 140,
@@ -357,7 +327,7 @@
       "label": "getColor()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L555",
+      "source_location": "L556",
       "_origin": "ast",
       "id": "js_ebeam_pointing_getcolor",
       "community": 140,
@@ -367,7 +337,7 @@
       "label": "setupCanvasInteraction()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L589",
+      "source_location": "L590",
       "_origin": "ast",
       "id": "js_ebeam_pointing_setupcanvasinteraction",
       "community": 140,
@@ -377,7 +347,7 @@
       "label": "runCalculations()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L714",
+      "source_location": "L716",
       "_origin": "ast",
       "id": "js_ebeam_pointing_runcalculations",
       "community": 140,
@@ -387,7 +357,7 @@
       "label": "fit2DGaussianEbeam()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L762",
+      "source_location": "L764",
       "_origin": "ast",
       "id": "js_ebeam_pointing_fit2dgaussianebeam",
       "community": 140,
@@ -397,7 +367,7 @@
       "label": "simplexOptimize()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L928",
+      "source_location": "L930",
       "_origin": "ast",
       "id": "js_ebeam_pointing_simplexoptimize",
       "community": 140,
@@ -407,7 +377,7 @@
       "label": "updateSummaryTables()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L1020",
+      "source_location": "L1022",
       "_origin": "ast",
       "id": "js_ebeam_pointing_updatesummarytables",
       "community": 140,
@@ -417,7 +387,7 @@
       "label": "renderPostRoiCanvas()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L1127",
+      "source_location": "L1129",
       "_origin": "ast",
       "id": "js_ebeam_pointing_renderpostroicanvas",
       "community": 140,
@@ -427,7 +397,7 @@
       "label": "showError()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L1254",
+      "source_location": "L1255",
       "_origin": "ast",
       "id": "js_ebeam_pointing_showerror",
       "community": 140,
@@ -437,7 +407,7 @@
       "label": "updateMemoryDiagnostics()",
       "file_type": "code",
       "source_file": "assets/js/ebeam-pointing.js",
-      "source_location": "L1269",
+      "source_location": "L1270",
       "_origin": "ast",
       "id": "js_ebeam_pointing_updatememorydiagnostics",
       "community": 140,
@@ -467,7 +437,7 @@
       "label": "initDefaultRoi()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L262",
+      "source_location": "L263",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_initdefaultroi",
       "community": 118,
@@ -477,7 +447,7 @@
       "label": "parseImageFile()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L289",
+      "source_location": "L290",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_parseimagefile",
       "community": 118,
@@ -487,7 +457,7 @@
       "label": "parsePNG16bitAsync()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L394",
+      "source_location": "L395",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_parsepng16bitasync",
       "community": 118,
@@ -497,7 +467,7 @@
       "label": "paethPredictor()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L506",
+      "source_location": "L507",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_paethpredictor",
       "community": 118,
@@ -507,7 +477,7 @@
       "label": "getColor()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L519",
+      "source_location": "L520",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_getcolor",
       "community": 118,
@@ -517,7 +487,7 @@
       "label": "hslToRgb()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L564",
+      "source_location": "L565",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_hsltorgb",
       "community": 118,
@@ -527,7 +497,7 @@
       "label": "hue2rgb()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L578",
+      "source_location": "L579",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_hue2rgb",
       "community": 118,
@@ -537,7 +507,7 @@
       "label": "renderMainCanvas()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L590",
+      "source_location": "L591",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_rendermaincanvas",
       "community": 118,
@@ -547,7 +517,7 @@
       "label": "drawRoiBox()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L625",
+      "source_location": "L629",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_drawroibox",
       "community": 118,
@@ -557,7 +527,7 @@
       "label": "setupCanvasInteraction()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L655",
+      "source_location": "L659",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_setupcanvasinteraction",
       "community": 118,
@@ -567,7 +537,7 @@
       "label": "runCalculations()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L767",
+      "source_location": "L773",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_runcalculations",
       "community": 118,
@@ -577,7 +547,7 @@
       "label": "fit2DGaussianROI()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L811",
+      "source_location": "L817",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_fit2dgaussianroi",
       "community": 118,
@@ -587,7 +557,7 @@
       "label": "simplexOptimize()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L949",
+      "source_location": "L953",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_simplexoptimize",
       "community": 118,
@@ -597,7 +567,7 @@
       "label": "updateSummaryTables()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L1063",
+      "source_location": "L1067",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_updatesummarytables",
       "community": 118,
@@ -607,7 +577,7 @@
       "label": "renderPostRoiCanvas()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L1154",
+      "source_location": "L1188",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_renderpostroicanvas",
       "community": 118,
@@ -617,7 +587,7 @@
       "label": "showError()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L1262",
+      "source_location": "L1296",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_showerror",
       "community": 118,
@@ -627,10 +597,480 @@
       "label": "updateMemoryDiagnostics()",
       "file_type": "code",
       "source_file": "assets/js/focal-spot-calculator.js",
-      "source_location": "L1277",
+      "source_location": "L1311",
       "_origin": "ast",
       "id": "js_focal_spot_calculator_updatememorydiagnostics",
       "community": 118,
+      "norm_label": "updatememorydiagnostics()"
+    },
+    {
+      "label": "laser-propagation.js",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "js_laser_propagation",
+      "community": 141,
+      "norm_label": "laser-propagation.js"
+    },
+    {
+      "label": "formatFixed()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "js_laser_propagation_formatfixed",
+      "community": 141,
+      "norm_label": "formatfixed()"
+    },
+    {
+      "label": "WebGLPropagator",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L109",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator",
+      "community": 141,
+      "norm_label": "webglpropagator"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L110",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_constructor",
+      "community": 141,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".createShader()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L146",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_createshader",
+      "community": 141,
+      "norm_label": ".createshader()"
+    },
+    {
+      "label": ".createProgram()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L159",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_createprogram",
+      "community": 141,
+      "norm_label": ".createprogram()"
+    },
+    {
+      "label": ".initShaders()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L177",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_initshaders",
+      "community": 141,
+      "norm_label": ".initshaders()"
+    },
+    {
+      "label": ".initBuffers()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L470",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_initbuffers",
+      "community": 141,
+      "norm_label": ".initbuffers()"
+    },
+    {
+      "label": ".initTextures()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L482",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_inittextures",
+      "community": 141,
+      "norm_label": ".inittextures()"
+    },
+    {
+      "label": ".createFloatTexture()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L505",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_createfloattexture",
+      "community": 141,
+      "norm_label": ".createfloattexture()"
+    },
+    {
+      "label": ".setIntensityTexture()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L517",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_setintensitytexture",
+      "community": 141,
+      "norm_label": ".setintensitytexture()"
+    },
+    {
+      "label": ".setPhaseTexture()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L533",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_setphasetexture",
+      "community": 141,
+      "norm_label": ".setphasetexture()"
+    },
+    {
+      "label": ".propagate()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L549",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_propagate",
+      "community": 141,
+      "norm_label": ".propagate()"
+    },
+    {
+      "label": ".renderToCanvas()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L681",
+      "_origin": "ast",
+      "id": "js_laser_propagation_webglpropagator_rendertocanvas",
+      "community": 141,
+      "norm_label": ".rendertocanvas()"
+    },
+    {
+      "label": "setZSliderDisabled()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L922",
+      "_origin": "ast",
+      "id": "js_laser_propagation_setzsliderdisabled",
+      "community": 141,
+      "norm_label": "setzsliderdisabled()"
+    },
+    {
+      "label": "handleImageUpload()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1066",
+      "_origin": "ast",
+      "id": "js_laser_propagation_handleimageupload",
+      "community": 141,
+      "norm_label": "handleimageupload()"
+    },
+    {
+      "label": "parsePNG16bitOr8bit()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1119",
+      "_origin": "ast",
+      "id": "js_laser_propagation_parsepng16bitor8bit",
+      "community": 141,
+      "norm_label": "parsepng16bitor8bit()"
+    },
+    {
+      "label": "parsePNG16bitAsync()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1199",
+      "_origin": "ast",
+      "id": "js_laser_propagation_parsepng16bitasync",
+      "community": 141,
+      "norm_label": "parsepng16bitasync()"
+    },
+    {
+      "label": "paethPredictor()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1292",
+      "_origin": "ast",
+      "id": "js_laser_propagation_paethpredictor",
+      "community": 141,
+      "norm_label": "paethpredictor()"
+    },
+    {
+      "label": "initDefaultRoi()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1302",
+      "_origin": "ast",
+      "id": "js_laser_propagation_initdefaultroi",
+      "community": 141,
+      "norm_label": "initdefaultroi()"
+    },
+    {
+      "label": "renderMainCanvas()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1377",
+      "_origin": "ast",
+      "id": "js_laser_propagation_rendermaincanvas",
+      "community": 141,
+      "norm_label": "rendermaincanvas()"
+    },
+    {
+      "label": "drawRoiBox()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1429",
+      "_origin": "ast",
+      "id": "js_laser_propagation_drawroibox",
+      "community": 141,
+      "norm_label": "drawroibox()"
+    },
+    {
+      "label": "getColor()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1455",
+      "_origin": "ast",
+      "id": "js_laser_propagation_getcolor",
+      "community": 141,
+      "norm_label": "getcolor()"
+    },
+    {
+      "label": "hslToRgb()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1496",
+      "_origin": "ast",
+      "id": "js_laser_propagation_hsltorgb",
+      "community": 141,
+      "norm_label": "hsltorgb()"
+    },
+    {
+      "label": "hue2rgb()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1510",
+      "_origin": "ast",
+      "id": "js_laser_propagation_hue2rgb",
+      "community": 141,
+      "norm_label": "hue2rgb()"
+    },
+    {
+      "label": "setupCanvasInteraction()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1520",
+      "_origin": "ast",
+      "id": "js_laser_propagation_setupcanvasinteraction",
+      "community": 141,
+      "norm_label": "setupcanvasinteraction()"
+    },
+    {
+      "label": "fftComplex()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1630",
+      "_origin": "ast",
+      "id": "js_laser_propagation_fftcomplex",
+      "community": 141,
+      "norm_label": "fftcomplex()"
+    },
+    {
+      "label": "fft2d()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1689",
+      "_origin": "ast",
+      "id": "js_laser_propagation_fft2d",
+      "community": 141,
+      "norm_label": "fft2d()"
+    },
+    {
+      "label": "nextPow2()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1723",
+      "_origin": "ast",
+      "id": "js_laser_propagation_nextpow2",
+      "community": 141,
+      "norm_label": "nextpow2()"
+    },
+    {
+      "label": "computeFFTSize()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1729",
+      "_origin": "ast",
+      "id": "js_laser_propagation_computefftsize",
+      "community": 141,
+      "norm_label": "computefftsize()"
+    },
+    {
+      "label": "showProgress()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1738",
+      "_origin": "ast",
+      "id": "js_laser_propagation_showprogress",
+      "community": 141,
+      "norm_label": "showprogress()"
+    },
+    {
+      "label": "hideProgress()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1749",
+      "_origin": "ast",
+      "id": "js_laser_propagation_hideprogress",
+      "community": 141,
+      "norm_label": "hideprogress()"
+    },
+    {
+      "label": "yieldToDOM()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1755",
+      "_origin": "ast",
+      "id": "js_laser_propagation_yieldtodom",
+      "community": 141,
+      "norm_label": "yieldtodom()"
+    },
+    {
+      "label": "evalZernike()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1760",
+      "_origin": "ast",
+      "id": "js_laser_propagation_evalzernike",
+      "community": 141,
+      "norm_label": "evalzernike()"
+    },
+    {
+      "label": "propagateNearField()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1795",
+      "_origin": "ast",
+      "id": "js_laser_propagation_propagatenearfield",
+      "community": 141,
+      "norm_label": "propagatenearfield()"
+    },
+    {
+      "label": "computeFocalPlaneSpot()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1990",
+      "_origin": "ast",
+      "id": "js_laser_propagation_computefocalplanespot",
+      "community": 141,
+      "norm_label": "computefocalplanespot()"
+    },
+    {
+      "label": "runCausticCalculations()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1998",
+      "_origin": "ast",
+      "id": "js_laser_propagation_runcausticcalculations",
+      "community": 141,
+      "norm_label": "runcausticcalculations()"
+    },
+    {
+      "label": "calculateSecondMoments()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2192",
+      "_origin": "ast",
+      "id": "js_laser_propagation_calculatesecondmoments",
+      "community": 141,
+      "norm_label": "calculatesecondmoments()"
+    },
+    {
+      "label": "fitQuadraticCaustic()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2246",
+      "_origin": "ast",
+      "id": "js_laser_propagation_fitquadraticcaustic",
+      "community": 141,
+      "norm_label": "fitquadraticcaustic()"
+    },
+    {
+      "label": "adaptiveCropFocalSpot()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2296",
+      "_origin": "ast",
+      "id": "js_laser_propagation_adaptivecropfocalspot",
+      "community": 141,
+      "norm_label": "adaptivecropfocalspot()"
+    },
+    {
+      "label": "drawCurrentFocalSpot()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2363",
+      "_origin": "ast",
+      "id": "js_laser_propagation_drawcurrentfocalspot",
+      "community": 141,
+      "norm_label": "drawcurrentfocalspot()"
+    },
+    {
+      "label": "drawFocalSpotImage()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2371",
+      "_origin": "ast",
+      "id": "js_laser_propagation_drawfocalspotimage",
+      "community": 141,
+      "norm_label": "drawfocalspotimage()"
+    },
+    {
+      "label": "fit2DGaussianFocal()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2547",
+      "_origin": "ast",
+      "id": "js_laser_propagation_fit2dgaussianfocal",
+      "community": 141,
+      "norm_label": "fit2dgaussianfocal()"
+    },
+    {
+      "label": "simplexOptimize()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2668",
+      "_origin": "ast",
+      "id": "js_laser_propagation_simplexoptimize",
+      "community": 141,
+      "norm_label": "simplexoptimize()"
+    },
+    {
+      "label": "drawCausticProfilePlot()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2780",
+      "_origin": "ast",
+      "id": "js_laser_propagation_drawcausticprofileplot",
+      "community": 141,
+      "norm_label": "drawcausticprofileplot()"
+    },
+    {
+      "label": "showError()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2936",
+      "_origin": "ast",
+      "id": "js_laser_propagation_showerror",
+      "community": 141,
+      "norm_label": "showerror()"
+    },
+    {
+      "label": "updateMemoryDiagnostics()",
+      "file_type": "code",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2948",
+      "_origin": "ast",
+      "id": "js_laser_propagation_updatememorydiagnostics",
+      "community": 141,
       "norm_label": "updatememorydiagnostics()"
     },
     {
@@ -2584,6 +3024,36 @@
       "norm_label": "fs_1550"
     },
     {
+      "label": "laser-propagation-verify.py",
+      "file_type": "code",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_laser_propagation_verify",
+      "community": 247,
+      "norm_label": "laser-propagation-verify.py"
+    },
+    {
+      "label": "load_image()",
+      "file_type": "code",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "test_laser_propagation_verify_load_image",
+      "community": 247,
+      "norm_label": "load_image()"
+    },
+    {
+      "label": "run_verification()",
+      "file_type": "code",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "test_laser_propagation_verify_run_verification",
+      "community": 247,
+      "norm_label": "run_verification()"
+    },
+    {
       "label": "CONTRIBUTING.md",
       "file_type": "document",
       "source_file": ".github/CONTRIBUTING.md",
@@ -2654,10 +3124,20 @@
       "norm_label": "agents.md"
     },
     {
-      "label": "graphify",
+      "label": "Tests",
       "file_type": "document",
       "source_file": "AGENTS.md",
       "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents_tests",
+      "community": 252,
+      "norm_label": "tests"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": "L4",
       "_origin": "ast",
       "id": "agents_graphify",
       "community": 252,
@@ -2870,7 +3350,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "changelog_4_26_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_26_2",
-      "community": 158,
+      "community": 120,
       "norm_label": "[4.26.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.26.2)"
     },
     {
@@ -2880,7 +3360,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "changelog_enhancements_109",
-      "community": 158,
+      "community": 120,
       "norm_label": "enhancements"
     },
     {
@@ -2890,7 +3370,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "changelog_bug_fixes_114",
-      "community": 158,
+      "community": 120,
       "norm_label": "bug fixes"
     },
     {
@@ -3260,7 +3740,7 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "changelog_4_19_3_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_19_3",
-      "community": 1,
+      "community": 262,
       "norm_label": "[4.19.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.19.3)"
     },
     {
@@ -3270,7 +3750,7 @@
       "source_location": "L366",
       "_origin": "ast",
       "id": "changelog_enhancements_366",
-      "community": 1,
+      "community": 262,
       "norm_label": "enhancements"
     },
     {
@@ -3370,7 +3850,7 @@
       "source_location": "L428",
       "_origin": "ast",
       "id": "changelog_4_18_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_18_1",
-      "community": 269,
+      "community": 261,
       "norm_label": "[4.18.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.18.1)"
     },
     {
@@ -3380,7 +3860,7 @@
       "source_location": "L430",
       "_origin": "ast",
       "id": "changelog_bug_fixes_430",
-      "community": 269,
+      "community": 261,
       "norm_label": "bug fixes"
     },
     {
@@ -3540,7 +4020,7 @@
       "source_location": "L514",
       "_origin": "ast",
       "id": "changelog_4_16_5_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_16_5",
-      "community": 141,
+      "community": 1,
       "norm_label": "[4.16.5](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.5)"
     },
     {
@@ -3550,7 +4030,7 @@
       "source_location": "L516",
       "_origin": "ast",
       "id": "changelog_enhancements_516",
-      "community": 141,
+      "community": 1,
       "norm_label": "enhancements"
     },
     {
@@ -3560,7 +4040,7 @@
       "source_location": "L527",
       "_origin": "ast",
       "id": "changelog_bug_fixes_527",
-      "community": 141,
+      "community": 1,
       "norm_label": "bug fixes"
     },
     {
@@ -3680,7 +4160,7 @@
       "source_location": "L574",
       "_origin": "ast",
       "id": "changelog_4_16_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_16_0",
-      "community": 137,
+      "community": 178,
       "norm_label": "[4.16.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.0)"
     },
     {
@@ -3690,7 +4170,7 @@
       "source_location": "L576",
       "_origin": "ast",
       "id": "changelog_enhancements_576",
-      "community": 137,
+      "community": 178,
       "norm_label": "enhancements"
     },
     {
@@ -3700,7 +4180,7 @@
       "source_location": "L590",
       "_origin": "ast",
       "id": "changelog_bug_fixes_590",
-      "community": 137,
+      "community": 178,
       "norm_label": "bug fixes"
     },
     {
@@ -3890,7 +4370,7 @@
       "source_location": "L707",
       "_origin": "ast",
       "id": "changelog_4_12_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_12_2",
-      "community": 1,
+      "community": 267,
       "norm_label": "[4.12.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.12.2)"
     },
     {
@@ -3900,7 +4380,7 @@
       "source_location": "L709",
       "_origin": "ast",
       "id": "changelog_enhancements_709",
-      "community": 1,
+      "community": 267,
       "norm_label": "enhancements"
     },
     {
@@ -4060,7 +4540,7 @@
       "source_location": "L800",
       "_origin": "ast",
       "id": "changelog_4_10_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_10_0",
-      "community": 1,
+      "community": 265,
       "norm_label": "[4.10.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.10.0)"
     },
     {
@@ -4070,7 +4550,7 @@
       "source_location": "L802",
       "_origin": "ast",
       "id": "changelog_enhancements_802",
-      "community": 1,
+      "community": 265,
       "norm_label": "enhancements"
     },
     {
@@ -4080,7 +4560,7 @@
       "source_location": "L806",
       "_origin": "ast",
       "id": "changelog_4_9_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_9_1",
-      "community": 171,
+      "community": 1,
       "norm_label": "[4.9.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.9.1)"
     },
     {
@@ -4090,7 +4570,7 @@
       "source_location": "L808",
       "_origin": "ast",
       "id": "changelog_enhancements_808",
-      "community": 171,
+      "community": 1,
       "norm_label": "enhancements"
     },
     {
@@ -4100,7 +4580,7 @@
       "source_location": "L825",
       "_origin": "ast",
       "id": "changelog_bug_fixes_825",
-      "community": 171,
+      "community": 1,
       "norm_label": "bug fixes"
     },
     {
@@ -4260,7 +4740,7 @@
       "source_location": "L931",
       "_origin": "ast",
       "id": "changelog_4_6_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_6_0",
-      "community": 1,
+      "community": 266,
       "norm_label": "[4.6.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.6.0)"
     },
     {
@@ -4270,7 +4750,7 @@
       "source_location": "L933",
       "_origin": "ast",
       "id": "changelog_enhancements_933",
-      "community": 1,
+      "community": 266,
       "norm_label": "enhancements"
     },
     {
@@ -4570,7 +5050,7 @@
       "source_location": "L1106",
       "_origin": "ast",
       "id": "changelog_4_2_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_2_1",
-      "community": 162,
+      "community": 137,
       "norm_label": "[4.2.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.2.1)"
     },
     {
@@ -4580,7 +5060,7 @@
       "source_location": "L1108",
       "_origin": "ast",
       "id": "changelog_enhancements_1108",
-      "community": 162,
+      "community": 137,
       "norm_label": "enhancements"
     },
     {
@@ -4590,7 +5070,7 @@
       "source_location": "L1112",
       "_origin": "ast",
       "id": "changelog_maintenance_1112",
-      "community": 162,
+      "community": 137,
       "norm_label": "maintenance"
     },
     {
@@ -4730,7 +5210,7 @@
       "source_location": "L1167",
       "_origin": "ast",
       "id": "changelog_4_0_9_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_0_9",
-      "community": 267,
+      "community": 1,
       "norm_label": "[4.0.9](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.0.9)"
     },
     {
@@ -4740,7 +5220,7 @@
       "source_location": "L1169",
       "_origin": "ast",
       "id": "changelog_bug_fixes_1169",
-      "community": 267,
+      "community": 1,
       "norm_label": "bug fixes"
     },
     {
@@ -5410,7 +5890,7 @@
       "source_location": "L1430",
       "_origin": "ast",
       "id": "changelog_3_3_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_3_1",
-      "community": 121,
+      "community": 171,
       "norm_label": "[3.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.1)"
     },
     {
@@ -5420,7 +5900,7 @@
       "source_location": "L1432",
       "_origin": "ast",
       "id": "changelog_enhancements_1432",
-      "community": 121,
+      "community": 171,
       "norm_label": "enhancements"
     },
     {
@@ -5430,7 +5910,7 @@
       "source_location": "L1438",
       "_origin": "ast",
       "id": "changelog_maintenance_1438",
-      "community": 121,
+      "community": 171,
       "norm_label": "maintenance"
     },
     {
@@ -5580,7 +6060,7 @@
       "source_location": "L1493",
       "_origin": "ast",
       "id": "changelog_3_2_8_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_8",
-      "community": 120,
+      "community": 162,
       "norm_label": "[3.2.8](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.8)"
     },
     {
@@ -5590,7 +6070,7 @@
       "source_location": "L1495",
       "_origin": "ast",
       "id": "changelog_bug_fixes_1495",
-      "community": 120,
+      "community": 162,
       "norm_label": "bug fixes"
     },
     {
@@ -5600,7 +6080,7 @@
       "source_location": "L1499",
       "_origin": "ast",
       "id": "changelog_maintenance_1499",
-      "community": 120,
+      "community": 162,
       "norm_label": "maintenance"
     },
     {
@@ -5640,7 +6120,7 @@
       "source_location": "L1513",
       "_origin": "ast",
       "id": "changelog_3_2_6_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_6",
-      "community": 265,
+      "community": 1,
       "norm_label": "[3.2.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.6)"
     },
     {
@@ -5650,7 +6130,7 @@
       "source_location": "L1515",
       "_origin": "ast",
       "id": "changelog_bug_fixes_1515",
-      "community": 265,
+      "community": 1,
       "norm_label": "bug fixes"
     },
     {
@@ -5740,7 +6220,7 @@
       "source_location": "L1549",
       "_origin": "ast",
       "id": "changelog_3_2_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_2",
-      "community": 1,
+      "community": 260,
       "norm_label": "[3.2.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.2)"
     },
     {
@@ -5750,7 +6230,7 @@
       "source_location": "L1551",
       "_origin": "ast",
       "id": "changelog_enhancements_1551",
-      "community": 1,
+      "community": 260,
       "norm_label": "enhancements"
     },
     {
@@ -5790,7 +6270,7 @@
       "source_location": "L1565",
       "_origin": "ast",
       "id": "changelog_3_2_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_0",
-      "community": 1,
+      "community": 263,
       "norm_label": "[3.2.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.0)"
     },
     {
@@ -5800,7 +6280,7 @@
       "source_location": "L1567",
       "_origin": "ast",
       "id": "changelog_bug_fixes_1567",
-      "community": 1,
+      "community": 263,
       "norm_label": "bug fixes"
     },
     {
@@ -5870,7 +6350,7 @@
       "source_location": "L1593",
       "_origin": "ast",
       "id": "changelog_3_1_6_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_6",
-      "community": 1,
+      "community": 222,
       "norm_label": "[3.1.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.6)"
     },
     {
@@ -5880,7 +6360,7 @@
       "source_location": "L1595",
       "_origin": "ast",
       "id": "changelog_maintenance_1595",
-      "community": 1,
+      "community": 222,
       "norm_label": "maintenance"
     },
     {
@@ -5910,7 +6390,7 @@
       "source_location": "L1605",
       "_origin": "ast",
       "id": "changelog_3_1_4_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_4",
-      "community": 266,
+      "community": 1,
       "norm_label": "[3.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.4)"
     },
     {
@@ -5920,7 +6400,7 @@
       "source_location": "L1607",
       "_origin": "ast",
       "id": "changelog_enhancements_1607",
-      "community": 266,
+      "community": 1,
       "norm_label": "enhancements"
     },
     {
@@ -5990,7 +6470,7 @@
       "source_location": "L1637",
       "_origin": "ast",
       "id": "changelog_3_1_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_1",
-      "community": 262,
+      "community": 1,
       "norm_label": "[3.1.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.1)"
     },
     {
@@ -6000,7 +6480,7 @@
       "source_location": "L1639",
       "_origin": "ast",
       "id": "changelog_bug_fix",
-      "community": 262,
+      "community": 1,
       "norm_label": "bug fix"
     },
     {
@@ -6040,7 +6520,7 @@
       "source_location": "L1654",
       "_origin": "ast",
       "id": "changelog_3_0_3_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_0_3",
-      "community": 261,
+      "community": 1,
       "norm_label": "[3.0.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.0.3)"
     },
     {
@@ -6050,7 +6530,7 @@
       "source_location": "L1656",
       "_origin": "ast",
       "id": "changelog_enhancements_1656",
-      "community": 261,
+      "community": 1,
       "norm_label": "enhancements"
     },
     {
@@ -6584,6 +7064,116 @@
       "norm_label": "attenuation-explanation.md"
     },
     {
+      "label": "caustic-parameters-explanation.md",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation",
+      "community": 121,
+      "norm_label": "caustic-parameters-explanation.md"
+    },
+    {
+      "label": "3D Beam Caustic Analysis (ISO 11146 Second-Moment Fit)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_3d_beam_caustic_analysis_iso_11146_second_moment_fit",
+      "community": 121,
+      "norm_label": "3d beam caustic analysis (iso 11146 second-moment fit)"
+    },
+    {
+      "label": "1. Calculating Beam Radius at each Plane ($w_{avg}(z)$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_1_calculating_beam_radius_at_each_plane_w_avg_z",
+      "community": 121,
+      "norm_label": "1. calculating beam radius at each plane ($w_{avg}(z)$)"
+    },
+    {
+      "label": "2. Fitting the Caustic Hyperbola",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_2_fitting_the_caustic_hyperbola",
+      "community": 121,
+      "norm_label": "2. fitting the caustic hyperbola"
+    },
+    {
+      "label": "3. Extracting the Parameters",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "community": 121,
+      "norm_label": "3. extracting the parameters"
+    },
+    {
+      "label": "Focus Shift / Axial Waist Offset ($z_0 - f$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_focus_shift_axial_waist_offset_z_0_f",
+      "community": 121,
+      "norm_label": "focus shift / axial waist offset ($z_0 - f$)"
+    },
+    {
+      "label": "Waist Radius ($w_0$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_waist_radius_w_0",
+      "community": 121,
+      "norm_label": "waist radius ($w_0$)"
+    },
+    {
+      "label": "Beam Quality Factor ($M^2$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_beam_quality_factor_m_2",
+      "community": 121,
+      "norm_label": "beam quality factor ($m^2$)"
+    },
+    {
+      "label": "Rayleigh Range ($z_R$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_rayleigh_range_z_r",
+      "community": 121,
+      "norm_label": "rayleigh range ($z_r$)"
+    },
+    {
+      "label": "Waist FWHM Spot Diameter ($d_0$)",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_waist_fwhm_spot_diameter_d_0",
+      "community": 121,
+      "norm_label": "waist fwhm spot diameter ($d_0$)"
+    },
+    {
+      "label": "Verification Example",
+      "file_type": "document",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "calculators_caustic_parameters_explanation_verification_example",
+      "community": 121,
+      "norm_label": "verification example"
+    },
+    {
       "label": "counts-estimation-explanation.md",
       "file_type": "document",
       "source_file": "calculators/counts-estimation-explanation.md",
@@ -6662,6 +7252,16 @@
       "id": "calculators_focal_spot_explanation",
       "community": 469,
       "norm_label": "focal-spot-explanation.md"
+    },
+    {
+      "label": "laser-propagation.md",
+      "file_type": "document",
+      "source_file": "calculators/laser-propagation.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "calculators_laser_propagation",
+      "community": 475,
+      "norm_label": "laser-propagation.md"
     },
     {
       "label": "laser-spot-size-explanation.md",
@@ -8640,7 +9240,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "docs_18_history_4_26_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_26_2",
-      "community": 260,
+      "community": 201,
       "norm_label": "[4.26.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.26.2)"
     },
     {
@@ -8650,7 +9250,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_124",
-      "community": 260,
+      "community": 201,
       "norm_label": "enhancements"
     },
     {
@@ -8660,7 +9260,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_129",
-      "community": 260,
+      "community": 201,
       "norm_label": "bug fixes"
     },
     {
@@ -8890,7 +9490,7 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "docs_18_history_4_22_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_22_0",
-      "community": 222,
+      "community": 198,
       "norm_label": "[4.22.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.22.0)"
     },
     {
@@ -8900,7 +9500,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_298",
-      "community": 222,
+      "community": 198,
       "norm_label": "bug fixes"
     },
     {
@@ -8910,7 +9510,7 @@
       "source_location": "L303",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_303",
-      "community": 222,
+      "community": 198,
       "norm_label": "enhancements"
     },
     {
@@ -9280,7 +9880,7 @@
       "source_location": "L514",
       "_origin": "ast",
       "id": "docs_18_history_4_16_6_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_16_6",
-      "community": 210,
+      "community": 194,
       "norm_label": "[4.16.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.6)"
     },
     {
@@ -9290,7 +9890,7 @@
       "source_location": "L516",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_516",
-      "community": 210,
+      "community": 194,
       "norm_label": "enhancements"
     },
     {
@@ -9300,7 +9900,7 @@
       "source_location": "L522",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_522",
-      "community": 210,
+      "community": 194,
       "norm_label": "bug fixes"
     },
     {
@@ -9400,7 +10000,7 @@
       "source_location": "L572",
       "_origin": "ast",
       "id": "docs_18_history_4_16_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_16_2",
-      "community": 0,
+      "community": 471,
       "norm_label": "[4.16.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.2)"
     },
     {
@@ -9410,7 +10010,7 @@
       "source_location": "L574",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_574",
-      "community": 0,
+      "community": 471,
       "norm_label": "bug fixes"
     },
     {
@@ -9510,7 +10110,7 @@
       "source_location": "L631",
       "_origin": "ast",
       "id": "docs_18_history_4_15_1_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_15_1",
-      "community": 466,
+      "community": 0,
       "norm_label": "[4.15.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.15.1)"
     },
     {
@@ -9520,7 +10120,7 @@
       "source_location": "L633",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_633",
-      "community": 466,
+      "community": 0,
       "norm_label": "bug fixes"
     },
     {
@@ -9530,7 +10130,7 @@
       "source_location": "L637",
       "_origin": "ast",
       "id": "docs_18_history_4_15_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_15_0",
-      "community": 0,
+      "community": 466,
       "norm_label": "[4.15.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.15.0)"
     },
     {
@@ -9540,7 +10140,7 @@
       "source_location": "L639",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_639",
-      "community": 0,
+      "community": 466,
       "norm_label": "enhancements"
     },
     {
@@ -9630,7 +10230,7 @@
       "source_location": "L707",
       "_origin": "ast",
       "id": "docs_18_history_4_13_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_13_0",
-      "community": 201,
+      "community": 0,
       "norm_label": "[4.13.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.13.0)"
     },
     {
@@ -9640,7 +10240,7 @@
       "source_location": "L709",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_709",
-      "community": 201,
+      "community": 0,
       "norm_label": "enhancements"
     },
     {
@@ -9650,7 +10250,7 @@
       "source_location": "L717",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_717",
-      "community": 201,
+      "community": 0,
       "norm_label": "bug fixes"
     },
     {
@@ -9740,7 +10340,7 @@
       "source_location": "L775",
       "_origin": "ast",
       "id": "docs_18_history_4_11_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_11_2",
-      "community": 198,
+      "community": 186,
       "norm_label": "[4.11.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.11.2)"
     },
     {
@@ -9750,7 +10350,7 @@
       "source_location": "L777",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_777",
-      "community": 198,
+      "community": 186,
       "norm_label": "enhancements"
     },
     {
@@ -9760,7 +10360,7 @@
       "source_location": "L783",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_783",
-      "community": 198,
+      "community": 186,
       "norm_label": "bug fixes"
     },
     {
@@ -10030,7 +10630,7 @@
       "source_location": "L946",
       "_origin": "ast",
       "id": "docs_18_history_4_6_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_6_0",
-      "community": 0,
+      "community": 472,
       "norm_label": "[4.6.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.6.0)"
     },
     {
@@ -10040,7 +10640,7 @@
       "source_location": "L948",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_948",
-      "community": 0,
+      "community": 472,
       "norm_label": "enhancements"
     },
     {
@@ -10470,7 +11070,7 @@
       "source_location": "L1172",
       "_origin": "ast",
       "id": "docs_18_history_4_0_10_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_0_10",
-      "community": 194,
+      "community": 257,
       "norm_label": "[4.0.10](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.0.10)"
     },
     {
@@ -10480,7 +11080,7 @@
       "source_location": "L1174",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1174",
-      "community": 194,
+      "community": 257,
       "norm_label": "bug fixes"
     },
     {
@@ -10490,7 +11090,7 @@
       "source_location": "L1178",
       "_origin": "ast",
       "id": "docs_18_history_maintenance_1178",
-      "community": 194,
+      "community": 257,
       "norm_label": "maintenance"
     },
     {
@@ -10500,7 +11100,7 @@
       "source_location": "L1182",
       "_origin": "ast",
       "id": "docs_18_history_4_0_9_https_github_com_mmistakes_minimal_mistakes_releases_tag_4_0_9",
-      "community": 0,
+      "community": 272,
       "norm_label": "[4.0.9](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.0.9)"
     },
     {
@@ -10510,7 +11110,7 @@
       "source_location": "L1184",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1184",
-      "community": 0,
+      "community": 272,
       "norm_label": "bug fixes"
     },
     {
@@ -11060,7 +11660,7 @@
       "source_location": "L1399",
       "_origin": "ast",
       "id": "docs_18_history_3_3_5_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_3_5",
-      "community": 257,
+      "community": 210,
       "norm_label": "[3.3.5](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.5)"
     },
     {
@@ -11070,7 +11670,7 @@
       "source_location": "L1401",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1401",
-      "community": 257,
+      "community": 210,
       "norm_label": "enhancements"
     },
     {
@@ -11080,7 +11680,7 @@
       "source_location": "L1407",
       "_origin": "ast",
       "id": "docs_18_history_maintenance_1407",
-      "community": 257,
+      "community": 210,
       "norm_label": "maintenance"
     },
     {
@@ -11210,7 +11810,7 @@
       "source_location": "L1458",
       "_origin": "ast",
       "id": "docs_18_history_3_2_13_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_13",
-      "community": 272,
+      "community": 0,
       "norm_label": "[3.2.13](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.13)"
     },
     {
@@ -11220,7 +11820,7 @@
       "source_location": "L1460",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1460",
-      "community": 272,
+      "community": 0,
       "norm_label": "enhancements"
     },
     {
@@ -11380,7 +11980,7 @@
       "source_location": "L1518",
       "_origin": "ast",
       "id": "docs_18_history_3_2_7_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_7",
-      "community": 186,
+      "community": 182,
       "norm_label": "[3.2.7](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.7)"
     },
     {
@@ -11390,7 +11990,7 @@
       "source_location": "L1520",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1520",
-      "community": 186,
+      "community": 182,
       "norm_label": "enhancements"
     },
     {
@@ -11400,7 +12000,7 @@
       "source_location": "L1524",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1524",
-      "community": 186,
+      "community": 182,
       "norm_label": "bug fixes"
     },
     {
@@ -11510,7 +12110,7 @@
       "source_location": "L1564",
       "_origin": "ast",
       "id": "docs_18_history_3_2_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_2_2",
-      "community": 0,
+      "community": 271,
       "norm_label": "[3.2.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.2)"
     },
     {
@@ -11520,7 +12120,7 @@
       "source_location": "L1566",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1566",
-      "community": 0,
+      "community": 271,
       "norm_label": "enhancements"
     },
     {
@@ -11580,7 +12180,7 @@
       "source_location": "L1586",
       "_origin": "ast",
       "id": "docs_18_history_3_1_8_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_8",
-      "community": 182,
+      "community": 181,
       "norm_label": "[3.1.8](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.8)"
     },
     {
@@ -11590,7 +12190,7 @@
       "source_location": "L1588",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1588",
-      "community": 182,
+      "community": 181,
       "norm_label": "bug fixes"
     },
     {
@@ -11600,7 +12200,7 @@
       "source_location": "L1592",
       "_origin": "ast",
       "id": "docs_18_history_maintenance_1592",
-      "community": 182,
+      "community": 181,
       "norm_label": "maintenance"
     },
     {
@@ -11610,7 +12210,7 @@
       "source_location": "L1598",
       "_origin": "ast",
       "id": "docs_18_history_3_1_7_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_7",
-      "community": 181,
+      "community": 158,
       "norm_label": "[3.1.7](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.7)"
     },
     {
@@ -11620,7 +12220,7 @@
       "source_location": "L1600",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1600",
-      "community": 181,
+      "community": 158,
       "norm_label": "enhancements"
     },
     {
@@ -11630,7 +12230,7 @@
       "source_location": "L1604",
       "_origin": "ast",
       "id": "docs_18_history_maintenance_1604",
-      "community": 181,
+      "community": 158,
       "norm_label": "maintenance"
     },
     {
@@ -11660,7 +12260,7 @@
       "source_location": "L1614",
       "_origin": "ast",
       "id": "docs_18_history_3_1_5_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_5",
-      "community": 0,
+      "community": 269,
       "norm_label": "[3.1.5](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.5)"
     },
     {
@@ -11670,7 +12270,7 @@
       "source_location": "L1616",
       "_origin": "ast",
       "id": "docs_18_history_maintenance_1616",
-      "community": 0,
+      "community": 269,
       "norm_label": "maintenance"
     },
     {
@@ -11780,7 +12380,7 @@
       "source_location": "L1658",
       "_origin": "ast",
       "id": "docs_18_history_3_1_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_3_1_0",
-      "community": 178,
+      "community": 0,
       "norm_label": "[3.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.0)"
     },
     {
@@ -11790,7 +12390,7 @@
       "source_location": "L1660",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1660",
-      "community": 178,
+      "community": 0,
       "norm_label": "enhancements"
     },
     {
@@ -11800,7 +12400,7 @@
       "source_location": "L1665",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1665",
-      "community": 178,
+      "community": 0,
       "norm_label": "bug fixes"
     },
     {
@@ -11840,7 +12440,7 @@
       "source_location": "L1695",
       "_origin": "ast",
       "id": "docs_18_history_2_2_0_https_github_com_mmistakes_minimal_mistakes_releases_tag_2_2_0",
-      "community": 0,
+      "community": 268,
       "norm_label": "[2.2.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.2.0)"
     },
     {
@@ -11850,7 +12450,7 @@
       "source_location": "L1697",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1697",
-      "community": 0,
+      "community": 268,
       "norm_label": "enhancements"
     },
     {
@@ -11860,7 +12460,7 @@
       "source_location": "L1702",
       "_origin": "ast",
       "id": "docs_18_history_2_1_3_https_github_com_mmistakes_minimal_mistakes_releases_tag_2_1_3",
-      "community": 271,
+      "community": 0,
       "norm_label": "[2.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.3)"
     },
     {
@@ -11870,7 +12470,7 @@
       "source_location": "L1704",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1704",
-      "community": 271,
+      "community": 0,
       "norm_label": "enhancements"
     },
     {
@@ -12050,7 +12650,7 @@
       "source_location": "L1797",
       "_origin": "ast",
       "id": "docs_18_history_1_1_4_https_github_com_mmistakes_minimal_mistakes_releases_tag_1_1_4",
-      "community": 270,
+      "community": 0,
       "norm_label": "[1.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.4)"
     },
     {
@@ -12060,7 +12660,7 @@
       "source_location": "L1799",
       "_origin": "ast",
       "id": "docs_18_history_bug_fixes_1799",
-      "community": 270,
+      "community": 0,
       "norm_label": "bug fixes"
     },
     {
@@ -12140,7 +12740,7 @@
       "source_location": "L1833",
       "_origin": "ast",
       "id": "docs_18_history_1_0_2_https_github_com_mmistakes_minimal_mistakes_releases_tag_v1_0_2",
-      "community": 268,
+      "community": 270,
       "norm_label": "[1.0.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.2)"
     },
     {
@@ -12150,7 +12750,7 @@
       "source_location": "L1835",
       "_origin": "ast",
       "id": "docs_18_history_enhancements_1835",
-      "community": 268,
+      "community": 270,
       "norm_label": "enhancements"
     },
     {
@@ -15474,26 +16074,6 @@
       "norm_label": "directions"
     },
     {
-      "label": "wake_parameters_7b46a281.md",
-      "file_type": "document",
-      "source_file": "graphify-out/converted/wake_parameters_7b46a281.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "converted_wake_parameters_7b46a281",
-      "community": 263,
-      "norm_label": "wake_parameters_7b46a281.md"
-    },
-    {
-      "label": "Sheet: Sheet1",
-      "file_type": "document",
-      "source_file": "graphify-out/converted/wake_parameters_7b46a281.md",
-      "source_location": "L3",
-      "_origin": "ast",
-      "id": "converted_wake_parameters_7b46a281_sheet_sheet1",
-      "community": 263,
-      "norm_label": "sheet: sheet1"
-    },
-    {
       "label": "index.md",
       "file_type": "document",
       "source_file": "index.md",
@@ -18398,26 +18978,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": ".opencode/package.json",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "opencode_package",
-      "target": "opencode_package_dependencies"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": ".opencode/package.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "opencode_package_dependencies",
-      "target": "opencode_package_dependencies_opencode_ai_plugin"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": ".opencode/plugins/graphify.js",
       "source_location": "L6",
       "weight": 1.0,
@@ -19387,6 +19947,972 @@
       "confidence_score": 1.0,
       "source": "js_focal_spot_calculator_fit2dgaussianroi",
       "target": "js_focal_spot_calculator_simplexoptimize"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1506",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_adaptivecropfocalspot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1408",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_calculatesecondmoments"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1031",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_computefftsize"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1227",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_computefocalplanespot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1967",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_drawcausticprofileplot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1573",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_drawcurrentfocalspot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1581",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_drawfocalspotimage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L732",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_drawroibox"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1059",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_evalzernike"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L992",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_fft2d"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L933",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_fftcomplex"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1734",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_fit2dgaussianfocal"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1456",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_fitquadraticcaustic"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_formatfixed"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L758",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_getcolor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L390",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_handleimageupload"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1048",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_hideprogress"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L799",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_hsltorgb"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L813",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_hue2rgb"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L620",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_initdefaultroi"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1026",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_nextpow2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L610",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_paethpredictor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L517",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_parsepng16bitasync"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L437",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_parsepng16bitor8bit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1094",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_propagatenearfield"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L695",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_rendermaincanvas"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1235",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_runcausticcalculations"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L823",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_setupcanvasinteraction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L304",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_setzsliderdisabled"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2111",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_showerror"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1037",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_showprogress"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1855",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_simplexoptimize"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2123",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_updatememorydiagnostics"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_webglpropagator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1054",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation",
+      "target": "js_laser_propagation_yieldtodom"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2162",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawcausticprofileplot",
+      "target": "js_laser_propagation_formatfixed"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1364",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_formatfixed"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L505",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_createfloattexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_createprogram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L146",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_createshader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L470",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_initbuffers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L177",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_initshaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L482",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_inittextures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L549",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_propagate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L681",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_rendertocanvas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L517",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_setintensitytexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L533",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator",
+      "target": "js_laser_propagation_webglpropagator_setphasetexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_constructor",
+      "target": "js_laser_propagation_webglpropagator_initbuffers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_constructor",
+      "target": "js_laser_propagation_webglpropagator_initshaders",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_createprogram",
+      "target": "js_laser_propagation_webglpropagator_createshader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L463",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_initshaders",
+      "target": "js_laser_propagation_webglpropagator_createprogram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L490",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_inittextures",
+      "target": "js_laser_propagation_webglpropagator_createfloattexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L553",
+      "weight": 1.0,
+      "source": "js_laser_propagation_webglpropagator_propagate",
+      "target": "js_laser_propagation_webglpropagator_inittextures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1098",
+      "weight": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_webglpropagator_setintensitytexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1087",
+      "weight": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_webglpropagator_setphasetexture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1851",
+      "weight": 1.0,
+      "source": "js_laser_propagation_propagatenearfield",
+      "target": "js_laser_propagation_webglpropagator_propagate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L2440",
+      "weight": 1.0,
+      "source": "js_laser_propagation_drawfocalspotimage",
+      "target": "js_laser_propagation_webglpropagator_rendertocanvas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1406",
+      "weight": 1.0,
+      "source": "js_laser_propagation_rendermaincanvas",
+      "target": "js_laser_propagation_webglpropagator_rendertocanvas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1346",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_setzsliderdisabled"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L421",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_initdefaultroi"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L400",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_parsepng16bitor8bit"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L422",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_rendermaincanvas"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L391",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_handleimageupload",
+      "target": "js_laser_propagation_showerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L474",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_parsepng16bitor8bit",
+      "target": "js_laser_propagation_parsepng16bitasync"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L593",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_parsepng16bitasync",
+      "target": "js_laser_propagation_paethpredictor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L729",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_rendermaincanvas",
+      "target": "js_laser_propagation_drawroibox"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L717",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_rendermaincanvas",
+      "target": "js_laser_propagation_getcolor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1642",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawfocalspotimage",
+      "target": "js_laser_propagation_getcolor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L768",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_getcolor",
+      "target": "js_laser_propagation_hsltorgb"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L806",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_hsltorgb",
+      "target": "js_laser_propagation_hue2rgb"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1001",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_fft2d",
+      "target": "js_laser_propagation_fftcomplex"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1196",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_propagatenearfield",
+      "target": "js_laser_propagation_fft2d"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1033",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_computefftsize",
+      "target": "js_laser_propagation_nextpow2"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1113",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_propagatenearfield",
+      "target": "js_laser_propagation_computefftsize"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1278",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_showprogress"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1361",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_hideprogress"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1279",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_yieldtodom"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1228",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_computefocalplanespot",
+      "target": "js_laser_propagation_propagatenearfield"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1575",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawcurrentfocalspot",
+      "target": "js_laser_propagation_propagatenearfield"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1307",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_propagatenearfield"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1229",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_computefocalplanespot",
+      "target": "js_laser_propagation_drawfocalspotimage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1295",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_computefocalplanespot"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1314",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_calculatesecondmoments"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1391",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_drawcausticprofileplot"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1357",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_fitquadraticcaustic"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1236",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_runcausticcalculations",
+      "target": "js_laser_propagation_showerror"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1457",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_calculatesecondmoments",
+      "target": "js_laser_propagation_adaptivecropfocalspot"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1594",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawfocalspotimage",
+      "target": "js_laser_propagation_adaptivecropfocalspot"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1576",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawcurrentfocalspot",
+      "target": "js_laser_propagation_drawfocalspotimage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1655",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_drawfocalspotimage",
+      "target": "js_laser_propagation_fit2dgaussianfocal"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/js/laser-propagation.js",
+      "source_location": "L1795",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "js_laser_propagation_fit2dgaussianfocal",
+      "target": "js_laser_propagation_simplexoptimize"
     },
     {
       "relation": "contains",
@@ -22482,6 +24008,37 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_laser_propagation_verify",
+      "target": "test_laser_propagation_verify_load_image"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_laser_propagation_verify",
+      "target": "test_laser_propagation_verify_run_verification"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "test/laser-propagation-verify.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "test_laser_propagation_verify_run_verification",
+      "target": "test_laser_propagation_verify_load_image"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".github/CONTRIBUTING.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -22528,6 +24085,16 @@
       "confidence_score": 1.0,
       "source": "agents",
       "target": "agents_graphify"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents",
+      "target": "agents_tests"
     },
     {
       "relation": "contains",
@@ -26408,6 +27975,106 @@
       "confidence_score": 1.0,
       "source": "readme_credits",
       "target": "readme_other"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation",
+      "target": "calculators_caustic_parameters_explanation_3d_beam_caustic_analysis_iso_11146_second_moment_fit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3d_beam_caustic_analysis_iso_11146_second_moment_fit",
+      "target": "calculators_caustic_parameters_explanation_1_calculating_beam_radius_at_each_plane_w_avg_z"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3d_beam_caustic_analysis_iso_11146_second_moment_fit",
+      "target": "calculators_caustic_parameters_explanation_2_fitting_the_caustic_hyperbola"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3d_beam_caustic_analysis_iso_11146_second_moment_fit",
+      "target": "calculators_caustic_parameters_explanation_3_extracting_the_parameters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_beam_quality_factor_m_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_focus_shift_axial_waist_offset_z_0_f"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_rayleigh_range_z_r"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_verification_example"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_waist_fwhm_spot_diameter_d_0"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "calculators/caustic-parameters-explanation.md",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calculators_caustic_parameters_explanation_3_extracting_the_parameters",
+      "target": "calculators_caustic_parameters_explanation_waist_radius_w_0"
     },
     {
       "relation": "contains",
@@ -33972,16 +35639,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "graphify-out/converted/wake_parameters_7b46a281.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "converted_wake_parameters_7b46a281",
-      "target": "converted_wake_parameters_7b46a281_sheet_sheet1"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "test/_pages/archive-layout-with-content.md",
       "source_location": "L9",
       "weight": 1.0,
@@ -35871,5 +37528,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1838d7f3fba4e1a8fb3df810ea6ec47ebe254855"
+  "built_at_commit": "6e9b879a0ecb27d2c0dcd74bf5630ba8d8c8bb6d"
 }

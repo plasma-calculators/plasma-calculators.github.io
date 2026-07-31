@@ -1,3 +1,6 @@
+## Tests
+* use the conda or micromamba environment website to run the jekyll, graphify, python commands, bundle, gem, and other commands and execute tests
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.

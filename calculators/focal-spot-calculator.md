@@ -37,7 +37,7 @@ classes: wide
       <h4 class="input-section-title">Spatial Calibration</h4>
       <div class="form-group" style="margin-bottom: 0.4rem;">
         <label class="radio-label" style="font-size: 0.78rem; font-weight: 600;">
-          <input type="checkbox" id="calib-same" checked style="width: auto; margin-right: 0.35rem;"> Same X and Y Calibration
+          <input type="checkbox" id="calib-same" style="width: auto; margin-right: 0.35rem;"> Same X and Y Calibration
         </label>
       </div>
 
@@ -46,7 +46,7 @@ classes: wide
         <input type="number" id="calib-x" value="0.4" min="0.0001" step="0.01" class="small-input" required>
       </div>
 
-      <div id="calib-y-group" class="form-group" style="display: none;">
+      <div id="calib-y-group" class="form-group">
         <label for="calib-y">Calibration Y (μm/pixel)</label>
         <input type="number" id="calib-y" value="0.4" min="0.0001" step="0.01" class="small-input" required>
       </div>
