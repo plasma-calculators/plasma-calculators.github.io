@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "_data/navigation.yml": {
-    "mtime": 1785395209.777733,
-    "ast_hash": "2f72a1cd279e10aa482156c082c1bb38",
+    "mtime": 1785481986.3646758,
+    "ast_hash": "52605098efc56c40c0a4a1389139d576",
     "semantic_hash": ""
   },
   "_data/ui-text.yml": {
@@ -1610,8 +1610,8 @@
     "semantic_hash": ""
   },
   "index.md": {
-    "mtime": 1785396152.9914877,
-    "ast_hash": "0ee5268df80a9786e837f87490a95acb",
+    "mtime": 1785479874.5858407,
+    "ast_hash": "9aeab0a8812d82e17a7e9efbb5a3daa0",
     "semantic_hash": ""
   },
   "staticman.yml": {
@@ -3465,8 +3465,8 @@
     "semantic_hash": ""
   },
   "assets/js/focal-spot-calculator.js": {
-    "mtime": 1785395209.8010762,
-    "ast_hash": "2202659bd9106ea958d882b8f8f54a33",
+    "mtime": 1785606000.0322244,
+    "ast_hash": "63271733eb59be9dd4ed6e3444049758",
     "semantic_hash": ""
   },
   "assets/js/vendor/utif.js": {
@@ -3475,8 +3475,8 @@
     "semantic_hash": ""
   },
   "calculators/focal-spot-calculator.md": {
-    "mtime": 1785395209.8138685,
-    "ast_hash": "b63b9cc92377a7717cf880b458d26c9c",
+    "mtime": 1785605977.8065977,
+    "ast_hash": "331f110d8c0cd003aa840e4aad00d743",
     "semantic_hash": ""
   },
   "calculators/focal-spot-explanation.md": {
@@ -3495,8 +3495,8 @@
     "semantic_hash": ""
   },
   "assets/js/ebeam-pointing.js": {
-    "mtime": 1785395209.80096,
-    "ast_hash": "dae141c7b2aa5a8b0b01f67a71478ecf",
+    "mtime": 1785481521.6765862,
+    "ast_hash": "f8fb4b3a8cc17c25ec98dc1a0b738e09",
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing-explanation.md": {
@@ -3505,8 +3505,8 @@
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing.md": {
-    "mtime": 1785395209.8137925,
-    "ast_hash": "dee7eded61e3619f2ea85a5113a10587",
+    "mtime": 1785481662.8060439,
+    "ast_hash": "afee7741646bd23efa78d63880e35759",
     "semantic_hash": ""
   },
   "assets/images/ebeam_pointing_card.jpg": {
@@ -3540,18 +3540,18 @@
     "semantic_hash": ""
   },
   "assets/js/laser-propagation.js": {
-    "mtime": 1785419270.9203968,
-    "ast_hash": "b0db22c4c793164f9a3124f06b3994df",
+    "mtime": 1785481523.7245827,
+    "ast_hash": "edef2342e96983d581fa7cb640a18326",
     "semantic_hash": ""
   },
   "test/laser-propagation-verify.py": {
-    "mtime": 1785396168.8030305,
-    "ast_hash": "aacad7c53b7ac9309f4839724bfa8b1b",
+    "mtime": 1785479894.9060156,
+    "ast_hash": "02a358a975f91f8cc3024cb87b9540bf",
     "semantic_hash": ""
   },
   "calculators/laser-propagation.md": {
-    "mtime": 1785419055.6470852,
-    "ast_hash": "5db783b053d09ca29d2f4b807d463757",
+    "mtime": 1785481882.8150191,
+    "ast_hash": "e8993dc112f2874866294e7879712d04",
     "semantic_hash": ""
   },
   "assets/images/propagation_card.png": {

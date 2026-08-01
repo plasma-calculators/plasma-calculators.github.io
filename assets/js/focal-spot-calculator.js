@@ -1004,6 +1004,16 @@ document.addEventListener("DOMContentLoaded", function () {
         a0Gauss = 0.86 * lambda_um * Math.sqrt(Math.max(0, intensityGauss));
       }
 
+      let thetaDeg = (theta * 180 / Math.PI) % 180;
+      if (thetaDeg < 0) thetaDeg += 180;
+
+      let majorAxisAngleRad = theta;
+      if (sigX * calibX < sigY * calibY) {
+        majorAxisAngleRad = theta + Math.PI / 2;
+      }
+      let majorAxisAngleDeg = (majorAxisAngleRad * 180 / Math.PI) % 180;
+      if (majorAxisAngleDeg < 0) majorAxisAngleDeg += 180;
+
       return {
         success: true,
         amplitude: amp,
@@ -1014,6 +1024,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sigmaX: sigX,
         sigmaY: sigY,
         theta: theta,
+        theta_deg: thetaDeg,
+        major_axis_angle: majorAxisAngleRad,
+        major_axis_angle_deg: majorAxisAngleDeg,
         offset: offset,
         FWHM_maj: fwhmMajor,
         FWHM_min: fwhmMinor,
@@ -1148,10 +1161,43 @@ document.addEventListener("DOMContentLoaded", function () {
         return { mean, std };
       }
 
+      function calcAngleStats(anglesRad) {
+        if (anglesRad.length === 0) return { mean: 0, std: 0 };
+        let sumSin = 0;
+        let sumCos = 0;
+        for (let a of anglesRad) {
+          sumSin += Math.sin(2 * a);
+          sumCos += Math.cos(2 * a);
+        }
+        let meanSin = sumSin / anglesRad.length;
+        let meanCos = sumCos / anglesRad.length;
+        let mean2 = Math.atan2(meanSin, meanCos);
+        let meanAngle = mean2 / 2;
+        
+        let meanDeg = (meanAngle * 180 / Math.PI) % 180;
+        if (meanDeg < 0) meanDeg += 180;
+        
+        let diffSqSum = 0;
+        for (let a of anglesRad) {
+          let diff = a - meanAngle;
+          diff = ((diff + Math.PI / 2) % Math.PI);
+          if (diff < 0) diff += Math.PI;
+          diff -= Math.PI / 2;
+          
+          diffSqSum += diff * diff;
+        }
+        let stdRad = Math.sqrt(diffSqSum / anglesRad.length);
+        let stdDeg = stdRad * 180 / Math.PI;
+        
+        return { mean: meanDeg, std: stdDeg };
+      }
+
       let fwhmMajArr = [], fwhmMinArr = [], rmsArr = [], qFactorArr = [];
       let rmsMajArr = [], rmsMinArr = [];
       let devXArr = [], devYArr = [];
       let iGaussArr = [], a0GaussArr = [];
+      let thetaArr = [];
+      let majorAxisAngleArr = [];
       
       let calibX = parseFloat(calibXInput.value);
       let calibY = calibSameCheckbox.checked ? calibX : parseFloat(calibYInput.value);
@@ -1166,6 +1212,10 @@ document.addEventListener("DOMContentLoaded", function () {
         rmsMajArr.push(img.fitResult.RMS_maj);
         rmsMinArr.push(img.fitResult.RMS_min);
         qFactorArr.push(img.fitResult.qFactor);
+        thetaArr.push(img.fitResult.theta);
+        
+        let majAngleRad = img.fitResult.major_axis_angle !== undefined ? img.fitResult.major_axis_angle : (img.fitResult.sigmaX * calibX < img.fitResult.sigmaY * calibY ? img.fitResult.theta + Math.PI / 2 : img.fitResult.theta);
+        majorAxisAngleArr.push(majAngleRad);
         
         devXArr.push(img.fitResult.xo * calibX);
         devYArr.push(img.fitResult.yo * calibY);
@@ -1187,6 +1237,8 @@ document.addEventListener("DOMContentLoaded", function () {
       let rmsMajStats = calcStats(rmsMajArr);
       let rmsMinStats = calcStats(rmsMinArr);
       let qFactorStats = calcStats(qFactorArr);
+      let thetaStats = calcAngleStats(thetaArr);
+      let majorAxisAngleStats = calcAngleStats(majorAxisAngleArr);
 
       summaryTableBody.innerHTML = `
         <tr>
@@ -1208,6 +1260,16 @@ document.addEventListener("DOMContentLoaded", function () {
           <td><strong>FWHM Minor Axis (d<sub>FWHM, min</sub>)</strong></td>
           <td class="font-highlight">${fwhmMinStats.mean.toFixed(2)} μm</td>
           <td>${fwhmMinStats.std.toFixed(2)} μm</td>
+        </tr>
+        <tr>
+          <td><strong>Fit Rotation Angle (<i>&theta;</i>)</strong></td>
+          <td class="font-highlight">${thetaStats.mean.toFixed(1)}°</td>
+          <td>${thetaStats.std.toFixed(1)}°</td>
+        </tr>
+        <tr>
+          <td><strong>Major Axis Orientation Angle</strong></td>
+          <td class="font-highlight">${majorAxisAngleStats.mean.toFixed(1)}°</td>
+          <td>${majorAxisAngleStats.std.toFixed(1)}°</td>
         </tr>
         <tr>
           <td><strong>Energy Fraction (<i>q</i>-factor)</strong></td>
@@ -1349,12 +1411,22 @@ document.addEventListener("DOMContentLoaded", function () {
           <p style="margin:0.25rem 0;"><strong>Vector Potential (a<sub>0</sub>):</strong> ${fit.a0Gauss.toFixed(2)}</p>
         ` : '';
 
+        let majAngleVal = fit.major_axis_angle_deg;
+        if (majAngleVal === undefined) {
+          let rad = fit.theta;
+          if (fit.sigmaX < fit.sigmaY) rad += Math.PI / 2;
+          majAngleVal = (rad * 180 / Math.PI) % 180;
+          if (majAngleVal < 0) majAngleVal += 180;
+        }
+
         roiStatsDiv.innerHTML = `
           <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
           <p style="margin:0.25rem 0;"><strong>RMS Major:</strong> <span class="font-highlight">${fit.RMS_maj.toFixed(2)} μm</span></p>
           <p style="margin:0.25rem 0;"><strong>RMS Minor:</strong> <span class="font-highlight">${fit.RMS_min.toFixed(2)} μm</span></p>
           <p style="margin:0.25rem 0;"><strong>FWHM Major:</strong> <span class="font-highlight">${fit.fwhmMajor_um ? fit.fwhmMajor_um.toFixed(2) : fit.FWHM_maj.toFixed(2)} μm</span></p>
           <p style="margin:0.25rem 0;"><strong>FWHM Minor:</strong> <span class="font-highlight">${fit.fwhmMinor_um ? fit.fwhmMinor_um.toFixed(2) : fit.FWHM_min.toFixed(2)} μm</span></p>
+          <p style="margin:0.25rem 0;"><strong>Fit Rotation Angle (<i>&theta;</i>):</strong> <span class="font-highlight">${(fit.theta_deg !== undefined ? fit.theta_deg : (((fit.theta * 180 / Math.PI) % 180 + 180) % 180)).toFixed(1)}°</span></p>
+          <p style="margin:0.25rem 0;"><strong>Major Axis Angle:</strong> <span class="font-highlight">${majAngleVal.toFixed(1)}°</span></p>
           <p style="margin:0.25rem 0;"><strong><i>q</i>-factor:</strong> ${fit.qFactor.toFixed(3)}</p>
           ${pulsedHtml}
         `;

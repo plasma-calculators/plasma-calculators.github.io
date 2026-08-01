@@ -1,16 +1,16 @@
-# Graph Report - plasma-calculators.github.io  (2026-07-30)
+# Graph Report - plasma-calculators.github.io  (2026-08-01)
 
 ## Corpus Check
-- 271 files · ~4,652,304 words
+- 271 files · ~4,655,603 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1895 nodes · 1836 edges · 474 communities (435 shown, 39 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.8)
+- 1904 nodes · 1860 edges · 471 communities (435 shown, 36 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6e9b879a`
+- Built from commit: `e35770d2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -295,9 +295,6 @@
 - [[_COMMUNITY_Community 283|Community 283]]
 - [[_COMMUNITY_Community 284|Community 284]]
 - [[_COMMUNITY_Community 285|Community 285]]
-- [[_COMMUNITY_Community 466|Community 466]]
-- [[_COMMUNITY_Community 471|Community 471]]
-- [[_COMMUNITY_Community 472|Community 472]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Changelog` - 132 edges
@@ -308,7 +305,7 @@
 6. `HTML Tags` - 16 edges
 7. `HTML Tags` - 16 edges
 8. `I()` - 15 edges
-9. `WebGLPropagator` - 12 edges
+9. `WebGLPropagator` - 13 edges
 10. `runCausticCalculations()` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -316,19 +313,23 @@
   assets/js/dispersion-engine.js → assets/js/main.min.js
 - `parsePNG16bitAsync()` --calls--> `paethPredictor()`  [INFERRED]
   assets/js/ebeam-pointing.js → assets/js/focal-spot-calculator.js
+- `runCalculations()` --calls--> `updateSummaryTables()`  [INFERRED]
+  assets/js/focal-spot-calculator.js → assets/js/ebeam-pointing.js
+- `runCalculations()` --calls--> `renderPostRoiCanvas()`  [INFERRED]
+  assets/js/focal-spot-calculator.js → assets/js/ebeam-pointing.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (474 total, 39 thin omitted)
+## Communities (471 total, 36 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
-Nodes (69): [1.0.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.1), [1.1.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.2), [1.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.3), [1.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.4), [1.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.3.1), [2.0.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/v2.0), [2.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.0), [2.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.3) (+61 more)
+Nodes (70): [1.0.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.1), [1.1.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.2), [1.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.3), [1.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.4), [1.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.3.1), [2.0.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/v2.0), [2.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.0), [2.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.3) (+62 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.03
-Nodes (70): [1.0.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.1), [1.0.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.2), [1.1.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.2), [1.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.3), [1.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.4), [1.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.3.1), [2.0.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/v2.0), [2.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.0) (+62 more)
+Nodes (69): [1.0.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.1), [1.0.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/v1.0.2), [1.1.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.2), [1.1.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.3), [1.1.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.1.4), [1.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/1.3.1), [2.0.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/v2.0), [2.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/2.1.0) (+61 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.08
@@ -791,12 +792,12 @@ Cohesion: 0.67
 Nodes (3): [3.1.8](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.8), Bug Fixes, Maintenance
 
 ### Community 117 - "Community 117"
-Cohesion: 0.67
-Nodes (3): [3.2.11](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.11), Bug Fixes, Maintenance
+Cohesion: 0.27
+Nodes (6): [3.2.11](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.11), [4.19.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.19.1), Bug Fixes, Bug Fixes, Enhancements, Maintenance
 
 ### Community 118 - "Community 118"
-Cohesion: 0.18
-Nodes (18): parsePNG16bitAsync(), drawRoiBox(), fit2DGaussianROI(), getColor(), handleImageUpload(), hslToRgb(), hue2rgb(), initDefaultRoi() (+10 more)
+Cohesion: 0.10
+Nodes (36): drawSquareHandles(), fit2DGaussianEbeam(), getColor(), handleExampleSelect(), handleImageUpload(), parseImageFile(), parsePNG16bitAsync(), renderMainCanvas() (+28 more)
 
 ### Community 119 - "Community 119"
 Cohesion: 0.67
@@ -883,16 +884,16 @@ Cohesion: 0.67
 Nodes (3): [4.16.3](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.3), Bug Fixes, Enhancements
 
 ### Community 140 - "Community 140"
-Cohesion: 0.29
-Nodes (13): drawSquareHandles(), fit2DGaussianEbeam(), getColor(), handleImageUpload(), parseImageFile(), renderMainCanvas(), renderPostRoiCanvas(), runCalculations() (+5 more)
+Cohesion: 0.67
+Nodes (3): [3.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.1), Enhancements, Maintenance
 
 ### Community 141 - "Community 141"
-Cohesion: 0.09
+Cohesion: 0.08
 Nodes (32): adaptiveCropFocalSpot(), calculateSecondMoments(), computeFFTSize(), computeFocalPlaneSpot(), drawCausticProfilePlot(), drawCurrentFocalSpot(), drawFocalSpotImage(), drawRoiBox() (+24 more)
 
 ### Community 142 - "Community 142"
 Cohesion: 0.67
-Nodes (3): [4.16.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.6), Bug Fixes, Enhancements
+Nodes (3): [3.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.1), Enhancements, Maintenance
 
 ### Community 143 - "Community 143"
 Cohesion: 0.67
@@ -900,7 +901,7 @@ Nodes (3): [4.17.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4
 
 ### Community 144 - "Community 144"
 Cohesion: 0.67
-Nodes (3): [4.17.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.17.1), Bug Fixes, Enhancements
+Nodes (3): [4.16.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.6), Bug Fixes, Enhancements
 
 ### Community 145 - "Community 145"
 Cohesion: 0.67
@@ -916,7 +917,7 @@ Nodes (3): [4.19.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4
 
 ### Community 148 - "Community 148"
 Cohesion: 0.67
-Nodes (3): [4.19.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.19.1), Bug Fixes, Enhancements
+Nodes (3): [4.17.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.17.1), Bug Fixes, Enhancements
 
 ### Community 149 - "Community 149"
 Cohesion: 0.67
@@ -1008,7 +1009,7 @@ Nodes (3): [4.9.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.
 
 ### Community 171 - "Community 171"
 Cohesion: 0.67
-Nodes (3): [3.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.1), Enhancements, Maintenance
+Nodes (3): [4.16.5](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.5), Bug Fixes, Enhancements
 
 ### Community 172 - "Community 172"
 Cohesion: 0.67
@@ -1064,7 +1065,7 @@ Nodes (3): [3.2.12](https://github.com/mmistakes/minimal-mistakes/releases/tag/3
 
 ### Community 185 - "Community 185"
 Cohesion: 0.67
-Nodes (3): [3.2.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.1), Bug Fixes, Maintenance
+Nodes (3): [4.19.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.19.0), Bug Fixes, Enhancements
 
 ### Community 186 - "Community 186"
 Cohesion: 0.67
@@ -1180,7 +1181,7 @@ Nodes (3): [4.17.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4
 
 ### Community 214 - "Community 214"
 Cohesion: 0.67
-Nodes (3): [4.19.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.19.0), Bug Fixes, Enhancements
+Nodes (3): [3.2.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.2.1), Bug Fixes, Maintenance
 
 ### Community 215 - "Community 215"
 Cohesion: 0.67
@@ -1209,6 +1210,10 @@ Nodes (3): [4.20.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4
 ### Community 221 - "Community 221"
 Cohesion: 0.67
 Nodes (3): [4.21.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.21.0), Bug Fixes, Enhancements
+
+### Community 222 - "Community 222"
+Cohesion: 0.67
+Nodes (3): [4.9.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.9.1), Bug Fixes, Enhancements
 
 ### Community 223 - "Community 223"
 Cohesion: 0.67
@@ -1288,35 +1293,31 @@ Nodes (3): [3.2.12](https://github.com/mmistakes/minimal-mistakes/releases/tag/3
 
 ### Community 256 - "Community 256"
 Cohesion: 0.67
-Nodes (3): [3.3.1](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.3.1), Enhancements, Maintenance
+Nodes (3): [3.1.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.1.0), Bug Fixes, Enhancements
 
 ### Community 257 - "Community 257"
 Cohesion: 0.67
 Nodes (3): [4.0.10](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.0.10), Bug Fixes, Maintenance
 
-### Community 259 - "Community 259"
-Cohesion: 0.67
-Nodes (3): [4.16.4](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.16.4), Bug Fixes, Enhancements
-
 ## Knowledge Gaps
 - **997 isolated node(s):** `$schema`, `plugin`, `CRYSTALS`, `CAMERAS`, `name` (+992 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **39 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Changelog` connect `Community 1` to `Community 57`, `Community 58`, `Community 59`, `Community 60`, `Community 61`, `Community 62`, `Community 63`, `Community 64`, `Community 65`, `Community 66`, `Community 67`, `Community 68`, `Community 69`, `Community 70`, `Community 71`, `Community 72`, `Community 73`, `Community 74`, `Community 75`, `Community 76`, `Community 77`, `Community 78`, `Community 107`, `Community 108`, `Community 109`, `Community 110`, `Community 111`, `Community 112`, `Community 113`, `Community 114`, `Community 115`, `Community 116`, `Community 117`, `Community 119`, `Community 120`, `Community 122`, `Community 123`, `Community 124`, `Community 125`, `Community 126`, `Community 127`, `Community 128`, `Community 129`, `Community 130`, `Community 131`, `Community 132`, `Community 133`, `Community 134`, `Community 135`, `Community 136`, `Community 137`, `Community 138`, `Community 139`, `Community 142`, `Community 143`, `Community 144`, `Community 145`, `Community 146`, `Community 147`, `Community 148`, `Community 149`, `Community 150`, `Community 151`, `Community 152`, `Community 153`, `Community 154`, `Community 155`, `Community 156`, `Community 157`, `Community 159`, `Community 160`, `Community 161`, `Community 162`, `Community 163`, `Community 164`, `Community 165`, `Community 166`, `Community 167`, `Community 168`, `Community 169`, `Community 170`, `Community 171`, `Community 172`, `Community 178`, `Community 188`, `Community 193`, `Community 222`, `Community 255`, `Community 259`, `Community 260`, `Community 261`, `Community 262`, `Community 263`, `Community 265`, `Community 266`, `Community 267`?**
+- **Why does `Changelog` connect `Community 1` to `Community 57`, `Community 58`, `Community 59`, `Community 60`, `Community 61`, `Community 62`, `Community 63`, `Community 64`, `Community 65`, `Community 66`, `Community 67`, `Community 68`, `Community 69`, `Community 70`, `Community 71`, `Community 72`, `Community 73`, `Community 74`, `Community 75`, `Community 76`, `Community 77`, `Community 78`, `Community 107`, `Community 108`, `Community 109`, `Community 110`, `Community 111`, `Community 112`, `Community 113`, `Community 114`, `Community 115`, `Community 116`, `Community 117`, `Community 119`, `Community 120`, `Community 122`, `Community 123`, `Community 124`, `Community 125`, `Community 126`, `Community 127`, `Community 128`, `Community 129`, `Community 130`, `Community 131`, `Community 132`, `Community 133`, `Community 134`, `Community 135`, `Community 136`, `Community 137`, `Community 138`, `Community 139`, `Community 140`, `Community 143`, `Community 144`, `Community 145`, `Community 146`, `Community 147`, `Community 148`, `Community 149`, `Community 150`, `Community 151`, `Community 152`, `Community 153`, `Community 154`, `Community 155`, `Community 156`, `Community 157`, `Community 159`, `Community 160`, `Community 161`, `Community 162`, `Community 163`, `Community 164`, `Community 165`, `Community 166`, `Community 167`, `Community 168`, `Community 169`, `Community 170`, `Community 171`, `Community 172`, `Community 178`, `Community 188`, `Community 193`, `Community 222`, `Community 255`, `Community 259`, `Community 260`, `Community 261`, `Community 262`, `Community 263`, `Community 265`, `Community 266`?**
   _High betweenness centrality (0.037) - this node is a cross-community bridge._
-- **Why does `[4.27.0](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.27.0)` connect `Community 73` to `Community 1`?**
+- **Why does `[4.0.6](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.0.6)` connect `Community 67` to `Community 1`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `[4.2.2](https://github.com/mmistakes/minimal-mistakes/releases/tag/4.2.2)` connect `Community 75` to `Community 1`?**
+- **Why does `[3.4.5](https://github.com/mmistakes/minimal-mistakes/releases/tag/3.4.5)` connect `Community 63` to `Community 1`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `CRYSTALS` to the rest of the system?**
   _997 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.02857142857142857 - nodes in this community are weakly interconnected._
-- **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.028169014084507043 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.02857142857142857 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08311688311688312 - nodes in this community are weakly interconnected._
