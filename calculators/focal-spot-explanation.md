@@ -123,7 +123,7 @@ classes: wide
   <div class="exp-section">
     <h3>3. Energy Fraction ($q$-Factor)</h3>
     <p>
-      The $q$-factor represents the fraction of total beam energy contained inside the FWHM boundary of the beam focus:
+      The $q$-factor represents the fraction of background-subtracted beam energy contained inside the FWHM boundary of the beam focus:
     </p>
     <div class="math-box">
       $$q = \frac{\sum_{(x,y) \in \text{FWHM contour}} I(x,y)}{\sum_{(x,y) \in \text{ROI}} I(x,y)}$$
@@ -148,7 +148,7 @@ classes: wide
     <h4>Peak Power & Peak Intensity</h4>
     <p>Assuming a Gaussian temporal pulse shape, the peak power $P_{\text{peak}}$ (corrected by the FWHM energy fraction $q$) is:</p>
     <div class="math-box">
-      $$P_{\text{peak}} = \frac{E_L}{\tau} \frac{2 \ln 2}{\sqrt{\pi}} \cdot q$$
+      $$P_{\text{peak}} = \frac{E_L}{\tau} 2\sqrt{\frac{\ln 2}{\pi}} \cdot q$$
     </div>
     <p>The focused peak intensity $I_0$ of the spatial Gaussian profile is then calculated as:</p>
     <div class="math-box">
@@ -160,5 +160,6 @@ classes: wide
     <div class="math-box">
       $$a_0 \approx 0.86 \cdot \lambda_{[\text{μm}]} \sqrt{I_0 [10^{18}\ \text{W/cm}^2]}$$
     </div>
+    <p>The quoted $a_0$ coefficient assumes a linearly polarized laser field.</p>
   </div>
 </div>

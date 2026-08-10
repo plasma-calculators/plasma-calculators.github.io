@@ -12,30 +12,6 @@ $doc-font-size: 10pt;
 
 /* Custom Styles for Plasma Calculators */
 
-.hero-banner-placeholder {
-  background: linear-gradient(135deg, #1f2937, #111827);
-  color: #f3f4f6;
-  border-radius: 8px;
-  padding: 4rem 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  border: 1px solid #374151;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.45);
-}
-
-.hero-banner-placeholder h2 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-  color: #f3f4f6 !important;
-}
-
-.hero-banner-placeholder p {
-  color: #9ca3af;
-  font-size: 1.1rem;
-}
-
 .section-title {
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -230,6 +206,82 @@ $doc-font-size: 10pt;
   padding-bottom: 0.5rem;
 }
 
+.image-viewport {
+  contain: paint;
+}
+
+.navigable-image {
+  transform-origin: center center;
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+}
+
+.navigable-image.is-panning {
+  cursor: grabbing;
+}
+
+.image-overlay-canvas {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.image-navigation {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.55rem;
+  min-height: 2rem;
+}
+
+.image-nav-button {
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.55rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.image-nav-button:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.image-nav-button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.image-nav-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.image-nav-reset {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.image-zoom-level {
+  min-width: 3.5rem;
+  color: #374151;
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.image-nav-hint {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -394,7 +446,45 @@ $doc-font-size: 10pt;
   min-width: 260px;
 }
 
+.calculator-container.compact-mode .comparison-table.temporal-metrics-table th:first-child,
+.calculator-container.compact-mode .comparison-table.temporal-metrics-table td:first-child {
+  width: 68%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.calculator-container.compact-mode .comparison-table.temporal-metrics-table th:last-child,
+.calculator-container.compact-mode .comparison-table.temporal-metrics-table td:last-child {
+  width: 32%;
+  white-space: nowrap;
+  text-align: right;
+}
+
 /* Navigation Dropdown Support */
+.masthead-disclaimer {
+  flex: 1 1 20rem;
+  min-width: 0;
+  margin: 0 0.75rem;
+  color: #b91c1c;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.greedy-nav .masthead-disclaimer a {
+  display: inline;
+  margin: 0;
+  color: inherit;
+  text-decoration: underline;
+}
+
+.masthead-disclaimer .fa-github {
+  margin-inline-start: 0.2rem;
+  font-size: 0.9rem;
+}
+
 .greedy-nav .visible-links {
   overflow: visible !important;
 }
@@ -507,4 +597,3 @@ $doc-font-size: 10pt;
   font-size: 0.88rem;
   color: #6b7280;
 }
-

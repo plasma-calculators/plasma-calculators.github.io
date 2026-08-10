@@ -16,7 +16,61 @@ classes: wide
     }
   });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = id => document.getElementById(id);
+  const ids = ["pulse-duration","laser-energy","waist-radius","laser-wavelength","q-factor","electrons-bg","electrons-dopant","dopant-percent","pressure-mbar","gas-temperature","direct-ne","plasma-temp"];
+  const inputs = Object.fromEntries(ids.map(id => [id, $(id)]));
+  const gasFields = $("gas-input-fields"), directFields = $("direct-input-fields");
+  const error = $("errorMessage") || (() => { const e=document.createElement("div"); e.id="errorMessage"; e.className="notice--danger"; $("calculator-form").after(e); return e; })();
+  const text = (id, value) => { const el=$(id); if (el) el.textContent=value; };
+  const renderProfile = (p, prefix) => { text(`res-spotsize-${prefix}`, `${p.geometry.areaUm2.toFixed(1)} μm²`); text(`res-power-${prefix}`, `${p.peakPowerTW.toFixed(1)} TW`); text(`res-intensity-${prefix}`, `${p.peakIntensity18.toFixed(1)} × 10¹⁸ W/cm²`); text(`res-a0-${prefix}`, p.a0.toFixed(2)); text(`res-matcheda0-${prefix}`, p.matchedA0.toFixed(2)); text(`res-bubble-${prefix}`, `${p.bubbleRadiusUm.toFixed(1)} μm`); text(`res-dephasing-${prefix}`, `${(p.dephasingLengthM*1000).toFixed(1)} mm`); text(`res-pumpdep-${prefix}`, `${(p.pumpDepletionLengthM*1000).toFixed(1)} mm`); text(`res-energy-${prefix}`, `${p.energyGainMeV.toFixed(1)} MeV (${(p.energyGainMeV/1000).toFixed(2)} GeV)`); };
+  function update() {
+    try {
+      const source = document.querySelector('input[name="density-source"]:checked').value;
+      const r = LWFAEngine.compute({durationFs:+inputs["pulse-duration"].value, energyJ:+inputs["laser-energy"].value, waistUm:+inputs["waist-radius"].value, wavelengthUm:+inputs["laser-wavelength"].value, q:+inputs["q-factor"].value, densitySource:source, directDensity:inputs["direct-ne"].value, backgroundElectrons:+inputs["electrons-bg"].value, dopantElectrons:+inputs["electrons-dopant"].value, dopantPercent:+inputs["dopant-percent"].value, pressureMbar:+inputs["pressure-mbar"].value, gasTemperatureK:+inputs["gas-temperature"].value, temperatureEv:+inputs["plasma-temp"].value});
+      error.textContent=""; renderProfile(r.profiles.gaussian,"gauss"); renderProfile(r.profiles.topHat,"tophat");
+      text("res-ne", `${r.plasma.electronDensityCm3.toExponential(1)} cm⁻³`); text("res-omegap", `${r.plasma.omegaP.toExponential(1)} rad/s`); text("res-lambdap", `${(r.plasma.lambdaP*1e6).toFixed(1)} μm`); text("res-crit-density", `${r.plasma.criticalDensityCm3.toExponential(1)} cm⁻³`); text("res-density-ratio", r.plasma.densityRatio.toExponential(2)); text("res-debye-nm", `${(r.plasma.debyeLengthM*1e9).toFixed(1)} nm`); text("res-vth", `${r.plasma.thermalSpeed.toExponential(1)} m/s (${r.plasma.thermalSpeedFractionC.toFixed(1)}% c)`); text("res-pcrit", `${r.plasma.criticalPowerTW.toFixed(1)} TW`); text("res-omegalaser", `${r.laser.omega.toExponential(1)} rad/s`); text("res-freq-laser", `${r.laser.frequency.toExponential(1)} Hz`);
+      text("res-rayleigh", `${(r.profiles.gaussian.rayleighRangeM*1000).toFixed(1)} mm`); text("res-spot-match", `G ${r.profiles.gaussian.spotToMatchedRadius.toFixed(2)}; TH ${r.profiles.topHat.spotToMatchedRadius.toFixed(2)}`); text("res-pulse-bubble", `G ${r.profiles.gaussian.pulseToBubbleRatio.toFixed(2)}; TH ${r.profiles.topHat.pulseToBubbleRatio.toFixed(2)}`); text("res-limit", `G ${(r.profiles.gaussian.limitingLengthM*1000).toFixed(1)} mm; TH ${(r.profiles.topHat.limitingLengthM*1000).toFixed(1)} mm`);
+      const warnings=[...r.warnings, ...r.profiles.gaussian.warnings.map(w=>`Gaussian: ${w}`), ...r.profiles.topHat.warnings.map(w=>`Top-hat: ${w}`)]; text("lwfa-warnings", warnings.length ? warnings.join(" • ") : "No validity warnings for these inputs.");
+    } catch (e) { error.textContent = e.message; }
+  }
+  document.querySelectorAll('input[name="density-source"]').forEach(radio => radio.addEventListener("change", () => { const gas=radio.value==="gas" && radio.checked; gasFields.style.display=gas?"block":"none"; directFields.style.display=gas?"none":"block"; update(); })); ids.forEach(id => inputs[id].addEventListener("input", update)); update();
+});
+</script>
+<!-- LWFA engine UI script is loaded after the calculator markup. -->
+<!--
+document.addEventListener("DOMContentLoaded", () => {
+  const $ = id => document.getElementById(id);
+  const ids = ["pulse-duration","laser-energy","waist-radius","laser-wavelength","q-factor","electrons-bg","electrons-dopant","dopant-percent","pressure-mbar","gas-temperature","direct-ne","plasma-temp"];
+  const inputs = Object.fromEntries(ids.map(id => [id, $(id)]));
+  const gasFields = $("gas-input-fields"), directFields = $("direct-input-fields"), error = $("errorMessage") || (() => { const e=document.createElement("div"); e.id="errorMessage"; e.className="notice--danger"; $("calculator-form").after(e); return e; })();
+  const text = (id, value) => { const el=$(id); if (el) el.textContent=value; };
+  const profile = (p, prefix) => {
+    text(`res-spotsize-${prefix}`, `${p.geometry.areaUm2.toFixed(1)} μm²`);
+    text(`res-power-${prefix}`, `${p.peakPowerTW.toFixed(1)} TW`);
+    text(`res-intensity-${prefix}`, `${p.peakIntensity18.toFixed(1)} × 10¹⁸ W/cm²`);
+    text(`res-a0-${prefix}`, p.a0.toFixed(2)); text(`res-matcheda0-${prefix}`, p.matchedA0.toFixed(2));
+    text(`res-bubble-${prefix}`, `${p.bubbleRadiusUm.toFixed(1)} μm`); text(`res-dephasing-${prefix}`, `${(p.dephasingLengthM*1000).toFixed(1)} mm`);
+    text(`res-pumpdep-${prefix}`, `${(p.pumpDepletionLengthM*1000).toFixed(1)} mm`);
+    text(`res-energy-${prefix}`, `${p.energyGainMeV.toFixed(1)} MeV (${(p.energyGainMeV/1000).toFixed(2)} GeV)`);
+  };
+  function update() {
+    try {
+      const source = document.querySelector('input[name="density-source"]:checked').value;
+      const r = LWFAEngine.compute({durationFs:+inputs["pulse-duration"].value, energyJ:+inputs["laser-energy"].value, waistUm:+inputs["waist-radius"].value, wavelengthUm:+inputs["laser-wavelength"].value, q:+inputs["q-factor"].value, densitySource:source, directDensity:inputs["direct-ne"].value, backgroundElectrons:+inputs["electrons-bg"].value, dopantElectrons:+inputs["electrons-dopant"].value, dopantPercent:+inputs["dopant-percent"].value, pressureMbar:+inputs["pressure-mbar"].value, gasTemperatureK:+inputs["gas-temperature"].value, temperatureEv:+inputs["plasma-temp"].value});
+      error.textContent=""; profile(r.profiles.gaussian,"gauss"); profile(r.profiles.topHat,"tophat");
+      text("res-ne", `${r.plasma.electronDensityCm3.toExponential(1)} cm⁻³`); text("res-omegap", `${r.plasma.omegaP.toExponential(1)} rad/s`); text("res-lambdap", `${(r.plasma.lambdaP*1e6).toFixed(1)} μm`); text("res-crit-density", `${r.plasma.criticalDensityCm3.toExponential(1)} cm⁻³`); text("res-density-ratio", r.plasma.densityRatio.toExponential(2)); text("res-debye-nm", `${(r.plasma.debyeLengthM*1e9).toFixed(1)} nm`); text("res-vth", `${r.plasma.thermalSpeed.toExponential(1)} m/s (${r.plasma.thermalSpeedFractionC.toFixed(1)}% c)`); text("res-pcrit", `${r.plasma.criticalPowerTW.toFixed(1)} TW`); text("res-omegalaser", `${r.laser.omega.toExponential(1)} rad/s`); text("res-freq-laser", `${r.laser.frequency.toExponential(1)} Hz`);
+      text("res-rayleigh", `${(r.profiles.gaussian.rayleighRangeM*1000).toFixed(1)} mm`); text("res-spot-match", `G ${r.profiles.gaussian.spotToMatchedRadius.toFixed(2)}; TH ${r.profiles.topHat.spotToMatchedRadius.toFixed(2)}`); text("res-pulse-bubble", `G ${r.profiles.gaussian.pulseToBubbleRatio.toFixed(2)}; TH ${r.profiles.topHat.pulseToBubbleRatio.toFixed(2)}`); text("res-limit", `G ${(r.profiles.gaussian.limitingLengthM*1000).toFixed(1)} mm; TH ${(r.profiles.topHat.limitingLengthM*1000).toFixed(1)} mm`);
+      const warnings=[...r.warnings, ...r.profiles.gaussian.warnings.map(w=>`Gaussian: ${w}`), ...r.profiles.topHat.warnings.map(w=>`Top-hat: ${w}`)]; text("lwfa-warnings", warnings.length ? warnings.join(" • ") : "No validity warnings for these inputs.");
+    } catch (e) { error.textContent = e.message; }
+  }
+  document.querySelectorAll('input[name="density-source"]').forEach(radio => radio.addEventListener("change", () => { const gas=radio.value==="gas" && radio.checked; gasFields.style.display=gas?"block":"none"; directFields.style.display=gas?"none":"block"; update(); }));
+  ids.forEach(id => inputs[id].addEventListener("input", update)); update();
+});
+</script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script src="/assets/js/lwfa-engine.js"></script>
 
 <div class="calculator-container compact-mode">
   <div class="calculator-sidebar">
@@ -32,7 +86,7 @@ classes: wide
         <input type="number" id="laser-energy" value="3" step="any" class="small-input" required>
       </div>
       <div class="form-group">
-        <label for="waist-radius">Waist Radius, $w_0$ (E-field $1/e$, µm)</label>
+        <label for="waist-radius">Waist radius, $w_0$ (Gaussian field 1/e; top-hat disk radius, µm)</label>
         <input type="number" id="waist-radius" value="10.9" step="any" class="small-input" required>
       </div>
       <div class="form-group">
@@ -40,7 +94,7 @@ classes: wide
         <input type="number" id="laser-wavelength" value="0.8" step="any" class="small-input" required>
       </div>
       <div class="form-group">
-        <label for="q-factor">q-factor</label>
+        <label for="q-factor">Focused-energy fraction $q$ (0–1)</label>
         <input type="number" id="q-factor" value="1" step="any" class="small-input" required>
       </div>
 
@@ -57,11 +111,11 @@ classes: wide
       <div id="gas-input-fields" style="display: none;">
         <h4 class="input-section-title">Gas & Pressure Settings</h4>
         <div class="form-group">
-          <label for="electrons-bg">e⁻ per background atom</label>
+          <label for="electrons-bg">e⁻ per background gas particle</label>
           <input type="number" id="electrons-bg" value="2" step="any" class="small-input" required>
         </div>
         <div class="form-group">
-          <label for="electrons-dopant">e⁻ per dopant atom</label>
+          <label for="electrons-dopant">e⁻ per dopant gas particle</label>
           <input type="number" id="electrons-dopant" value="7" step="any" class="small-input" required>
         </div>
         <div class="form-group">
@@ -70,8 +124,13 @@ classes: wide
         </div>
         <div class="form-group">
           <label for="pressure-mbar">Total Pressure (mbar)</label>
-          <input type="number" id="pressure-mbar" value="17.33" step="any" class="small-input" required>
+          <input type="number" id="pressure-mbar" value="18.78" step="any" class="small-input" required>
         </div>
+        <div class="form-group">
+          <label for="gas-temperature">Gas temperature (K)</label>
+          <input type="number" id="gas-temperature" value="293.15" step="any" class="small-input" required>
+        </div>
+        <small>Charge-state inputs are electrons per gas particle (include molecular stoichiometry).</small>
       </div>
 
       <div id="direct-input-fields">
@@ -170,7 +229,8 @@ classes: wide
           </tr>
           <tr>
             <td><strong>Energy Gain $W_{el}$ <small style="display:block; font-weight:normal;">(only if $R = w_0$)</small></strong></td>
-            <td colspan="2" style="text-align: center;" id="res-energy-gauss" class="font-highlight">-</td>
+            <td id="res-energy-gauss" class="font-highlight">-</td>
+            <td id="res-energy-tophat" class="font-highlight">-</td>
           </tr>
         </tbody>
       </table>
@@ -199,12 +259,16 @@ classes: wide
             <td id="res-lambdap">-</td>
           </tr>
           <tr>
-            <td><strong>Critical Wavelength</strong></td>
-            <td id="res-crit-lambda">-</td>
+            <td><strong>Critical Density $n_c$</strong></td>
+            <td id="res-crit-density">-</td>
+          </tr>
+          <tr>
+            <td><strong>Density ratio $n_e/n_c$</strong></td>
+            <td id="res-density-ratio">-</td>
           </tr>
           <tr>
             <td><strong>Debye Length $\lambda_D$</strong></td>
-            <td id="res-debye-um">-</td>
+            <td id="res-debye-nm">-</td>
           </tr>
           <tr>
             <td><strong>Thermal Speed $v_{\text{th}}$</strong></td>
@@ -217,10 +281,22 @@ classes: wide
         </tbody>
       </table>
     </div>
+    <div class="results-group">
+      <h3>4. Validity Diagnostics</h3>
+      <table class="comparison-table"><tbody>
+        <tr><td><strong>Rayleigh range</strong></td><td id="res-rayleigh">-</td></tr>
+        <tr><td><strong>Spot / matched radius</strong></td><td id="res-spot-match">-</td></tr>
+        <tr><td><strong>Pulse length / bubble diameter</strong></td><td id="res-pulse-bubble">-</td></tr>
+        <tr><td><strong>Limiting propagation length</strong></td><td id="res-limit">-</td></tr>
+      </tbody></table>
+      <div id="lwfa-warnings" class="notice--warning" style="margin-top:0.5rem;">-</div>
+      <small>a₀ uses the standard linear-polarization convention.</small>
+    </div>
   </div>
 </div>
 
 <script>
+if (false) {
 document.addEventListener("DOMContentLoaded", function() {
   const densitySourceRadios = document.getElementsByName("density-source");
   const gasFields = document.getElementById("gas-input-fields");
@@ -403,7 +479,7 @@ document.addEventListener("DOMContentLoaded", function() {
     outputs.dephasingTophat.innerText = dephasing_tophat_mm.toFixed(1) + " mm";
     outputs.pumpdepGauss.innerText = pumpdep_gauss_mm.toFixed(1) + " mm";
     outputs.pumpdepTophat.innerText = pumpdep_tophat_mm.toFixed(1) + " mm";
-    outputs.energyGauss.innerText = energy_gauss.toFixed(1) + " MeV (" + (energy_gauss/1000).toFixed(1) + " GeV)";
+  outputs.energyGauss.innerText = energy_gauss.toFixed(1) + " MeV (" + (energy_gauss/1000).toFixed(1) + " GeV)";
   }
 
   for (const key in inputs) {
@@ -411,4 +487,5 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   update();
 });
+}
 </script>

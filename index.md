@@ -1,18 +1,10 @@
 ---
 layout: single
-title: "Plasma Calculators"
 author_profile: false
 share: false
 comments: false
 classes: wide
 ---
-
-<div class="hero-banner-placeholder">
-  <div class="hero-banner-text">
-    <h2>Plasma Accelerator Simulation</h2>
-    <p>[Simulation Image Placeholder - User Provided]</p>
-  </div>
-</div>
 
 <div class="category-section">
   <div class="category-header">
@@ -44,7 +36,7 @@ classes: wide
 
     <a href="/calculators/laser-propagation/" class="calculator-card">
       <div class="card-image-wrapper">
-        <img src="/assets/images/propagation_card.png" alt="NF/FF Calculator">
+        <img src="/assets/images/propagation_card_nf.png" alt="NF/FF near-field intensity profile">
       </div>
       <div class="card-caption">
         <h3>NF/FF Calculator</h3>
@@ -123,5 +115,3 @@ classes: wide
     </a>
   </div>
 </div>
-
-

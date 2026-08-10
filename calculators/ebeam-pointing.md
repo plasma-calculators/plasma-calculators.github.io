@@ -138,8 +138,17 @@ classes: wide
     <div class="results-group" style="padding: 1rem;">
       <h3>1. Image ROI & Background Selection</h3>
       
-      <div id="canvas-wrapper" style="position: relative; width: 100%; background: #111827; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 250px;">
-        <canvas id="main-canvas" style="max-width: 100%; height: auto; display: block;"></canvas>
+      <div id="canvas-wrapper" class="image-viewport" style="position: relative; width: 100%; background: #111827; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 250px;">
+        <canvas id="main-canvas" class="navigable-image" style="max-width: 100%; height: auto; display: block;"></canvas>
+        <canvas id="main-overlay-canvas" class="image-overlay-canvas" aria-hidden="true"></canvas>
+      </div>
+
+      <div class="image-navigation" aria-label="Main image navigation">
+        <button type="button" id="main-zoom-out" class="image-nav-button" title="Zoom out" aria-label="Zoom out">−</button>
+        <button type="button" id="main-zoom-in" class="image-nav-button" title="Zoom in" aria-label="Zoom in">+</button>
+        <button type="button" id="main-zoom-reset" class="image-nav-button image-nav-reset" title="Return to original fit" aria-label="Return to original fit">Reset</button>
+        <span id="main-zoom-level" class="image-zoom-level">100%</span>
+        <span class="image-nav-hint">Scroll to zoom; drag empty image space to pan</span>
       </div>
 
       <!-- Controls Row 1: Image Slider + Colormap Combobox -->
@@ -241,14 +250,22 @@ classes: wide
         
         <div style="display: flex; gap: 1.25rem; align-items: flex-start; flex-wrap: wrap; margin-top: 0.5rem;">
           <!-- ROI Canvas -->
-          <div style="background: #111827; border-radius: 6px; padding: 0.5rem; display: flex; justify-content: center; align-items: center; min-width: 200px; min-height: 200px;">
-            <canvas id="roi-canvas" style="max-width: 260px; max-height: 260px; height: auto; display: block; image-rendering: pixelated;"></canvas>
+          <div id="roi-canvas-wrapper" class="image-viewport roi-image-viewport" style="background: #111827; border-radius: 6px; padding: 0.5rem; display: flex; justify-content: center; align-items: center; min-width: 200px; min-height: 200px;">
+            <canvas id="roi-canvas" class="navigable-image" style="max-width: 260px; max-height: 260px; height: auto; display: block; image-rendering: pixelated;"></canvas>
           </div>
 
           <!-- Stats text on the right -->
           <div id="roi-stats-info" style="flex: 1; min-width: 220px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.85rem; font-size: 0.82rem;">
             <p style="color: #6b7280;">Select an image below to view post-processed fit.</p>
           </div>
+        </div>
+
+        <div class="image-navigation" aria-label="Processed image navigation">
+          <button type="button" id="roi-zoom-out" class="image-nav-button" title="Zoom out" aria-label="Zoom out">−</button>
+          <button type="button" id="roi-zoom-in" class="image-nav-button" title="Zoom in" aria-label="Zoom in">+</button>
+          <button type="button" id="roi-zoom-reset" class="image-nav-button image-nav-reset" title="Return to original fit" aria-label="Return to original fit">Reset</button>
+          <span id="roi-zoom-level" class="image-zoom-level">100%</span>
+          <span class="image-nav-hint">Scroll to zoom; drag to pan</span>
         </div>
 
         <!-- Post-Processing Sliders -->

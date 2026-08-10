@@ -146,8 +146,8 @@ classes: wide
 <h3>Overview</h3>
 <p>
 This page presents the mathematical foundations of the <strong>Ultrafast Pulse Propagation & Dispersion Calculator</strong>.
-All quantities are computed using the <strong>Sellmeier refractive index model</strong>, high-accuracy numerical differentiation,
-and an FFT-based spectral propagation algorithm. Results for <em>Fused Silica at 800 nm</em> are cross-checked against
+All quantities are computed using the <strong>Sellmeier refractive index model</strong>, fourth-order Taylor differentiation,
+and an FFT-based spectral propagation algorithm using GDD and TOD. Results for <em>Fused Silica at 800 nm</em> are cross-checked against
 published literature values.
 </p>
 </div>
@@ -212,13 +212,12 @@ $$n_g(\lambda) = n(\lambda) - \lambda\,\frac{dn}{d\lambda}$$
 
 <h4>Numerical Differentiation</h4>
 <p>
-All derivatives $\frac{d^k n}{d\lambda^k}$ are computed using high-order central finite differences with a step size
-$h = 0.2\,\text{nm}$ converted to µm:
+All derivatives $\frac{d^k n}{d\lambda^k}$ through fourth order are computed by truncated Taylor arithmetic on the Sellmeier/rational model:
 </p>
 <div class="eq-block">
-$$\frac{dn}{d\lambda}\bigg|_{\lambda_0} \approx \frac{-n(\lambda_0+2h)+8n(\lambda_0+h)-8n(\lambda_0-h)+n(\lambda_0-2h)}{12h}$$
+$$n(\lambda_0+\delta\lambda)=n_0+n'_0\delta\lambda+\frac{n''_0}{2}\delta\lambda^2+\frac{n'''_0}{6}\delta\lambda^3+\frac{n''''_0}{24}\delta\lambda^4+\cdots$$
 </div>
-<p>Higher-order stencils (6-point for the 3rd derivative) are used to achieve $\mathcal{O}(h^4)$ accuracy.</p>
+<p>This avoids cancellation error in the fourth derivative near the edges of a material's validity range.</p>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -268,7 +267,7 @@ $$\tau_{\mathrm{out}} = \tau_0\,\sqrt{1 + \left(\frac{4\ln 2 \cdot \mathrm{GDD}}
 </div>
 
 <p>
-This formula assumes a Gaussian temporal shape and ignores TOD/FOD contributions. The broadening factor
+This formula assumes a Gaussian temporal shape and ignores TOD contributions. The broadening factor
 $\tau_{\mathrm{out}}/\tau_0$ approaches $|4\ln 2 \cdot \mathrm{GDD}|/\tau_0^2$ for strong dispersion.
 The FFT simulation (see §5) captures the full non-Gaussian distortion.
 </p>
@@ -285,26 +284,25 @@ The FFT simulation (see §5) captures the full non-Gaussian distortion.
 <h3>5. Numerical FFT Spectral Propagation</h3>
 
 <p>
-To capture higher-order effects (asymmetric TOD ringing, FOD pedestals), the calculator performs a
-full numerical simulation in the frequency domain:
+To capture TOD-induced asymmetric distortion, the calculator performs a numerical simulation in the frequency domain:
 </p>
 
 <h4>Algorithm</h4>
 <ul>
-  <li><strong>Step 1 — Time grid:</strong> Build $N = 1024$ point grid spanning $\pm\tau_\mathrm{max}$ where $\tau_\mathrm{max} = \max(1000\,\text{fs},\;25\tau_0)$.</li>
-  <li><strong>Step 2 — Input pulse:</strong> Construct transform-limited Gaussian: $E_\mathrm{in}(t) = \exp\!\left[-\tfrac{t^2}{2\sigma_t^2}\right]$ with $\sigma_t = \tau_0 / (2\sqrt{2\ln 2})$.</li>
+  <li><strong>Step 1 — Time grid:</strong> Build $N = 8192$ points spanning $\pm\tau_\mathrm{max}$ where $\tau_\mathrm{max} = \max(2000\,\text{fs},\;40\tau_0)$.</li>
+  <li><strong>Step 2 — Input pulse:</strong> Construct transform-limited Gaussian: $E_\mathrm{in}(t) = \exp\!\left[-\tfrac{t^2}{2\sigma_t^2}\right]$ with $\sigma_t = \tau_0 / (2\sqrt{\ln 2})$ so the intensity FWHM is $\tau_0$.</li>
   <li><strong>Step 3 — Forward FFT:</strong> Compute $\tilde{E}_\mathrm{in}(\omega)$ using a radix-2 Cooley–Tukey FFT.</li>
   <li><strong>Step 4 — Spectral phase:</strong> Apply medium and compensation phases:
-    $$\Phi_\mathrm{med}(\delta\omega) = \tfrac{1}{2}\,\mathrm{GDD}\,\delta\omega^2 + \tfrac{1}{6}\,\mathrm{TOD}_\mathrm{tot}\,\delta\omega^3 + \tfrac{1}{24}\,\mathrm{FOD}_\mathrm{tot}\,\delta\omega^4$$
-    $$\Phi_\mathrm{comp}(\delta\omega) = \tfrac{1}{2}\,\mathrm{GDD}_c\,\delta\omega^2 + \tfrac{1}{6}\,\mathrm{TOD}_c\,\delta\omega^3 + \tfrac{1}{24}\,\mathrm{FOD}_c\,\delta\omega^4$$
-    $$\tilde{E}_\mathrm{out}(\omega) = \tilde{E}_\mathrm{in}(\omega)\,e^{i\left[\Phi_\mathrm{med} - \Phi_\mathrm{comp}\right]}$$
+    $$\Phi_\mathrm{med}(\delta\omega) = \tfrac{1}{2}\,\mathrm{GDD}\,\delta\omega^2 + \tfrac{1}{6}\,\mathrm{TOD}_\mathrm{tot}\,\delta\omega^3$$
+    $$\Phi_\mathrm{comp}(\delta\omega) = \tfrac{1}{2}\,\mathrm{GDD}_c\,\delta\omega^2 + \tfrac{1}{6}\,\mathrm{TOD}_c\,\delta\omega^3$$
+    $$\tilde{E}_\mathrm{out}(\omega) = \tilde{E}_\mathrm{in}(\omega)\,e^{i\left[\Phi_\mathrm{med} + \Phi_\mathrm{comp}\right]}$$
   </li>
   <li><strong>Step 5 — Inverse FFT:</strong> $E_\mathrm{out}(t) = \mathcal{F}^{-1}\{\tilde{E}_\mathrm{out}(\omega)\}$, pulse intensity $I(t) = |E_\mathrm{out}(t)|^2$.</li>
   <li><strong>Step 6 — FWHM:</strong> Linear interpolation to find exact half-maximum crossing points.</li>
 </ul>
 
 <div class="warn-box">
-  <strong>Note on spectral intensity:</strong> For purely linear dispersion (GVD/TOD/FOD with no gain or absorption), the spectral power $|\tilde{E}(\omega)|^2$ is <em>conserved</em> — the medium only modifies the spectral phase, not the amplitude. All temporal changes arise solely from phase distortion.
+  <strong>Note on spectral intensity:</strong> For purely linear dispersion (GVD/TOD with no gain or absorption), the spectral power $|\tilde{E}(\omega)|^2$ is <em>conserved</em> — the medium only modifies the spectral phase, not the amplitude. All temporal changes arise solely from phase distortion.
 </div>
 </div>
 
@@ -333,8 +331,8 @@ Cross-check of calculator outputs against published and independently computed l
     </tr>
     <tr>
       <td>Group index $n_g$</td>
-      <td class="val">1.4682</td>
-      <td>1.4682 (Agrawal 2019)</td>
+      <td class="val">1.4671</td>
+      <td>1.4671 (derived from Malitson model)</td>
     </tr>
     <tr>
       <td>GVD ($\beta_2$)</td>
@@ -368,12 +366,20 @@ Cross-check of calculator outputs against published and independently computed l
 <table class="ref-table">
   <thead><tr><th>Category</th><th>Materials</th><th>Wavelength Range</th></tr></thead>
   <tbody>
-    <tr><td>Reference</td><td>Vacuum</td><td>All λ</td></tr>
+    <tr><td>Reference</td><td>Vacuum</td><td>100–10000 nm</td></tr>
     <tr><td>Gaseous</td><td>Air (dry, 1 atm, 15°C)</td><td>230–1690 nm</td></tr>
-    <tr><td>Optical Glasses</td><td>Fused Silica, N-BK7, SF11, SF10, N-SF11</td><td>300–3710 nm</td></tr>
-    <tr><td>Crystals</td><td>Sapphire (o/e), Calcite (o/e), YAG</td><td>200–5600 nm</td></tr>
-    <tr><td>Nonlinear Crystals</td><td>BBO (o/e), LBO (x/y/z)</td><td>190–3500 nm</td></tr>
-    <tr><td>IR Materials</td><td>ZnSe, CaF₂, MgF₂, BaF₂</td><td>800–12000 nm</td></tr>
+    <tr><td>Glasses</td><td>Fused Silica</td><td>210–3710 nm</td></tr>
+    <tr><td>Glasses</td><td>N-BK7</td><td>300–2500 nm</td></tr>
+    <tr><td>Glasses</td><td>SF11, N-SF11</td><td>370–2500 nm</td></tr>
+    <tr><td>Glasses</td><td>SF10</td><td>380–2500 nm</td></tr>
+    <tr><td>Crystals</td><td>Sapphire (o/e)</td><td>200–5000 nm</td></tr>
+    <tr><td>Crystals</td><td>CaF₂</td><td>150–9000 nm</td></tr>
+    <tr><td>Crystals</td><td>MgF₂ (o)</td><td>150–7000 nm</td></tr>
+    <tr><td>Crystals</td><td>Diamond</td><td>230–25000 nm</td></tr>
+    <tr><td>Nonlinear Crystals</td><td>BBO (o/e)</td><td>220–1064 nm</td></tr>
+    <tr><td>Nonlinear Crystals</td><td>LBO</td><td>160–2600 nm</td></tr>
+    <tr><td>Nonlinear Crystals</td><td>KDP</td><td>200–1500 nm</td></tr>
+    <tr><td>IR Materials</td><td>ZnSe</td><td>540–18000 nm</td></tr>
   </tbody>
 </table>
 </div>

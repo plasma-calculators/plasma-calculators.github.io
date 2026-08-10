@@ -20,6 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const mainCanvas = document.getElementById("main-canvas");
   const mainCtx = mainCanvas ? mainCanvas.getContext("2d") : null;
+  const canvasWrapper = document.getElementById("canvas-wrapper");
+  const roiCanvasWrapper = document.getElementById("roi-canvas-wrapper");
+  const mainZoomIn = document.getElementById("main-zoom-in");
+  const mainZoomOut = document.getElementById("main-zoom-out");
+  const mainZoomReset = document.getElementById("main-zoom-reset");
+  const mainZoomLevel = document.getElementById("main-zoom-level");
 
   const imageSlider = document.getElementById("image-slider");
   const imageSliderLabel = document.getElementById("image-slider-label");
@@ -43,6 +49,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const roiCanvas = document.getElementById("roi-canvas");
   const roiCtx = roiCanvas ? roiCanvas.getContext("2d") : null;
+  const roiZoomIn = document.getElementById("roi-zoom-in");
+  const roiZoomOut = document.getElementById("roi-zoom-out");
+  const roiZoomReset = document.getElementById("roi-zoom-reset");
+  const roiZoomLevel = document.getElementById("roi-zoom-level");
   const postImageSlider = document.getElementById("post-image-slider");
   const postImageSliderLabel = document.getElementById("post-image-slider-label");
   const postImagePrevBtn = document.getElementById("post-image-prev");
@@ -57,6 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
   let loadedImages = []; // Array of { name, width, height, data: Float64Array, minVal, maxVal, fitResult: null }
   let currentImageIdx = 0;
   let currentPostIdx = 0;
+  const viewportState = {
+    zoom: 1,
+    mainPan: { x: 0, y: 0 },
+    roiPan: { x: 0, y: 0 },
+    activePan: null
+  };
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 8;
+  const ZOOM_STEP = 0.25;
+  const WHEEL_ZOOM_SENSITIVITY = 0.001;
 
   // ROI State (in image pixel coordinates)
   let roi = { x: 0, y: 0, w: 100, h: 100 };
@@ -64,6 +84,126 @@ document.addEventListener("DOMContentLoaded", function () {
   let activeHandle = null; // 'tl', 'tr', 'bl', 'br', 'body'
   let dragStartPos = { x: 0, y: 0 };
   let roiStartPos = { x: 0, y: 0, w: 0, h: 0 };
+
+  function getViewportPan(name) {
+    return name === "main" ? viewportState.mainPan : viewportState.roiPan;
+  }
+
+  function clampViewportPan(name, pan) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    const wrapper = name === "main" ? canvasWrapper : roiCanvasWrapper;
+    if (!canvas || !wrapper) return { x: pan.x, y: pan.y };
+    const width = canvas.offsetWidth || canvas.width;
+    const height = canvas.offsetHeight || canvas.height;
+    const maxX = Math.max(0, (width * viewportState.zoom - wrapper.clientWidth) / 2);
+    const maxY = Math.max(0, (height * viewportState.zoom - wrapper.clientHeight) / 2);
+    return { x: Math.max(-maxX, Math.min(maxX, pan.x)), y: Math.max(-maxY, Math.min(maxY, pan.y)) };
+  }
+
+  function applyViewportTransform(name) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    if (!canvas) return;
+    const pan = clampViewportPan(name, getViewportPan(name));
+    Object.assign(getViewportPan(name), pan);
+    canvas.style.transform = `scale(${viewportState.zoom}) translate(${pan.x / viewportState.zoom}px, ${pan.y / viewportState.zoom}px)`;
+  }
+
+  function updateViewportControls() {
+    const label = `${Math.round(viewportState.zoom * 100)}%`;
+    if (mainZoomLevel) mainZoomLevel.textContent = label;
+    if (roiZoomLevel) roiZoomLevel.textContent = label;
+  }
+
+  function applyAllViewportTransforms() {
+    applyViewportTransform("main");
+    applyViewportTransform("roi");
+    updateViewportControls();
+  }
+
+  function resetViewport() {
+    viewportState.zoom = 1;
+    viewportState.mainPan = { x: 0, y: 0 };
+    viewportState.roiPan = { x: 0, y: 0 };
+    applyAllViewportTransforms();
+  }
+
+  function setViewportZoom(nextZoom) {
+    viewportState.zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, nextZoom));
+    applyAllViewportTransforms();
+  }
+
+  function getUntransformedRect(canvas) {
+    const previousTransform = canvas.style.transform;
+    canvas.style.transform = "none";
+    const rect = canvas.getBoundingClientRect();
+    canvas.style.transform = previousTransform;
+    return rect;
+  }
+
+  function zoomAt(name, nextZoom, clientX, clientY) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    if (!canvas || loadedImages.length === 0) return;
+    const oldZoom = viewportState.zoom;
+    const clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, nextZoom));
+    if (clampedZoom === oldZoom) return;
+    const rect = getUntransformedRect(canvas);
+    const cursorX = clientX - (rect.left + rect.width / 2);
+    const cursorY = clientY - (rect.top + rect.height / 2);
+    const ratio = clampedZoom / oldZoom;
+    const pan = getViewportPan(name);
+    pan.x = cursorX - ratio * (cursorX - pan.x);
+    pan.y = cursorY - ratio * (cursorY - pan.y);
+    viewportState.zoom = clampedZoom;
+    viewportState.mainPan = clampViewportPan("main", viewportState.mainPan);
+    viewportState.roiPan = clampViewportPan("roi", viewportState.roiPan);
+    applyAllViewportTransforms();
+  }
+
+  function setupViewportNavigation() {
+    const zoomIn = () => setViewportZoom(viewportState.zoom + ZOOM_STEP);
+    const zoomOut = () => setViewportZoom(viewportState.zoom - ZOOM_STEP);
+    [mainZoomIn, roiZoomIn].forEach(button => { if (button) button.addEventListener("click", zoomIn); });
+    [mainZoomOut, roiZoomOut].forEach(button => { if (button) button.addEventListener("click", zoomOut); });
+    [mainZoomReset, roiZoomReset].forEach(button => { if (button) button.addEventListener("click", resetViewport); });
+
+    [[canvasWrapper, "main"], [roiCanvasWrapper, "roi"]].forEach(([wrapper, name]) => {
+      if (!wrapper) return;
+      wrapper.addEventListener("wheel", event => {
+        if (loadedImages.length === 0) return;
+        event.preventDefault();
+        const delta = Math.max(-100, Math.min(100, event.deltaY));
+        zoomAt(name, viewportState.zoom - delta * WHEEL_ZOOM_SENSITIVITY, event.clientX, event.clientY);
+      }, { passive: false });
+    });
+
+    [[mainCanvas, "main"], [roiCanvas, "roi"]].forEach(([canvas, name]) => {
+      if (!canvas) return;
+      canvas.addEventListener("mousedown", event => {
+        if (name === "main" && (isDraggingRoi || activeHandle)) return;
+        if (loadedImages.length === 0) return;
+        viewportState.activePan = { name, startX: event.clientX, startY: event.clientY, origin: { ...getViewportPan(name) } };
+        canvas.classList.add("is-panning");
+        event.preventDefault();
+      });
+    });
+    applyAllViewportTransforms();
+  }
+
+  window.addEventListener("mousemove", event => {
+    const active = viewportState.activePan;
+    if (!active) return;
+    const pan = getViewportPan(active.name);
+    pan.x = active.origin.x + event.clientX - active.startX;
+    pan.y = active.origin.y + event.clientY - active.startY;
+    applyViewportTransform(active.name);
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!viewportState.activePan) return;
+    const canvas = viewportState.activePan.name === "main" ? mainCanvas : roiCanvas;
+    if (canvas) canvas.classList.remove("is-panning");
+    viewportState.activePan = null;
+  });
 
   // Setup Event Listeners
   if (calibSameCheckbox) {
@@ -123,6 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
       currentImageIdx = parseInt(imageSlider.value, 10);
       if (imageSliderLabel) imageSliderLabel.innerText = `${currentImageIdx + 1} / ${loadedImages.length}`;
       renderMainCanvas();
+      resetViewport();
     });
   }
 
@@ -196,6 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
       currentPostIdx = parseInt(postImageSlider.value, 10);
       if (postImageSliderLabel) postImageSliderLabel.innerText = `${currentPostIdx + 1} / ${loadedImages.length}`;
       renderPostRoiCanvas();
+      resetViewport();
     });
   }
 
@@ -228,6 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   setupCanvasInteraction();
+  setupViewportNavigation();
 
   // -------------------------------------------------------------
   // Image Upload Handling
@@ -280,6 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initDefaultRoi(loadedImages[0]);
 
     renderMainCanvas();
+    resetViewport();
     updateMemoryDiagnostics();
   }
 
@@ -328,6 +472,7 @@ document.addEventListener("DOMContentLoaded", function () {
       initDefaultRoi(loadedImages[0]);
 
       renderMainCanvas();
+      resetViewport();
       updateMemoryDiagnostics();
     } catch (err) {
       console.error(err);
@@ -847,6 +992,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------------------------------------------
   // 2D Rotated Gaussian Fitting Engine
   // -------------------------------------------------------------
+  function physicalGaussianAxes(sigX, sigY, theta, calibX, calibY) {
+    const c = Math.cos(theta);
+    const s = Math.sin(theta);
+    const xx = calibX * calibX * (c * c * sigX * sigX + s * s * sigY * sigY);
+    const yy = calibY * calibY * (s * s * sigX * sigX + c * c * sigY * sigY);
+    const xy = calibX * calibY * c * s * (sigX * sigX - sigY * sigY);
+    const trace = xx + yy;
+    const delta = Math.sqrt(Math.max(0, (xx - yy) * (xx - yy) + 4 * xy * xy));
+    const major = Math.sqrt(Math.max(0, (trace + delta) / 2));
+    const minor = Math.sqrt(Math.max(0, (trace - delta) / 2));
+    let angle = 0.5 * Math.atan2(2 * xy, xx - yy);
+    angle = ((angle % Math.PI) + Math.PI) % Math.PI;
+    return { major, minor, angle };
+  }
+
   function runCalculations() {
     showError("");
     if (loadedImages.length === 0) {
@@ -929,29 +1089,24 @@ document.addEventListener("DOMContentLoaded", function () {
     let p = [amp0, xo0, yo0, sigX0, sigY0, theta0, offset0];
 
     // Non-Linear Optimization (Nelder-Mead Simplex method)
-    let bestP = simplexOptimize(p, roiData, rw, rh);
+    let fit = simplexOptimize(p, roiData, rw, rh);
+    let bestP = fit.params;
 
     let [amp, xo, yo, sigX, sigY, theta, offset] = bestP;
     sigX = Math.abs(sigX);
     sigY = Math.abs(sigY);
 
     // Validate fit bounds
-    if (amp <= 0 || sigX < 0.5 || sigY < 0.5 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
-      return { success: false };
+    if (!fit.converged || amp <= 0 || sigX < 0.5 || sigY < 0.5 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
+      return { success: false, fitConverged: fit.converged, fitNrmse: fit.nrmse };
     }
 
-    // FWHM major and minor axes
-    let fwhmX = 2 * Math.sqrt(2 * Math.LN2) * sigX * calibX;
-    let fwhmY = 2 * Math.sqrt(2 * Math.LN2) * sigY * calibY;
-    let fwhmMajor = Math.max(fwhmX, fwhmY);
-    let fwhmMinor = Math.min(fwhmX, fwhmY);
-
-    // RMS Beam Size (mean RMS radius)
-    let sigX_um = sigX * calibX;
-    let sigY_um = sigY * calibY;
-    let rmsMaj_um = Math.max(sigX_um, sigY_um);
-    let rmsMin_um = Math.min(sigX_um, sigY_um);
-    let rms_um = Math.sqrt((sigX_um * sigX_um + sigY_um * sigY_um) / 2);
+    const axes = physicalGaussianAxes(sigX, sigY, theta, calibX, calibY);
+    let rmsMaj_um = axes.major;
+    let rmsMin_um = axes.minor;
+    let fwhmMajor = 2 * Math.sqrt(2 * Math.LN2) * rmsMaj_um;
+    let fwhmMinor = 2 * Math.sqrt(2 * Math.LN2) * rmsMin_um;
+    let rms_um = Math.sqrt((rmsMaj_um * rmsMaj_um + rmsMin_um * rmsMin_um) / 2);
 
     // q-factor: sum of counts within FWHM ellipse / sum of total counts in ROI
     let cosT = Math.cos(theta);
@@ -962,10 +1117,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let fwhmSum = 0;
     let totalSum = 0;
+    const background = Math.max(0, offset);
 
     for (let y = 0; y < rh; y++) {
       for (let x = 0; x < rw; x++) {
-        let v = roiData[y * rw + x];
+        let v = Math.max(0, roiData[y * rw + x] - background);
         totalSum += v;
         let dx = x - xo;
         let dy = y - yo;
@@ -988,12 +1144,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let spotArea_um2 = Math.PI * w0Major_um * w0Minor_um; // um^2
         
         // Wavelength and Energy parameters
-        let wavelengthNm = parseFloat(document.getElementById('wavelength').value) || 800;
-        let energyJ = parseFloat(document.getElementById('pulse-energy').value) || 0.60;
-        let durationFs = parseFloat(document.getElementById('pulse-duration').value) || 30;
+        wavelengthNm = wavelengthNm || 800;
+        energyJ = energyJ || 0.60;
+        durationFs = durationFs || 30;
 
-        // Peak Power P (TW) = (E_J / tau_fs) * 1000 * q * factor
-        let P_gauss_TW = (energyJ / durationFs) / Math.sqrt(Math.PI) * 2 * Math.LN2 * 1000 * qFactor;
+        // Peak Power P (TW) for a temporal Gaussian with intensity FWHM duration.
+        let P_gauss_TW = (energyJ / durationFs) * 2 * Math.sqrt(Math.LN2 / Math.PI) * 1000 * qFactor;
 
         // Peak Intensity I0 (10^18 W/cm^2) = 2 * P_TW / (pi * w0x * w0y) * 100
         // We convert spot area from um^2 to cm^2 (1 um^2 = 1e-8 cm^2) implicitly by the formula factors
@@ -1007,10 +1163,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let thetaDeg = (theta * 180 / Math.PI) % 180;
       if (thetaDeg < 0) thetaDeg += 180;
 
-      let majorAxisAngleRad = theta;
-      if (sigX * calibX < sigY * calibY) {
-        majorAxisAngleRad = theta + Math.PI / 2;
-      }
+      let majorAxisAngleRad = axes.angle;
       let majorAxisAngleDeg = (majorAxisAngleRad * 180 / Math.PI) % 180;
       if (majorAxisAngleDeg < 0) majorAxisAngleDeg += 180;
 
@@ -1033,6 +1186,8 @@ document.addEventListener("DOMContentLoaded", function () {
         RMS_spot: rms_um,
         RMS_maj: rmsMaj_um,
         RMS_min: rmsMin_um,
+        fitNrmse: fit.nrmse,
+        fitConverged: fit.converged,
         qFactor: qFactor,
         intensityGauss: intensityGauss,
         a0Gauss: a0Gauss
@@ -1076,8 +1231,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       let costs = simplex.map(cost);
+      const initialCost = Math.min(...costs);
+      let converged = false;
 
-      for (let iter = 0; iter < 800; iter++) {
+      for (let iter = 0; iter < 2000; iter++) {
         // Order vertices by cost
         let indices = Array.from({ length: N + 1 }, (_, i) => i).sort((a, b) => costs[a] - costs[b]);
         let bestIdx = indices[0];
@@ -1087,7 +1244,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Check convergence (relative tolerance)
         let costRange = Math.abs(costs[worstIdx] - costs[bestIdx]);
         let costScale = Math.max(1, Math.abs(costs[bestIdx]));
-        if (costRange / costScale < 1e-10) break;
+        if (costRange / costScale < 1e-8) {
+          converged = true;
+          break;
+        }
 
         // Centroid of best N vertices
         let centroid = new Float64Array(N);
@@ -1148,7 +1308,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       let finalBestIdx = Array.from({ length: N + 1 }, (_, i) => i).sort((a, b) => costs[a] - costs[b])[0];
-      return simplex[finalBestIdx];
+      const sampleCount = Math.ceil(rw / 2) * Math.ceil(rh / 2);
+      let dataSq = 0;
+      for (let y = 0; y < rh; y += 2) {
+        for (let x = 0; x < rw; x += 2) dataSq += roiData[y * rw + x] * roiData[y * rw + x];
+      }
+      const nrmse = Math.sqrt(costs[finalBestIdx] / sampleCount) / (Math.sqrt(dataSq / sampleCount) || 1);
+      return { params: simplex[finalBestIdx], converged, nrmse, initialCost };
     }
 
     // -------------------------------------------------------------
@@ -1428,12 +1594,14 @@ document.addEventListener("DOMContentLoaded", function () {
           <p style="margin:0.25rem 0;"><strong>Fit Rotation Angle (<i>&theta;</i>):</strong> <span class="font-highlight">${(fit.theta_deg !== undefined ? fit.theta_deg : (((fit.theta * 180 / Math.PI) % 180 + 180) % 180)).toFixed(1)}°</span></p>
           <p style="margin:0.25rem 0;"><strong>Major Axis Angle:</strong> <span class="font-highlight">${majAngleVal.toFixed(1)}°</span></p>
           <p style="margin:0.25rem 0;"><strong><i>q</i>-factor:</strong> ${fit.qFactor.toFixed(3)}</p>
+          <p style="margin:0.25rem 0;"><strong>Fit NRMSE:</strong> ${fit.fitNrmse.toExponential(2)}</p>
           ${pulsedHtml}
         `;
       } else if (fit && !fit.success) {
         roiStatsDiv.innerHTML = `
           <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
           <p style="color:#ef4444; font-weight:700;">Fit not possible</p>
+          ${Number.isFinite(fit.fitNrmse) ? `<p>Fit NRMSE: ${fit.fitNrmse.toExponential(2)}</p>` : ''}
         `;
       } else {
         roiStatsDiv.innerHTML = `

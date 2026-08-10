@@ -105,11 +105,11 @@ classes: wide
     <!-- Results Table Card 2 -->
     <div class="results-group">
       <h3>Temporal Pulse Metrics</h3>
-      <table class="comparison-table">
+      <table class="comparison-table temporal-metrics-table">
         <thead>
           <tr>
-            <th style="width: 55%;">Quantity</th>
-            <th style="width: 45%;">Value</th>
+            <th style="width: 68%;">Quantity</th>
+            <th style="width: 32%;">Value</th>
           </tr>
         </thead>
         <tbody>
@@ -122,11 +122,11 @@ classes: wide
             <td id="res-tau-analytic">-</td>
           </tr>
           <tr>
-            <td><strong>Dispersed Output Width (FFT full, FWHM)</strong></td>
+            <td><strong>Dispersed Output Width (FFT GDD+TOD, FWHM)</strong></td>
             <td id="res-tau-disp" class="font-highlight">-</td>
           </tr>
           <tr>
-            <td><strong>Compensated Output Width (FFT full, FWHM)</strong></td>
+            <td><strong>Compensated Output Width (FFT GDD+TOD, FWHM)</strong></td>
             <td id="res-tau-comp">-</td>
           </tr>
 
@@ -352,9 +352,21 @@ document.addEventListener("DOMContentLoaded", async function() {
       errorDiv.style.display = 'block';
       return;
     }
+    if (mat.range && (lam0_nm < mat.range[0] || lam0_nm > mat.range[1])) {
+      errorDiv.textContent = `Wavelength must be within this material's validity range (${mat.range[0]}–${mat.range[1]} nm).`;
+      errorDiv.style.display = 'block';
+      return;
+    }
 
     // 1. Dispersion Properties at lam0_nm
-    const props = DispersionEngine.computeDispersionProperties(mat, lam0_nm, L_mm);
+    let props;
+    try {
+      props = DispersionEngine.computeDispersionProperties(mat, lam0_nm, L_mm);
+    } catch (err) {
+      errorDiv.textContent = err.message || 'Unable to evaluate this material at the selected wavelength.';
+      errorDiv.style.display = 'block';
+      return;
+    }
     const analyticTau = DispersionEngine.computeAnalyticalBroadening(tau0_fs, props.gdd);
 
     outputs.n.innerText = props.n.toFixed(4);
@@ -378,9 +390,10 @@ document.addEventListener("DOMContentLoaded", async function() {
     outputs.tauDisp.innerText = sim.tau_disp_fwhm.toFixed(1) + " fs";
     outputs.tauComp.innerText = sim.tau_comp_fwhm.toFixed(1) + " fs";
 
-    // 3. Update Plots (Locked to 500-1100 nm, 250 points)
-    const minWl = 500;
-    const maxWl = 1100;
+    // 3. Update plots around the selected wavelength, constrained by the material range.
+    const plotHalfWidth = 300;
+    const minWl = mat.range ? Math.max(mat.range[0], lam0_nm - plotHalfWidth) : Math.max(100, lam0_nm - plotHalfWidth);
+    const maxWl = mat.range ? Math.min(mat.range[1], lam0_nm + plotHalfWidth) : lam0_nm + plotHalfWidth;
     const steps = 250;
     const dwl = (maxWl - minWl) / steps;
 
@@ -394,6 +407,10 @@ document.addEventListener("DOMContentLoaded", async function() {
       dataGvd.push({ x: wl, y: p.gvd });
       dataTod.push({ x: wl, y: p.tod });
     }
+    charts['index_dual'].options.scales.x.min = minWl;
+    charts['index_dual'].options.scales.x.max = maxWl;
+    charts['dispersion_dual'].options.scales.x.min = minWl;
+    charts['dispersion_dual'].options.scales.x.max = maxWl;
 
     // Chart 1: Combined n & ng on dual axis
     charts['index_dual'].data.datasets = [
@@ -470,4 +487,3 @@ document.addEventListener("DOMContentLoaded", async function() {
   setTimeout(update, 200);
 });
 </script>
-

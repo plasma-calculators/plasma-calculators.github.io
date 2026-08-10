@@ -15,6 +15,7 @@ const C_NM_FS = 299.792458; // nm/fs or um/fs * 1e3
  */
 function evaluateRefractiveIndex(mat, lambdaNm) {
   if (!mat) return 1.0;
+  if (!Number.isFinite(lambdaNm) || (mat.range && (lambdaNm < mat.range[0] || lambdaNm > mat.range[1]))) return NaN;
   if (mat.type === 'constant') return mat.n || 1.0;
 
   const lambdaUm = lambdaNm / 1000.0;
@@ -28,7 +29,7 @@ function evaluateRefractiveIndex(mat, lambdaNm) {
     for (let i = 0; i < B.length; i++) {
       n2 += (B[i] * l2) / (l2 - C[i]);
     }
-    return Math.sqrt(Math.max(1.0, n2));
+    return n2 > 0 ? Math.sqrt(n2) : NaN;
   }
 
   if (mat.type === 'ciddor') {
@@ -41,62 +42,81 @@ function evaluateRefractiveIndex(mat, lambdaNm) {
   if (mat.type === 'sellmeier_custom_bbo') {
     // n_o^2 = 2.7359 + 0.01878 / (l2 - 0.01822) - 0.01354 * l2
     const n2 = mat.B[0] + mat.B[1] / (l2 - mat.B[2]) - mat.B[3] * l2;
-    return Math.sqrt(Math.max(1.0, n2));
+    return n2 > 0 ? Math.sqrt(n2) : NaN;
   }
 
   if (mat.type === 'sellmeier_custom_bbo_e') {
     // n_e^2 = 2.3753 + 0.01224 / (l2 - 0.01667) - 0.01516 * l2
     const n2 = mat.B[0] + mat.B[1] / (l2 - mat.B[2]) - mat.B[3] * l2;
-    return Math.sqrt(Math.max(1.0, n2));
+    return n2 > 0 ? Math.sqrt(n2) : NaN;
   }
 
   if (mat.type === 'sellmeier_custom_lbo') {
     // n^2 = 2.45414 + 0.011249 / (l2 - 0.01135) - 0.0145 * l2
     const n2 = mat.B[0] + mat.B[1] / (l2 - mat.C[0]) - mat.B[3] * l2;
-    return Math.sqrt(Math.max(1.0, n2));
+    return n2 > 0 ? Math.sqrt(n2) : NaN;
   }
 
   return 1.0;
 }
 
-/**
- * High-precision numerical differentiation using central finite differences.
- * Computes dn/dlambda, d2n/dlambda2, d3n/dlambda3, d4n/dlambda4 at lambda0 (in um).
- */
+function jetConst(value) { return [value, 0, 0, 0, 0]; }
+function jetAdd(a, b) { return a.map((v, i) => v + b[i]); }
+function jetScale(a, s) { return a.map(v => v * s); }
+function jetMul(a, b) {
+  const out = [0, 0, 0, 0, 0];
+  for (let n = 0; n < 5; n++) for (let i = 0; i <= n; i++) out[n] += a[i] * b[n - i];
+  return out;
+}
+function jetInv(a) {
+  const out = [1 / a[0], 0, 0, 0, 0];
+  for (let n = 1; n < 5; n++) {
+    let sum = 0;
+    for (let i = 1; i <= n; i++) sum += a[i] * out[n - i];
+    out[n] = -sum / a[0];
+  }
+  return out;
+}
+function jetDiv(a, b) { return jetMul(a, jetInv(b)); }
+function jetSqrt(a) {
+  const out = [Math.sqrt(a[0]), 0, 0, 0, 0];
+  for (let n = 1; n < 5; n++) {
+    let sum = 0;
+    for (let i = 1; i < n; i++) sum += out[i] * out[n - i];
+    out[n] = (a[n] - sum) / (2 * out[0]);
+  }
+  return out;
+}
+
+/** Exact fourth-order derivatives through truncated Taylor arithmetic. */
 function computeDerivatives(mat, lambdaNm) {
-  const lambdaUm = lambdaNm / 1000.0;
-  // Step size for um wavelength grid
-  const h = 0.0002; // 0.2 nm in um
-
-  const f = (xUm) => evaluateRefractiveIndex(mat, xUm * 1000.0);
-
-  const f_m2 = f(lambdaUm - 2 * h);
-  const f_m1 = f(lambdaUm - h);
-  const f_0  = f(lambdaUm);
-  const f_p1 = f(lambdaUm + h);
-  const f_p2 = f(lambdaUm + 2 * h);
-
-  // 1st derivative dn/dlambda (um^-1)
-  const dn_dlambda = (f_m2 - 8 * f_m1 + 8 * f_p1 - f_p2) / (12 * h);
-
-  // 2nd derivative d2n/dlambda2 (um^-2)
-  const d2n_dlambda2 = (-f_m2 + 16 * f_m1 - 30 * f_0 + 16 * f_p1 - f_p2) / (12 * h * h);
-
-  // 3rd derivative d3n/dlambda3 (um^-3)
-  const f_m3 = f(lambdaUm - 3 * h);
-  const f_p3 = f(lambdaUm + 3 * h);
-  const d3n_dlambda3 = (f_m3 - 8 * f_m2 + 13 * f_m1 - 13 * f_p1 + 8 * f_p2 - f_p3) / (8 * h * h * h);
-
-  // 4th derivative d4n/dlambda4 (um^-4)
-  const d4n_dlambda4 = (f_m2 - 4 * f_m1 + 6 * f_0 - 4 * f_p1 + f_p2) / (h * h * h * h);
-
-  return {
-    n: f_0,
-    dn_dlambda,
-    d2n_dlambda2,
-    d3n_dlambda3,
-    d4n_dlambda4
-  };
+  if (!mat || !Number.isFinite(lambdaNm) || (mat.range && (lambdaNm < mat.range[0] || lambdaNm > mat.range[1]))) {
+    throw new RangeError('Wavelength is outside the material validity range.');
+  }
+  const x = [lambdaNm / 1000, 1, 0, 0, 0];
+  const l2 = jetMul(x, x);
+  let nJet;
+  if (mat.type === 'constant') {
+    nJet = jetConst(mat.n || 1);
+  } else if (mat.type === 'sellmeier_1') {
+    let n2 = jetConst(1);
+    for (let i = 0; i < mat.B.length; i++) n2 = jetAdd(n2, jetScale(jetDiv(l2, jetAdd(l2, jetConst(-mat.C[i]))), mat.B[i]));
+    nJet = jetSqrt(n2);
+  } else if (mat.type === 'ciddor') {
+    const sigma2 = jetInv(l2);
+    const p = mat.params;
+    nJet = jetAdd(jetConst(1), jetAdd(jetDiv(jetConst(p.a0), jetAdd(jetConst(p.b0), jetScale(sigma2, -1))), jetDiv(jetConst(p.a1), jetAdd(jetConst(p.b1), jetScale(sigma2, -1)))));
+  } else if (mat.type === 'sellmeier_custom_bbo' || mat.type === 'sellmeier_custom_bbo_e') {
+    const n2 = jetAdd(jetConst(mat.B[0]), jetAdd(jetDiv(jetConst(mat.B[1]), jetAdd(l2, jetConst(-mat.B[2]))), jetScale(l2, -mat.B[3])));
+    nJet = jetSqrt(n2);
+  } else if (mat.type === 'sellmeier_custom_lbo') {
+    const n2 = jetAdd(jetConst(mat.B[0]), jetAdd(jetDiv(jetConst(mat.B[1]), jetAdd(l2, jetConst(-mat.C[0]))), jetScale(l2, -mat.B[3])));
+    nJet = jetSqrt(n2);
+  } else {
+    nJet = jetConst(1);
+  }
+  const factorial = [1, 1, 2, 6, 24];
+  return { n: nJet[0], dn_dlambda: nJet[1], d2n_dlambda2: nJet[2] * factorial[2], d3n_dlambda3: nJet[3] * factorial[3], d4n_dlambda4: nJet[4] * factorial[4] };
 }
 
 /**
@@ -104,6 +124,7 @@ function computeDerivatives(mat, lambdaNm) {
  * Wavelength lambda in nm, thickness L in mm.
  */
 function computeDispersionProperties(mat, lambdaNm, thicknessMm) {
+  if (!Number.isFinite(thicknessMm) || thicknessMm <= 0) throw new RangeError('Thickness must be positive.');
   const lambdaUm = lambdaNm / 1000.0;
   const cUmFs = C_NM_FS / 1000.0; // ~0.299792458 um/fs
 
@@ -113,6 +134,7 @@ function computeDispersionProperties(mat, lambdaNm, thicknessMm) {
   const d2n_dl2 = derivs.d2n_dlambda2;
   const d3n_dl3 = derivs.d3n_dlambda3;
   const d4n_dl4 = derivs.d4n_dlambda4;
+  if (![n, dn_dl, d2n_dl2, d3n_dl3, d4n_dl4].every(Number.isFinite)) throw new RangeError('Invalid refractive-index model at this wavelength.');
 
   // Group Index ng = n - lambda * dn/dlambda
   const ng = n - lambdaUm * dn_dl;

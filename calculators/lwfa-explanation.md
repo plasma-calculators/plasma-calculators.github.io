@@ -135,7 +135,7 @@ classes: wide
 This page presents the mathematical definitions and scaling laws used in the
 <strong>Laser-Wakefield Acceleration (LWFA) Parameter Calculator</strong>, following the
 formulations of Lu et al. (PRSTAB 2007). Quantities are computed for a laser-driven plasma bubble
-in the blowout (cavitated) regime.
+in the blowout (cavitated) regime. These are approximate matched/guided scaling estimates, not a particle-in-cell simulation.
 </p>
 </div>
 
@@ -144,7 +144,7 @@ in the blowout (cavitated) regime.
 <h3>1. Laser Pulse Intensity Parameters</h3>
 
 <h4>Focal Spot Area</h4>
-<p>Cross-sectional area of the laser focal spot using the $1/e$ field waist radius $w_0$:</p>
+<p>The Gaussian uses a $1/e$ field waist (and $1/e^2$ intensity radius); the top-hat uses the same numeric $w_0$ as a uniform disk radius.</p>
 <div class="eq-block">
 $$A_\text{spot} = \pi w_0^2 \quad [\text{µm}^2]$$
 </div>
@@ -160,7 +160,7 @@ $$P_{0,\,\text{Top-Hat}} = \frac{W_L}{\tau_\text{FWHM}} \times 10^{3}\,q \quad [
 
 <h4>Peak Intensity</h4>
 <div class="eq-block">
-$$I_0 = \frac{2 P_0}{\pi w_0^2} \times 100 \quad [10^{18}\,\text{W/cm}^2]$$
+$$I_{0,G} = \frac{2P_G}{\pi w_0^2}\times100,\qquad I_{0,TH}=\frac{P_{TH}}{\pi w_0^2}\times100 \quad [10^{18}\,\text{W/cm}^2]$$
 </div>
 
 <h4>Normalized Vector Potential $a_0$</h4>
@@ -168,7 +168,7 @@ $$I_0 = \frac{2 P_0}{\pi w_0^2} \times 100 \quad [10^{18}\,\text{W/cm}^2]$$
 <div class="eq-block">
 $$a_0 = \sqrt{\frac{I_0\,\lambda_L^2}{1.37}} \approx 0.855\,\lambda_L\,\sqrt{I_0}$$
 </div>
-<p>where $\lambda_L$ is the laser wavelength in µm. The blowout regime requires $a_0 \gtrsim 1$.</p>
+<p>where $\lambda_L$ is the laser wavelength in µm. The calculator uses the conventional linear-polarization normalization; the blowout regime requires $a_0 \gtrsim 1$.</p>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════ -->
@@ -176,11 +176,11 @@ $$a_0 = \sqrt{\frac{I_0\,\lambda_L^2}{1.37}} \approx 0.855\,\lambda_L\,\sqrt{I_0
 <h3>2. Plasma Parameters</h3>
 
 <h4>Electron Density</h4>
-<p>If not set directly, $n_e$ is computed from the total gas pressure $P_\text{Torr}$, background gas
-valence $\text{bg\_el}$, dopant valence $\text{dop\_el}$, and dopant fraction $d\%$:</p>
+<p>If gas settings are selected, the ideal-gas density at pressure $P$ (mbar) and gas temperature $T_g$ is combined with the specified electrons per particle:</p>
 <div class="eq-block">
-$$n_e = 3.57\times10^{16}\cdot P_\text{Torr}\cdot\!\left[\text{bg\_el}\!\left(1-\frac{d\%}{100}\right) + \text{dop\_el}\cdot\frac{d\%}{100}\right] \quad [\text{cm}^{-3}]$$
+$$n_g[\text{cm}^{-3}] = \frac{100P}{k_BT_g}\,10^{-6},\qquad n_e=n_g\left[(1-f)Z_\text{bg}+fZ_\text{dop}\right].$$
 </div>
+<p>$Z$ values are electrons per gas particle (include molecular stoichiometry where applicable).</p>
 
 <h4>Plasma Frequency and Wavelength</h4>
 <div class="eq-block">
@@ -190,12 +190,12 @@ $$\omega_p = \sqrt{\frac{n_e \times 10^6 \cdot e^2}{\varepsilon_0 m_e}} \quad [\
 <h4>Debye Length</h4>
 <p>The electrostatic screening length at electron temperature $T_e$ (eV):</p>
 <div class="eq-block">
-$$\lambda_D = \sqrt{\frac{\varepsilon_0 T_e}{n_e \times 10^6 \cdot e}} \times 10^6 \quad [\text{µm}]$$
+$$\lambda_D = \sqrt{\frac{\varepsilon_0 k_BT_e}{n_e \times 10^6 e^2}} \quad [\text{m}]$$
 </div>
 
 <h4>Thermal Speed</h4>
 <div class="eq-block">
-$$v_\text{th} = \omega_p \lambda_D$$
+$$v_\text{th} = \omega_p \lambda_D$$ (one-dimensional, nonrelativistic RMS estimate)
 </div>
 
 <h4>Critical Power for Relativistic Self-Focusing</h4>
@@ -232,9 +232,6 @@ $$R = \frac{2\sqrt{a_0}}{k_p} = 2\sqrt{a_0}\,\frac{c}{\omega_p}\times10^6 \quad 
 $$L_d = \frac{2}{3}\left(\frac{\omega_\text{laser}}{\omega_p}\right)^2 R \times 10^3 \quad [\text{mm}]$$
 </div>
 <div class="eq-block">
-$$L_{d,\,\text{alt}} = L_d \cdot \frac{4}{3}\,a_{0,\,\text{matched}}^{1/2}$$
-</div>
-
 <h4>Pump Depletion Length</h4>
 <p>The distance over which the laser pulse transfers its energy to the plasma wake:</p>
 <div class="eq-block">
@@ -250,8 +247,8 @@ $$W_{el} = 1700\left(\frac{P_0}{100\,\text{TW}}\right)^{1/3}\!\left(\frac{10^{18
 <div class="note-box">
   <strong>Validity:</strong> These scaling laws assume the blowout regime ($a_0 \gtrsim 2$),
   matched laser spotsize ($w_0 \approx R$), and that the dephasing length is shorter than the
-  pump depletion length. For $P_0 \ll P_\text{crit}$, the bubble is not fully formed and
-  results should be treated as order-of-magnitude estimates.
+  pump depletion length. They omit injection, beam loading, density evolution, and external guiding;
+  the calculator reports these mismatches as validity warnings.
 </div>
 </div>
 

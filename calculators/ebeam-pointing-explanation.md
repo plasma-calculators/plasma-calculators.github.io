@@ -104,7 +104,7 @@ classes: wide
     <div class="math-box">
       $$I'(x, y) = \max(0, I_{\text{raw}}(x, y) - I_{\text{bg}})$$
     </div>
-    <p>This process is applied to all pixel coordinates across the image to filter out uniform ambient light and dark current noise.</p>
+    <p>This process is applied to pixels in the signal ROI. The background ROI is used only to estimate the uniform offset.</p>
   </div>
 
   <div class="exp-section">
@@ -120,19 +120,19 @@ classes: wide
       $$\sigma_{\text{maj}} = \max(\sigma_x C_x, \sigma_y C_y), \quad \sigma_{\text{min}} = \min(\sigma_x C_x, \sigma_y C_y)$$
     </div>
     <p>
-      where $C_x$ and $C_y$ represent the spatial calibrations (in $\text{μm}/\text{pixel}$). The RMS major/minor and FWHM major/minor divergences of the beam profile (in $\text{mrad}$) are then computed geometrically relative to the source-to-screen distance $L$ (in $\text{mm}$):
+      where $C_x$ and $C_y$ represent the spatial calibrations (in $\text{μm}/\text{pixel}$). The fitted covariance is transformed by these calibrations before its physical principal axes are selected. RMS divergence is reported as a paraxial one-sigma angle, while FWHM divergence uses the screen-angle span relative to the source-to-screen distance $L$ (in $\text{mm}$):
     </p>
     <div class="math-box">
-      $$\theta_{\text{RMS, maj}} = \arctan\left( \frac{\sigma_{\text{maj}}}{L \times 1000} \right) \times 1000 \approx \frac{\sigma_{\text{maj}}}{L}$$
+      $$\theta_{\text{RMS, maj}} \approx \frac{\sigma_{\text{maj}}}{L \times 1000} \times 1000 = \frac{\sigma_{\text{maj}}}{L}$$
     </div>
     <div class="math-box">
-      $$\theta_{\text{RMS, min}} = \arctan\left( \frac{\sigma_{\text{min}}}{L \times 1000} \right) \times 1000 \approx \frac{\sigma_{\text{min}}}{L}$$
+      $$\theta_{\text{RMS, min}} \approx \frac{\sigma_{\text{min}}}{L \times 1000} \times 1000 = \frac{\sigma_{\text{min}}}{L}$$
     </div>
     <div class="math-box">
-      $$\theta_{\text{FWHM, maj}} = 2\sqrt{2\ln 2} \cdot \theta_{\text{RMS, maj}} \approx 2.355 \cdot \theta_{\text{RMS, maj}}$$
+      $$\theta_{\text{FWHM, maj}} = 2\arctan\left(\frac{d_{\text{FWHM, maj}}}{2L\times1000}\right)\times1000$$
     </div>
     <div class="math-box">
-      $$\theta_{\text{FWHM, min}} = 2\sqrt{2\ln 2} \cdot \theta_{\text{RMS, min}} \approx 2.355 \cdot \theta_{\text{RMS, min}}$$
+      $$\theta_{\text{FWHM, min}} = 2\arctan\left(\frac{d_{\text{FWHM, min}}}{2L\times1000}\right)\times1000$$
     </div>
   </div>
 
@@ -165,6 +165,7 @@ classes: wide
     <p>
       The solid angle $\Omega$ (in $\text{sr}$) subtended by the imaging lens at distance $d_{\text{cam-screen}}$ (in $\text{mm}$) is calculated using the lens aperture diameter $D = f / f_{\#}$:
     </p>
+    <p>The charge estimate assumes an on-axis, small-aperture lens, isotropic screen emission, and a transmission input expressed as a surviving fraction between 0 and 1.</p>
     <div class="math-box">
       $$\Omega = \frac{\pi (D/2)^2}{d_{\text{cam-screen}}^2} = \frac{\pi (f / 2f_{\#})^2}{d_{\text{cam-screen}}^2}$$
     </div>

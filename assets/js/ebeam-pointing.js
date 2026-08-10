@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const mainCanvas = document.getElementById("main-canvas");
   const mainCtx = mainCanvas ? mainCanvas.getContext("2d") : null;
+  const mainOverlayCanvas = document.getElementById("main-overlay-canvas");
+  const mainOverlayCtx = mainOverlayCanvas ? mainOverlayCanvas.getContext("2d") : null;
 
   const imageSlider = document.getElementById("image-slider");
   const imageSliderLabel = document.getElementById("image-slider-label");
@@ -50,6 +52,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const roiCanvas = document.getElementById("roi-canvas");
   const roiCtx = roiCanvas ? roiCanvas.getContext("2d") : null;
+  const canvasWrapper = document.getElementById("canvas-wrapper");
+  const roiCanvasWrapper = document.getElementById("roi-canvas-wrapper");
+  const mainZoomOut = document.getElementById("main-zoom-out");
+  const mainZoomIn = document.getElementById("main-zoom-in");
+  const mainZoomReset = document.getElementById("main-zoom-reset");
+  const mainZoomLevel = document.getElementById("main-zoom-level");
+  const roiZoomOut = document.getElementById("roi-zoom-out");
+  const roiZoomIn = document.getElementById("roi-zoom-in");
+  const roiZoomReset = document.getElementById("roi-zoom-reset");
+  const roiZoomLevel = document.getElementById("roi-zoom-level");
   const postImageSlider = document.getElementById("post-image-slider");
   const postImageSliderLabel = document.getElementById("post-image-slider-label");
   const postImagePrevBtn = document.getElementById("post-image-prev");
@@ -65,6 +77,18 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentImageIdx = 0;
   let currentPostIdx = 0;
 
+  const viewportState = {
+    zoom: 1,
+    mainPan: { x: 0, y: 0 },
+    roiPan: { x: 0, y: 0 },
+    activePan: null
+  };
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 8;
+  const ZOOM_STEP = 0.25;
+  const WHEEL_ZOOM_SENSITIVITY = 0.001;
+  const MAX_DEVICE_PIXEL_RATIO = 3;
+
   // Dual ROI State (in image pixel coordinates)
   // Default values matching ebeam_pointing_jeti.py and pointing.py
   let signalRoi = { x: 670, y: 305, w: 470, h: 385 };
@@ -73,6 +97,204 @@ document.addEventListener("DOMContentLoaded", function () {
   let isDraggingRoi = false;
   let activeRoi = null; // Reference to signalRoi or bgRoi
   let activeHandle = null; // 'tl', 'tr', 'bl', 'br', 'body'
+
+  function getViewportPan(name) {
+    return name === "main" ? viewportState.mainPan : viewportState.roiPan;
+  }
+
+  function clampViewportPan(name, pan) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    const wrapper = name === "main" ? canvasWrapper : roiCanvasWrapper;
+    if (!canvas || !wrapper) return { x: pan.x, y: pan.y };
+    const width = canvas.offsetWidth || canvas.width;
+    const height = canvas.offsetHeight || canvas.height;
+    const viewWidth = wrapper.clientWidth;
+    const viewHeight = wrapper.clientHeight;
+    const maxX = Math.max(0, (width * viewportState.zoom - viewWidth) / 2);
+    const maxY = Math.max(0, (height * viewportState.zoom - viewHeight) / 2);
+    return {
+      x: Math.max(-maxX, Math.min(maxX, pan.x)),
+      y: Math.max(-maxY, Math.min(maxY, pan.y))
+    };
+  }
+
+  function syncMainOverlayGeometry() {
+    if (!mainCanvas || !mainOverlayCanvas || !canvasWrapper || loadedImages.length === 0) return;
+    const previousTransform = mainCanvas.style.transform;
+    mainCanvas.style.transform = "none";
+    const imageRect = mainCanvas.getBoundingClientRect();
+    const wrapperRect = canvasWrapper.getBoundingClientRect();
+    mainCanvas.style.transform = previousTransform;
+
+    const cssWidth = Math.max(1, imageRect.width);
+    const cssHeight = Math.max(1, imageRect.height);
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
+    mainOverlayCanvas.width = Math.round(cssWidth * dpr);
+    mainOverlayCanvas.height = Math.round(cssHeight * dpr);
+    mainOverlayCanvas.style.width = `${cssWidth}px`;
+    mainOverlayCanvas.style.height = `${cssHeight}px`;
+    mainOverlayCanvas.style.left = `${imageRect.left - wrapperRect.left}px`;
+    mainOverlayCanvas.style.top = `${imageRect.top - wrapperRect.top}px`;
+    mainOverlayCanvas.style.transformOrigin = "center center";
+  }
+
+  function renderMainOverlay() {
+    if (!mainOverlayCtx || !mainOverlayCanvas || !mainCanvas || loadedImages.length === 0) return;
+    syncMainOverlayGeometry();
+    const imgObj = loadedImages[currentImageIdx];
+    const cssWidth = parseFloat(mainOverlayCanvas.style.width) || 1;
+    const cssHeight = parseFloat(mainOverlayCanvas.style.height) || 1;
+    const scaleX = cssWidth / imgObj.width;
+    const scaleY = cssHeight / imgObj.height;
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
+    mainOverlayCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    mainOverlayCtx.clearRect(0, 0, cssWidth, cssHeight);
+    mainOverlayCtx.lineWidth = 2;
+    mainOverlayCtx.strokeStyle = "#facc15";
+    mainOverlayCtx.strokeRect(signalRoi.x * scaleX, signalRoi.y * scaleY, signalRoi.w * scaleX, signalRoi.h * scaleY);
+    drawOverlayHandles(signalRoi, "#facc15", scaleX, scaleY);
+    mainOverlayCtx.strokeStyle = "#db2777";
+    mainOverlayCtx.strokeRect(bgRoi.x * scaleX, bgRoi.y * scaleY, bgRoi.w * scaleX, bgRoi.h * scaleY);
+    drawOverlayHandles(bgRoi, "#db2777", scaleX, scaleY);
+  }
+
+  function drawOverlayHandles(roiBox, color, scaleX, scaleY) {
+    const handleSize = 8;
+    mainOverlayCtx.fillStyle = color;
+    mainOverlayCtx.strokeStyle = "#000000";
+    mainOverlayCtx.lineWidth = 1.5;
+    const handles = [
+      { x: roiBox.x, y: roiBox.y },
+      { x: roiBox.x + roiBox.w, y: roiBox.y },
+      { x: roiBox.x, y: roiBox.y + roiBox.h },
+      { x: roiBox.x + roiBox.w, y: roiBox.y + roiBox.h }
+    ];
+    for (const handle of handles) {
+      const x = handle.x * scaleX;
+      const y = handle.y * scaleY;
+      mainOverlayCtx.fillRect(x - handleSize / 2, y - handleSize / 2, handleSize, handleSize);
+      mainOverlayCtx.strokeRect(x - handleSize / 2, y - handleSize / 2, handleSize, handleSize);
+    }
+  }
+
+  function applyViewportTransform(name) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    if (!canvas) return;
+    const pan = clampViewportPan(name, getViewportPan(name));
+    Object.assign(getViewportPan(name), pan);
+    const translateX = pan.x / viewportState.zoom;
+    const translateY = pan.y / viewportState.zoom;
+    canvas.style.transform = `scale(${viewportState.zoom}) translate(${translateX}px, ${translateY}px)`;
+    if (name === "main" && mainOverlayCanvas) {
+      mainOverlayCanvas.style.transform = canvas.style.transform;
+    }
+  }
+
+  function updateViewportControls() {
+    const label = `${Math.round(viewportState.zoom * 100)}%`;
+    if (mainZoomLevel) mainZoomLevel.textContent = label;
+    if (roiZoomLevel) roiZoomLevel.textContent = label;
+    [mainZoomOut, roiZoomOut].forEach(button => { if (button) button.disabled = viewportState.zoom <= MIN_ZOOM; });
+    [mainZoomIn, roiZoomIn].forEach(button => { if (button) button.disabled = viewportState.zoom >= MAX_ZOOM; });
+  }
+
+  function applyAllViewportTransforms() {
+    applyViewportTransform("main");
+    applyViewportTransform("roi");
+    updateViewportControls();
+  }
+
+  function resetViewport() {
+    viewportState.zoom = 1;
+    viewportState.mainPan = { x: 0, y: 0 };
+    viewportState.roiPan = { x: 0, y: 0 };
+    applyAllViewportTransforms();
+  }
+
+  function setViewportZoom(nextZoom) {
+    viewportState.zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, nextZoom));
+    viewportState.mainPan = clampViewportPan("main", viewportState.mainPan);
+    viewportState.roiPan = clampViewportPan("roi", viewportState.roiPan);
+    applyAllViewportTransforms();
+  }
+
+  function getUntransformedRect(canvas) {
+    const previousTransform = canvas.style.transform;
+    canvas.style.transform = "none";
+    const rect = canvas.getBoundingClientRect();
+    canvas.style.transform = previousTransform;
+    return rect;
+  }
+
+  function zoomAt(name, nextZoom, clientX, clientY) {
+    const canvas = name === "main" ? mainCanvas : roiCanvas;
+    if (!canvas || loadedImages.length === 0) return;
+    const oldZoom = viewportState.zoom;
+    const clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, nextZoom));
+    if (clampedZoom === oldZoom) return;
+    const rect = getUntransformedRect(canvas);
+    const cursorX = clientX - (rect.left + rect.width / 2);
+    const cursorY = clientY - (rect.top + rect.height / 2);
+    const ratio = clampedZoom / oldZoom;
+    const pan = getViewportPan(name);
+    pan.x = cursorX - ratio * (cursorX - pan.x);
+    pan.y = cursorY - ratio * (cursorY - pan.y);
+    viewportState.zoom = clampedZoom;
+    viewportState.mainPan = clampViewportPan("main", viewportState.mainPan);
+    viewportState.roiPan = clampViewportPan("roi", viewportState.roiPan);
+    applyAllViewportTransforms();
+  }
+
+  function setupViewportControls() {
+    const zoomIn = () => setViewportZoom(viewportState.zoom + ZOOM_STEP);
+    const zoomOut = () => setViewportZoom(viewportState.zoom - ZOOM_STEP);
+    [mainZoomIn, roiZoomIn].forEach(button => { if (button) button.addEventListener("click", zoomIn); });
+    [mainZoomOut, roiZoomOut].forEach(button => { if (button) button.addEventListener("click", zoomOut); });
+    [mainZoomReset, roiZoomReset].forEach(button => { if (button) button.addEventListener("click", resetViewport); });
+    applyAllViewportTransforms();
+  }
+
+  function setupViewportPan(canvas, name) {
+    if (!canvas) return;
+    canvas.addEventListener("mousedown", function (event) {
+      if (name === "main" && (isDraggingRoi || activeHandle)) return;
+      if (loadedImages.length === 0) return;
+      viewportState.activePan = {
+        name,
+        startX: event.clientX,
+        startY: event.clientY,
+        origin: { ...getViewportPan(name) }
+      };
+      canvas.classList.add("is-panning");
+      event.preventDefault();
+    });
+  }
+
+  function setupViewportWheel(wrapper, name) {
+    if (!wrapper) return;
+    wrapper.addEventListener("wheel", function (event) {
+      if (loadedImages.length === 0) return;
+      event.preventDefault();
+      const wheelDelta = Math.max(-100, Math.min(100, event.deltaY));
+      zoomAt(name, viewportState.zoom - wheelDelta * WHEEL_ZOOM_SENSITIVITY, event.clientX, event.clientY);
+    }, { passive: false });
+  }
+
+  window.addEventListener("mousemove", function (event) {
+    const active = viewportState.activePan;
+    if (!active) return;
+    const pan = getViewportPan(active.name);
+    pan.x = active.origin.x + event.clientX - active.startX;
+    pan.y = active.origin.y + event.clientY - active.startY;
+    applyViewportTransform(active.name);
+  });
+
+  window.addEventListener("mouseup", function () {
+    if (!viewportState.activePan) return;
+    const canvas = viewportState.activePan.name === "main" ? mainCanvas : roiCanvas;
+    if (canvas) canvas.classList.remove("is-panning");
+    viewportState.activePan = null;
+  });
 
   // -------------------------------------------------------------
   // Setup Event Listeners
@@ -124,6 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
       currentImageIdx = parseInt(imageSlider.value, 10);
       if (imageSliderLabel) imageSliderLabel.innerText = `${currentImageIdx + 1} / ${loadedImages.length}`;
       renderMainCanvas();
+      resetViewport();
     });
   }
 
@@ -197,6 +420,7 @@ document.addEventListener("DOMContentLoaded", function () {
       currentPostIdx = parseInt(postImageSlider.value, 10);
       if (postImageSliderLabel) postImageSliderLabel.innerText = `${currentPostIdx + 1} / ${loadedImages.length}`;
       renderPostRoiCanvas();
+      resetViewport();
     });
   }
 
@@ -231,6 +455,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   setupCanvasInteraction();
+  setupViewportControls();
+  setupViewportPan(mainCanvas, "main");
+  setupViewportPan(roiCanvas, "roi");
+  setupViewportWheel(canvasWrapper, "main");
+  setupViewportWheel(roiCanvasWrapper, "roi");
+  window.addEventListener("resize", function () {
+    if (loadedImages.length === 0) return;
+    renderMainOverlay();
+    applyAllViewportTransforms();
+  });
 
   // -------------------------------------------------------------
   // Image Upload Handling
@@ -297,6 +531,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     renderMainCanvas();
+    resetViewport();
     updateMemoryDiagnostics();
   }
 
@@ -357,6 +592,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       renderMainCanvas();
+      resetViewport();
       updateMemoryDiagnostics();
     } catch (err) {
       console.error(err);
@@ -607,38 +843,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     mainCtx.putImageData(imgData, 0, 0);
 
-    let rect = mainCanvas.getBoundingClientRect();
-    let displayScale = rect.width > 0 ? (mainCanvas.width / rect.width) : 1;
-
-    // 1. Draw Signal ROI (Vibrant Yellow #facc15, solid, 4px screen thickness)
-    mainCtx.lineWidth = 2 * displayScale;
-    mainCtx.strokeStyle = "#facc15";
-    mainCtx.setLineDash([]);
-    mainCtx.strokeRect(signalRoi.x, signalRoi.y, signalRoi.w, signalRoi.h);
-    drawSquareHandles(signalRoi, "#facc15", displayScale);
-
-    // 2. Draw Background ROI (Pink #db2777, solid, 4px screen thickness)
-    mainCtx.lineWidth = 2 * displayScale;
-    mainCtx.strokeStyle = "#db2777";
-    mainCtx.strokeRect(bgRoi.x, bgRoi.y, bgRoi.w, bgRoi.h);
-    drawSquareHandles(bgRoi, "#db2777", displayScale);
-  }
-
-  function drawSquareHandles(roiBox, color, displayScale) {
-    const handleSize = 8 * displayScale;
-    mainCtx.fillStyle = color;
-    mainCtx.strokeStyle = "#000000";
-    mainCtx.lineWidth = 1.5 * displayScale;
-    let handles = [
-      { x: roiBox.x, y: roiBox.y },
-      { x: roiBox.x + roiBox.w, y: roiBox.y },
-      { x: roiBox.x, y: roiBox.y + roiBox.h },
-      { x: roiBox.x + roiBox.w, y: roiBox.y + roiBox.h }
-    ];
-    for (let h of handles) {
-      mainCtx.fillRect(h.x - handleSize/2, h.y - handleSize/2, handleSize, handleSize);
-      mainCtx.strokeRect(h.x - handleSize/2, h.y - handleSize/2, handleSize, handleSize);
-    }
+    renderMainOverlay();
   }
 
   // Colormap generator
@@ -911,33 +1116,31 @@ document.addEventListener("DOMContentLoaded", function () {
     let theta0 = 0;
 
     let p = [amp0, xo0, yo0, sigX0, sigY0, theta0, offset0];
-    let bestP = simplexOptimize(p, roiData, rw, rh);
+    let fit = simplexOptimize(p, roiData, rw, rh);
+    let bestP = fit.params;
 
     let [amp, xo, yo, sigX, sigY, theta, offset] = bestP;
     sigX = Math.abs(sigX);
     sigY = Math.abs(sigY);
 
     // Validate fit bounds (allowing small standard deviations down to 0.05 px)
-    if (amp <= 0 || sigX < 0.05 || sigY < 0.05 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
-      return { success: false };
+    if (!fit.converged || amp <= 0 || sigX < 0.05 || sigY < 0.05 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
+      return { success: false, fitConverged: fit.converged, fitNrmse: fit.nrmse };
     }
 
-    // Convert pixel standard deviations to standard deviations on screen in μm
-    let sigX_um = sigX * calibX;
-    let sigY_um = sigY * calibY;
-    let rmsMaj_um = Math.max(sigX_um, sigY_um);
-    let rmsMin_um = Math.min(sigX_um, sigY_um);
+    const axes = physicalGaussianAxes(sigX, sigY, theta, calibX, calibY);
+    let rmsMaj_um = axes.major;
+    let rmsMin_um = axes.minor;
 
     let fwhmMaj_um = 2 * Math.sqrt(2 * Math.LN2) * rmsMaj_um;
     let fwhmMin_um = 2 * Math.sqrt(2 * Math.LN2) * rmsMin_um;
 
-    // Convert spatial sizes on screen to divergences in mrad:
-    // theta = arctan(size_um / (dist_source_screen_mm * 1000)) * 1000
-    let divRmsMajor_mrad = Math.atan(rmsMaj_um / (distSourceScreen_mm * 1000)) * 1000;
-    let divRmsMinor_mrad = Math.atan(rmsMin_um / (distSourceScreen_mm * 1000)) * 1000;
+    // Convert one-sigma screen sizes to paraxial RMS divergence in mrad.
+    let divRmsMajor_mrad = rmsMaj_um / distSourceScreen_mm;
+    let divRmsMinor_mrad = rmsMin_um / distSourceScreen_mm;
 
-    let divFwhmMajor_mrad = Math.atan(fwhmMaj_um / (distSourceScreen_mm * 1000)) * 1000;
-    let divFwhmMinor_mrad = Math.atan(fwhmMin_um / (distSourceScreen_mm * 1000)) * 1000;
+    let divFwhmMajor_mrad = 2 * Math.atan(fwhmMaj_um / (2 * distSourceScreen_mm * 1000)) * 1000;
+    let divFwhmMinor_mrad = 2 * Math.atan(fwhmMin_um / (2 * distSourceScreen_mm * 1000)) * 1000;
 
     // Pointing instability deviation relative to Signal ROI center
     // Centroid relative coordinates: (x0 - rw/2, yo - rh/2)
@@ -975,9 +1178,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let fwhmSum = 0;
     let totalSum = 0;
+    const background = Math.max(0, offset);
     for (let y = 0; y < rh; y++) {
       for (let x = 0; x < rw; x++) {
-        let v = roiData[y * rw + x];
+        let v = Math.max(0, roiData[y * rw + x] - background);
         totalSum += v;
         let dx = x - xo;
         let dy = y - yo;
@@ -1012,8 +1216,25 @@ document.addEventListener("DOMContentLoaded", function () {
       devY_um: devY_um,
       meanBkg: meanBkg,
       beamCharge: beamCharge,
-      qFactor: qFactor
+      qFactor: qFactor,
+      fitNrmse: fit.nrmse,
+      fitConverged: fit.converged
     };
+  }
+
+  function physicalGaussianAxes(sigX, sigY, theta, calibX, calibY) {
+    const c = Math.cos(theta);
+    const s = Math.sin(theta);
+    const xx = calibX * calibX * (c * c * sigX * sigX + s * s * sigY * sigY);
+    const yy = calibY * calibY * (s * s * sigX * sigX + c * c * sigY * sigY);
+    const xy = calibX * calibY * c * s * (sigX * sigX - sigY * sigY);
+    const trace = xx + yy;
+    const delta = Math.sqrt(Math.max(0, (xx - yy) * (xx - yy) + 4 * xy * xy));
+    const major = Math.sqrt(Math.max(0, (trace + delta) / 2));
+    const minor = Math.sqrt(Math.max(0, (trace - delta) / 2));
+    let angle = 0.5 * Math.atan2(2 * xy, xx - yy);
+    angle = ((angle % Math.PI) + Math.PI) % Math.PI;
+    return { major, minor, angle };
   }
 
   function simplexOptimize(initialP, roiData, rw, rh) {
@@ -1055,11 +1276,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let costs = simplex.map(cost);
+    const sampleCount = rw * rh;
+    let dataSq = 0;
+    for (let i = 0; i < roiData.length; i++) dataSq += roiData[i] * roiData[i];
+    let converged = false;
 
-    for (let iter = 0; iter < 400; iter++) {
+    for (let iter = 0; iter < 1000; iter++) {
       let indices = Array.from({ length: N + 1 }, (_, i) => i).sort((a, b) => costs[a] - costs[b]);
       simplex = indices.map(i => simplex[i]);
       costs = indices.map(i => costs[i]);
+      const costRange = costs[N] - costs[0];
+      if (costRange / Math.max(1, costs[0]) < 1e-8) {
+        converged = true;
+        break;
+      }
 
       let centroid = new Array(N).fill(0);
       for (let i = 0; i < N; i++) {
@@ -1102,7 +1332,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let finalBestIdx = Array.from({ length: N + 1 }, (_, i) => i).sort((a, b) => costs[a] - costs[b])[0];
-    return simplex[finalBestIdx];
+    const nrmse = Math.sqrt(costs[finalBestIdx] / sampleCount) / (Math.sqrt(dataSq / sampleCount) || 1);
+    return { params: simplex[finalBestIdx], converged, nrmse };
   }
 
   // -------------------------------------------------------------
@@ -1326,12 +1557,14 @@ document.addEventListener("DOMContentLoaded", function () {
         <p style="margin:0.25rem 0;"><strong>Mean Background:</strong> ${fit.meanBkg.toFixed(1)} counts</p>
         <p style="margin:0.25rem 0;"><strong>Centroid dev X:</strong> ${fit.devX_um.toFixed(1)} μm</p>
         <p style="margin:0.25rem 0;"><strong>Centroid dev Y:</strong> ${fit.devY_um.toFixed(1)} μm</p>
+        <p style="margin:0.25rem 0;"><strong>Fit NRMSE:</strong> ${fit.fitNrmse.toExponential(2)}</p>
         ${chargeHtml}
       `;
     } else if (fit && !fit.success) {
       roiStatsDiv.innerHTML = `
         <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
         <p style="color:#ef4444; font-weight:700;">Fit not possible</p>
+        ${Number.isFinite(fit.fitNrmse) ? `<p>Fit NRMSE: ${fit.fitNrmse.toExponential(2)}</p>` : ''}
       `;
     } else {
       roiStatsDiv.innerHTML = `
