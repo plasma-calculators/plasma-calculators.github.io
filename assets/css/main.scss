@@ -491,6 +491,14 @@ $doc-font-size: 10pt;
   text-align: right;
 }
 
+.calculator-container.compact-mode .comparison-table.ebeam-fit-summary-table th:first-child,
+.calculator-container.compact-mode .comparison-table.ebeam-fit-summary-table td:first-child {
+  width: 40%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 /* Navigation Dropdown Support */
 .masthead-disclaimer {
   flex: 1 1 20rem;

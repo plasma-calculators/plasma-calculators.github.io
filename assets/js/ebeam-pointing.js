@@ -1,7 +1,7 @@
 /**
  * Electron Beam Pointing, Divergence & Charge Calculator Engine
  * Handles image uploading, interactive dual-ROI selection (Signal & Background),
- * background subtraction, 2D Gaussian fitting, divergence & pointing stability
+ * background subtraction, 2D profile fitting, divergence & pointing stability
  * calculations, absolute charge estimation, and memory diagnostics.
  */
 
@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const contrastMaxVal = document.getElementById("contrast-max-val");
 
   const calculateBtn = document.getElementById("calculate-btn");
+  const fitMethodInputs = document.querySelectorAll('input[name="fit-method"]');
   const errorMessageDiv = document.getElementById("error-message");
 
   // Post-Processed Results UI Elements
@@ -1005,7 +1006,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // -------------------------------------------------------------
-  // Nelder-Mead Simplex Fitting Engine for 2D Rotated Gaussian
+  // Nelder-Mead Simplex Fitting Engine for 2D Rotated Profiles
   // -------------------------------------------------------------
   function runCalculations() {
     showError("");
@@ -1017,6 +1018,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let calibX = parseFloat(calibXInput.value);
     let calibY = calibSameCheckbox.checked ? calibX : parseFloat(calibYInput.value);
     let distSourceScreen_mm = parseFloat(distSourceScreenInput.value);
+    let fitMethod = [...fitMethodInputs].find(input => input.checked)?.value || "gaussian";
 
     if (isNaN(calibX) || calibX <= 0 || isNaN(calibY) || calibY <= 0 || isNaN(distSourceScreen_mm) || distSourceScreen_mm <= 0) {
       showError("Please enter valid positive values for spatial calibration and source-screen distance.");
@@ -1038,7 +1040,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Process background subtraction and fitting for each image
     for (let imgObj of loadedImages) {
-      imgObj.fitResult = fit2DGaussianEbeam(imgObj, signalRoi, bgRoi, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss);
+      imgObj.fitResult = fit2DEbeam(imgObj, signalRoi, bgRoi, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss, fitMethod);
     }
 
     // Show Results Section
@@ -1055,7 +1057,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderPostRoiCanvas();
   }
 
-  function fit2DGaussianEbeam(imgObj, sigBox, backgroundBox, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss) {
+  function fit2DEbeam(imgObj, sigBox, backgroundBox, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss, fitMethod) {
     let imgW = imgObj.width;
     let imgH = imgObj.height;
     let data = imgObj.data;
@@ -1110,30 +1112,33 @@ document.addEventListener("DOMContentLoaded", function () {
     let xo0 = maxPx;
     let yo0 = maxPy;
     let offset0 = minVal;
-    // Estimate initial sigma dynamically (limits starting guess to reasonable 0.5-15 px range)
-    let sigX0 = Math.max(0.5, Math.min(15, rw / 4));
-    let sigY0 = Math.max(0.5, Math.min(15, rh / 4));
+    // Estimate initial profile widths dynamically (sigma for Gaussian, HWHM for Lorentzian).
+    let widthX0 = Math.max(0.5, Math.min(15, rw / 4));
+    let widthY0 = Math.max(0.5, Math.min(15, rh / 4));
     let theta0 = 0;
 
-    let p = [amp0, xo0, yo0, sigX0, sigY0, theta0, offset0];
-    let fit = simplexOptimize(p, roiData, rw, rh);
+    let p = [amp0, xo0, yo0, widthX0, widthY0, theta0, offset0];
+    let fit = simplexOptimize(p, roiData, rw, rh, fitMethod);
     let bestP = fit.params;
 
-    let [amp, xo, yo, sigX, sigY, theta, offset] = bestP;
-    sigX = Math.abs(sigX);
-    sigY = Math.abs(sigY);
+    let [amp, xo, yo, widthX, widthY, theta, offset] = bestP;
+    widthX = Math.abs(widthX);
+    widthY = Math.abs(widthY);
 
-    // Validate fit bounds (allowing small standard deviations down to 0.05 px)
-    if (!fit.converged || amp <= 0 || sigX < 0.05 || sigY < 0.05 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
-      return { success: false, fitConverged: fit.converged, fitNrmse: fit.nrmse };
+    // Validate fit bounds (allowing small profile widths down to 0.05 px)
+    if (!fit.converged || amp <= 0 || widthX < 0.05 || widthY < 0.05 || xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) {
+      return { success: false, fitConverged: fit.converged, fitNrmse: fit.nrmse, fitR2: fit.r2 };
     }
 
-    const axes = physicalGaussianAxes(sigX, sigY, theta, calibX, calibY);
-    let rmsMaj_um = axes.major;
-    let rmsMin_um = axes.minor;
+    const axes = physicalAxes(widthX, widthY, theta, calibX, calibY);
+    const isLorentzian = fitMethod === "lorentzian";
+    const rmsScale = isLorentzian ? 1 / Math.sqrt(2 * Math.LN2) : 1;
+    const fwhmScale = isLorentzian ? 2 : 2 * Math.sqrt(2 * Math.LN2);
+    let rmsMaj_um = axes.major * rmsScale;
+    let rmsMin_um = axes.minor * rmsScale;
 
-    let fwhmMaj_um = 2 * Math.sqrt(2 * Math.LN2) * rmsMaj_um;
-    let fwhmMin_um = 2 * Math.sqrt(2 * Math.LN2) * rmsMin_um;
+    let fwhmMaj_um = axes.major * fwhmScale;
+    let fwhmMin_um = axes.minor * fwhmScale;
 
     // Convert one-sigma screen sizes to paraxial RMS divergence in mrad.
     let divRmsMajor_mrad = rmsMaj_um / distSourceScreen_mm;
@@ -1170,11 +1175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // energy fraction (q-factor): FWHM contour integral / total ROI sum
-    let cosT = Math.cos(theta);
-    let sinT = Math.sin(theta);
-    let a_coef = (cosT * cosT) / (2 * sigX * sigX) + (sinT * sinT) / (2 * sigY * sigY);
-    let b_coef = -Math.sin(2 * theta) / (4 * sigX * sigX) + Math.sin(2 * theta) / (4 * sigY * sigY);
-    let c_coef = (sinT * sinT) / (2 * sigX * sigX) + (cosT * cosT) / (2 * sigY * sigY);
+    const fwhmLevel = isLorentzian ? 1 : Math.LN2;
 
     let fwhmSum = 0;
     let totalSum = 0;
@@ -1185,8 +1186,7 @@ document.addEventListener("DOMContentLoaded", function () {
         totalSum += v;
         let dx = x - xo;
         let dy = y - yo;
-        let expVal = a_coef * dx * dx + 2 * b_coef * dx * dy + c_coef * dy * dy;
-        if (expVal <= Math.LN2) {
+        if (rotatedQuadratic(dx, dy, widthX, widthY, theta) <= fwhmLevel) {
           fwhmSum += v;
         }
       }
@@ -1200,9 +1200,11 @@ document.addEventListener("DOMContentLoaded", function () {
       yo: actualYo,
       localXo: xo,
       localYo: yo,
-      sigmaX: sigX,
-      sigmaY: sigY,
+      widthX: widthX,
+      widthY: widthY,
       theta: theta,
+      fitMethod: fitMethod,
+      rmsLabel: isLorentzian ? "RMS-Equivalent" : "RMS",
       offset: offset,
       rmsMaj_um: rmsMaj_um,
       rmsMin_um: rmsMin_um,
@@ -1218,11 +1220,12 @@ document.addEventListener("DOMContentLoaded", function () {
       beamCharge: beamCharge,
       qFactor: qFactor,
       fitNrmse: fit.nrmse,
+      fitR2: fit.r2,
       fitConverged: fit.converged
     };
   }
 
-  function physicalGaussianAxes(sigX, sigY, theta, calibX, calibY) {
+  function physicalAxes(sigX, sigY, theta, calibX, calibY) {
     const c = Math.cos(theta);
     const s = Math.sin(theta);
     const xx = calibX * calibX * (c * c * sigX * sigX + s * s * sigY * sigY);
@@ -1237,14 +1240,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return { major, minor, angle };
   }
 
-  function simplexOptimize(initialP, roiData, rw, rh) {
+  function formatSignificantDecimal(value, digits = 4) {
+    if (!Number.isFinite(value)) return "—";
+    if (value === 0) return "0." + "0".repeat(digits - 1);
+    const magnitude = Math.pow(10, Math.floor(Math.log10(Math.abs(value))) - digits + 1);
+    const rounded = Math.round(value / magnitude) * magnitude;
+    const decimals = Math.max(0, digits - 1 - Math.floor(Math.log10(Math.abs(rounded))));
+    return rounded.toFixed(decimals);
+  }
+
+  function rotatedQuadratic(dx, dy, widthX, widthY, theta) {
+    const cosT = Math.cos(theta);
+    const sinT = Math.sin(theta);
+    const xRot = cosT * dx - sinT * dy;
+    const yRot = sinT * dx + cosT * dy;
+    return xRot * xRot / (widthX * widthX) + yRot * yRot / (widthY * widthY);
+  }
+
+  function simplexOptimize(initialP, roiData, rw, rh, fitMethod) {
     let N = initialP.length;
     let simplex = new Array(N + 1);
     simplex[0] = initialP.slice();
 
-    let sigX0 = initialP[3];
-    let sigY0 = initialP[4];
-    let step = [initialP[0] * 0.2, Math.max(0.5, rw * 0.1), Math.max(0.5, rh * 0.1), Math.max(0.2, sigX0 * 0.2), Math.max(0.2, sigY0 * 0.2), 0.2, initialP[6] * 0.2];
+    let widthX0 = initialP[3];
+    let widthY0 = initialP[4];
+    let step = [initialP[0] * 0.2, Math.max(0.5, rw * 0.1), Math.max(0.5, rh * 0.1), Math.max(0.2, widthX0 * 0.2), Math.max(0.2, widthY0 * 0.2), 0.2, initialP[6] * 0.2];
     for (let i = 0; i < N; i++) {
       let vertex = initialP.slice();
       vertex[i] += step[i] !== 0 ? step[i] : 1.0;
@@ -1252,22 +1272,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function cost(pVec) {
-      let [amp, xo, yo, sigX, sigY, theta, offset] = pVec;
-      if (sigX <= 0.05 || sigY <= 0.05 || amp <= 0) return 1e18;
+      let [amp, xo, yo, widthX, widthY, theta, offset] = pVec;
+      if (widthX <= 0.05 || widthY <= 0.05 || amp <= 0) return 1e18;
       if (xo < -rw || xo > 2 * rw || yo < -rh || yo > 2 * rh) return 1e18;
-
-      let cosT = Math.cos(theta);
-      let sinT = Math.sin(theta);
-      let a = (cosT * cosT) / (2 * sigX * sigX) + (sinT * sinT) / (2 * sigY * sigY);
-      let b = -Math.sin(2 * theta) / (4 * sigX * sigX) + Math.sin(2 * theta) / (4 * sigY * sigY);
-      let c = (sinT * sinT) / (2 * sigX * sigX) + (cosT * cosT) / (2 * sigY * sigY);
 
       let error = 0;
       for (let y = 0; y < rh; y++) {
         for (let x = 0; x < rw; x++) {
           let dx = x - xo;
           let dy = y - yo;
-          let model = offset + amp * Math.exp(-(a * dx * dx + 2 * b * dx * dy + c * dy * dy));
+          const radial = rotatedQuadratic(dx, dy, widthX, widthY, theta);
+          let model = fitMethod === "lorentzian"
+            ? offset + amp / (1 + radial)
+            : offset + amp * Math.exp(-0.5 * radial);
           let diff = roiData[y * rw + x] - model;
           error += diff * diff;
         }
@@ -1277,8 +1294,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let costs = simplex.map(cost);
     const sampleCount = rw * rh;
-    let dataSq = 0;
-    for (let i = 0; i < roiData.length; i++) dataSq += roiData[i] * roiData[i];
+    let dataSq = 0, dataSum = 0;
+    for (let i = 0; i < roiData.length; i++) {
+      dataSq += roiData[i] * roiData[i];
+      dataSum += roiData[i];
+    }
+    let totalSumSquares = 0;
+    const dataMean = dataSum / sampleCount;
+    for (let i = 0; i < roiData.length; i++) totalSumSquares += Math.pow(roiData[i] - dataMean, 2);
     let converged = false;
 
     for (let iter = 0; iter < 1000; iter++) {
@@ -1332,8 +1355,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let finalBestIdx = Array.from({ length: N + 1 }, (_, i) => i).sort((a, b) => costs[a] - costs[b])[0];
-    const nrmse = Math.sqrt(costs[finalBestIdx] / sampleCount) / (Math.sqrt(dataSq / sampleCount) || 1);
-    return { params: simplex[finalBestIdx], converged, nrmse };
+    const residualSumSquares = costs[finalBestIdx];
+    const nrmse = Math.sqrt(residualSumSquares / sampleCount) / (Math.sqrt(dataSq / sampleCount) || 1);
+    const r2 = totalSumSquares > 0 ? 1 - residualSumSquares / totalSumSquares : (residualSumSquares === 0 ? 1 : 0);
+    return { params: simplex[finalBestIdx], converged, nrmse, r2 };
   }
 
   // -------------------------------------------------------------
@@ -1348,6 +1373,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let divRmsMajArr = [], divRmsMinArr = [];
     let divFwhmMajArr = [], divFwhmMinArr = [];
+    let fitR2Arr = [], fitNrmseArr = [];
     let devXArr = [], devYArr = [], devRArr = [];
     let chargeArr = [];
 
@@ -1357,6 +1383,8 @@ document.addEventListener("DOMContentLoaded", function () {
       divRmsMinArr.push(img.fitResult.divRmsMin);
       divFwhmMajArr.push(img.fitResult.divFwhmMaj);
       divFwhmMinArr.push(img.fitResult.divFwhmMin);
+      fitR2Arr.push(img.fitResult.fitR2);
+      fitNrmseArr.push(img.fitResult.fitNrmse);
 
       devXArr.push(img.fitResult.devX_um);
       devYArr.push(img.fitResult.devY_um);
@@ -1376,15 +1404,18 @@ document.addEventListener("DOMContentLoaded", function () {
     let divRmsMinStats = calcStats(divRmsMinArr);
     let divFwhmMajStats = calcStats(divFwhmMajArr);
     let divFwhmMinStats = calcStats(divFwhmMinArr);
+    let fitR2Stats = calcStats(fitR2Arr);
+    let fitNrmseStats = calcStats(fitNrmseArr);
+    const rmsLabel = loadedImages.find(img => img.fitResult && img.fitResult.success)?.fitResult.rmsLabel || "RMS";
 
     summaryTableBody.innerHTML = `
       <tr>
-        <td><strong>RMS Major Axis Divergence</strong></td>
+        <td><strong>${rmsLabel} Major Axis Divergence</strong></td>
         <td class="font-highlight">${divRmsMajStats.mean.toFixed(2)} mrad</td>
         <td>${divRmsMajStats.std.toFixed(2)} mrad</td>
       </tr>
       <tr>
-        <td><strong>RMS Minor Axis Divergence</strong></td>
+        <td><strong>${rmsLabel} Minor Axis Divergence</strong></td>
         <td class="font-highlight">${divRmsMinStats.mean.toFixed(2)} mrad</td>
         <td>${divRmsMinStats.std.toFixed(2)} mrad</td>
       </tr>
@@ -1397,6 +1428,16 @@ document.addEventListener("DOMContentLoaded", function () {
         <td><strong>FWHM Minor Axis Divergence</strong></td>
         <td class="font-highlight">${divFwhmMinStats.mean.toFixed(2)} mrad</td>
         <td>${divFwhmMinStats.std.toFixed(2)} mrad</td>
+      </tr>
+      <tr>
+        <td><strong>Fit R²</strong></td>
+        <td class="font-highlight">${fitR2Stats.mean.toFixed(4)}</td>
+        <td>${fitR2Stats.std.toFixed(4)}</td>
+      </tr>
+      <tr>
+        <td><strong>Fit NRMSE</strong></td>
+        <td class="font-highlight">${formatSignificantDecimal(fitNrmseStats.mean)}</td>
+        <td>${formatSignificantDecimal(fitNrmseStats.std)}</td>
       </tr>
     `;
 
@@ -1504,8 +1545,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (fit && fit.success) {
       let localXo = fit.localXo;
       let localYo = fit.localYo;
-      let sigX = fit.sigmaX;
-      let sigY = fit.sigmaY;
+      let widthX = fit.widthX;
+      let widthY = fit.widthY;
       let theta = fit.theta;
 
       let contourColor = "#ffffff";
@@ -1521,8 +1562,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Parametric FWHM Ellipse
       let numPts = 100;
-      let rFwhmX = Math.sqrt(2 * Math.LN2) * sigX;
-      let rFwhmY = Math.sqrt(2 * Math.LN2) * sigY;
+      let fwhmRadiusScale = fit.fitMethod === "lorentzian" ? 1 : Math.sqrt(2 * Math.LN2);
+      let rFwhmX = fwhmRadiusScale * widthX;
+      let rFwhmY = fwhmRadiusScale * widthY;
       let cosT = Math.cos(theta);
       let sinT = Math.sin(theta);
 
@@ -1550,26 +1592,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
       roiStatsDiv.innerHTML = `
         <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
-        <p style="margin:0.25rem 0;"><strong>Divergence RMS Maj:</strong> <span class="font-highlight">${fit.divRmsMaj.toFixed(2)} mrad</span></p>
-        <p style="margin:0.25rem 0;"><strong>Divergence RMS Min:</strong> <span class="font-highlight">${fit.divRmsMin.toFixed(2)} mrad</span></p>
+        <p style="margin:0.25rem 0;"><strong>Divergence ${fit.rmsLabel} Maj:</strong> <span class="font-highlight">${fit.divRmsMaj.toFixed(2)} mrad</span></p>
+        <p style="margin:0.25rem 0;"><strong>Divergence ${fit.rmsLabel} Min:</strong> <span class="font-highlight">${fit.divRmsMin.toFixed(2)} mrad</span></p>
         <p style="margin:0.25rem 0;"><strong>Divergence FWHM Maj:</strong> <span class="font-highlight">${fit.divFwhmMaj.toFixed(2)} mrad</span></p>
         <p style="margin:0.25rem 0;"><strong>Divergence FWHM Min:</strong> <span class="font-highlight">${fit.divFwhmMin.toFixed(2)} mrad</span></p>
         <p style="margin:0.25rem 0;"><strong>Mean Background:</strong> ${fit.meanBkg.toFixed(1)} counts</p>
         <p style="margin:0.25rem 0;"><strong>Centroid dev X:</strong> ${fit.devX_um.toFixed(1)} μm</p>
         <p style="margin:0.25rem 0;"><strong>Centroid dev Y:</strong> ${fit.devY_um.toFixed(1)} μm</p>
-        <p style="margin:0.25rem 0;"><strong>Fit NRMSE:</strong> ${fit.fitNrmse.toExponential(2)}</p>
+        <p style="margin:0.25rem 0;"><strong>Fit R²:</strong> ${fit.fitR2.toFixed(4)}</p>
+        <p style="margin:0.25rem 0;"><strong>Fit NRMSE:</strong> ${formatSignificantDecimal(fit.fitNrmse)}</p>
         ${chargeHtml}
       `;
     } else if (fit && !fit.success) {
       roiStatsDiv.innerHTML = `
         <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
         <p style="color:#ef4444; font-weight:700;">Fit not possible</p>
-        ${Number.isFinite(fit.fitNrmse) ? `<p>Fit NRMSE: ${fit.fitNrmse.toExponential(2)}</p>` : ''}
+        ${Number.isFinite(fit.fitR2) ? `<p>Fit R²: ${fit.fitR2.toFixed(4)}</p>` : ''}
+        ${Number.isFinite(fit.fitNrmse) ? `<p>Fit NRMSE: ${formatSignificantDecimal(fit.fitNrmse)}</p>` : ''}
       `;
     } else {
       roiStatsDiv.innerHTML = `
         <h4 style="margin-top:0; margin-bottom:0.5rem; color:#111827; word-break: break-all;">Image ${currentPostIdx + 1}: ${imgObj.name}</h4>
-        <p style="color:#6b7280;">Click "Calculate" to perform 2D Gaussian fit.</p>
+        <p style="color:#6b7280;">Click "Calculate" to perform the selected 2D fit.</p>
       `;
     }
   }

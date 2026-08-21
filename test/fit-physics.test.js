@@ -18,6 +18,22 @@ const [major, minor] = physicalAxes(10, 5, Math.PI / 4, 2, 1);
 close(major, Math.sqrt((312.5 + Math.sqrt(187.5 ** 2 + 4 * 75 ** 2)) / 2), 1e-9);
 close(minor, Math.sqrt((312.5 - Math.sqrt(187.5 ** 2 + 4 * 75 ** 2)) / 2), 1e-9);
 
+// Calibration must remain horizontal-pixel → X and vertical-pixel → Y.
+const [unrotatedMajor, unrotatedMinor] = physicalAxes(10, 5, 0, 2, 3);
+close(unrotatedMajor, 20);
+close(unrotatedMinor, 15);
+
+// A Lorentzian HWHM maps to the documented Gaussian-equivalent RMS scale.
+const lorentzianHwhm = 5;
+close(lorentzianHwhm / Math.sqrt(2 * Math.LN2), 4.24660900144, 1e-10);
+close(2 * lorentzianHwhm, 10);
+
+// Goodness of fit uses R² = 1 - SSE/SST.
+const samples = [1, 2, 3];
+const mean = samples.reduce((sum, value) => sum + value, 0) / samples.length;
+const sst = samples.reduce((sum, value) => sum + (value - mean) ** 2, 0);
+close(1 - 1 / sst, 0.5);
+
 // Ideal background-free Gaussian: the FWHM ellipse contains half its energy.
 let total = 0, correctedTotal = 0, inside = 0;
 for (let y = -80; y <= 80; y++) for (let x = -80; x <= 80; x++) {

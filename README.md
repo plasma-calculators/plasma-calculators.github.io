@@ -1,293 +1,137 @@
-# [Minimal Mistakes Jekyll theme](https://mmistakes.github.io/minimal-mistakes/)
+# Plasma Calculators
 
-[![LICENSE](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/mmistakes/minimal-mistakes/master/LICENSE)
-[![Jekyll](https://img.shields.io/badge/jekyll-%3E%3D%203.7-blue.svg)](https://jekyllrb.com/)
+Plasma Calculators is a collection of interactive, browser-based tools for plasma physics, laser systems, diagnostics, and accelerator experiments. The goal is to make commonly used estimates and conversions easy to run, inspect, and understand without requiring a separate desktop application.
 
-Minimal Mistakes is a flexible two-column Jekyll theme, perfect for building personal sites, blogs, and portfolios. As the name implies, styling is purposely minimalistic to be enhanced and customized by you :smile:.
+The calculators provide physics-based estimates, reference values, and explanatory equations. They are intended to support experiment planning, quick checks, and learning; results should be validated against the relevant experiment, simulation, or published model before being used as design limits.
 
-:sparkles: See what's new in the [CHANGELOG](CHANGELOG.md).
+## Available calculators
 
-**Note:** The theme uses the [jekyll-include-cache](https://github.com/benbalter/jekyll-include-cache) plugin which will need to be installed in your `Gemfile` and must be retained in the `plugins` array of `_config.yml`. Otherwise you'll encounter `Unknown tag 'include_cached'` errors at build.
+- [Photon Attenuation Calculator](https://plasma-calculators.github.io/calculators/attenuation-calculator/): attenuation, transmission, and interaction probabilities for materials.
+- [Camera Count Estimator](https://plasma-calculators.github.io/calculators/counts-estimation/): estimate camera and detector counts from imaging parameters.
+- [Ultrafast Pulse Propagation & Dispersion Calculator](https://plasma-calculators.github.io/calculators/dispersion/): refractive index, GVD, GDD, TOD, pulse broadening, and propagated pulse profiles.
+- [Electron Beam Pointing & Divergence Calculator](https://plasma-calculators.github.io/calculators/ebeam-pointing/): beam pointing, divergence, jitter, and screen-based diagnostics.
+- [Focal Spot Size & Focus Intensity Calculator](https://plasma-calculators.github.io/calculators/focal-spot-calculator/): focused spot size and intensity estimates.
+- [NF/FF Calculator](https://plasma-calculators.github.io/calculators/laser-propagation/): near-field and far-field laser propagation estimates.
+- [Laser Spot Size & Gaussian Beam Optics Calculator](https://plasma-calculators.github.io/calculators/laser-spot-size/): Gaussian beam waist, Rayleigh range, divergence, and related optics.
+- [Laser Wakefield Acceleration (LWFA) Calculator](https://plasma-calculators.github.io/calculators/lwfa/): laser, plasma, bubble-regime, energy-gain, and validity diagnostics.
 
-[![Minimal Mistakes live preview][2]][1]
+Most calculators include a linked equations-and-physics page explaining the formulas, assumptions, and limitations behind the results.
 
-[1]: https://mmistakes.github.io/minimal-mistakes/
-[2]: docs/screenshot.png (live preview)
+## Technology
 
-![layout examples](docs/screenshot-layouts.png)
+The site is built with [Jekyll](https://jekyllrb.com/) and uses HTML, Sass/CSS, and JavaScript calculator engines. It is deployed as a static website through GitHub Pages at [plasma-calculators.github.io](https://plasma-calculators.github.io).
 
-## Notable features
+## Origin and base template
 
-- Bundled as a "theme gem" for easier installation/upgrading.
-- Compatible with GitHub Pages.
-- Support for Jekyll's built-in Sass/SCSS preprocessor.
-- Nine different skins (color variations).
-- Several responsive layout options (single, archive index, search, splash, and paginated home page).
-- Optimized for search engines with support for [Twitter Cards](https://dev.twitter.com/cards/overview) and [Open Graph](http://ogp.me/) data.
-- Optional [header images](https://mmistakes.github.io/minimal-mistakes/docs/layouts/#headers), [custom sidebars](https://mmistakes.github.io/minimal-mistakes/docs/layouts/#sidebars), [table of contents](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#table-of-contents), [galleries](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#gallery), related posts, [breadcrumb links](https://mmistakes.github.io/minimal-mistakes/docs/configuration/#breadcrumb-navigation-beta), [navigation lists](https://mmistakes.github.io/minimal-mistakes/docs/helpers/#navigation-list), and more.
-- Commenting support (powered by [Disqus](https://disqus.com/), [Facebook](https://developers.facebook.com/docs/plugins/comments), Google+, [Discourse](https://www.discourse.org/), static-based via [Staticman](https://staticman.net/), [utterances](https://utteranc.es/), and [giscus](https://giscus.app/)).
-- [Google Analytics](https://www.google.com/analytics/) support.
-- [Swetrix](https://swetrix.com/) GDPR-compliant analytics support.
-- UI localized text in English (default), Arabic (عربي), Brazilian Portuguese (Português brasileiro), Bulgarian, Catalan, Chinese, Czech, Danish, Dutch, Finnish, French (Français), German (Deutsch), Greek, Hebrew, Hindi (हिंदी), Hungarian, Indonesian, Irish (Gaeilge), Italian (Italiano), Japanese, Kiswahili, Korean, Malayalam, Myanmar (Burmese), Nepali (Nepalese), Norwegian (Norsk), Persian (فارسی), Polish, Punjabi (ਪੰਜਾਬੀ), Romanian, Russian, Slovak, Spanish (Español), Swedish, Thai, Turkish (Türkçe), Ukrainian (Українська) and Vietnamese.
+This website started from the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes), a responsive Jekyll theme created by Michael Rose and released under the MIT License. The original theme supplied the site structure, layouts, navigation, styling foundation, and responsive behavior. The Plasma Calculators project customizes that foundation with its own calculator pages, physics engines, visual design, navigation, and documentation.
 
-## Skins (color variations)
+## Local development
 
-This theme comes in 11 different skins (in addition to the default one).
+The recommended local environment is a micromamba environment named `website`. It keeps Ruby, Node.js, and the command-line tools used by the project separate from the system installation.
 
-| `air`                                                                                                                                                                                 | `contrast`                                                                                                                                                                                           | `dark`                                                                                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![air skin](docs/assets/images/air-skin-archive.png)](docs/assets/images/air-skin-archive-large.png) | [![contrast skin](docs/assets/images/contrast-skin-archive.png)](docs/assets/images/contrast-skin-archive-large.png) | [![dark skin](docs/assets/images/dark-skin-archive.png)](docs/assets/images/dark-skin-archive-large.png) |
+### Requirements
 
-| `dirt`                                                                                                                                                                                   | `mint`                                                                                                                                                                                   | `sunrise`                                                                                                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![dirt skin](docs/assets/images/dirt-skin-archive.png)](docs/assets/images/dirt-skin-archive-large.png) | [![mint skin](docs/assets/images/mint-skin-archive.png)](docs/assets/images/mint-skin-archive-large.png) | [![sunrise skin](docs/assets/images/sunrise-skin-archive.png)](docs/assets/images/sunrise-skin-archive-large.png) |
+- Git
+- micromamba
+- Ruby 3.3 (provided by the environment below)
+- Node.js (used by the calculator tests)
+- Bundler 2.5.22 (the version recorded in `Gemfile.lock`)
+- A C compiler and `make` for any Ruby gems that need native extensions
 
-| `aqua`                                                                                                                                                                                   | `neon`                                                                                                                                                                                   | `plum`                                                                                                                                                                                   |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![aqua skin](docs/assets/images/aqua-skin-archive.png)](docs/assets/images/aqua-skin-archive-large.png) | [![neon skin](docs/assets/images/neon-skin-archive.png)](docs/assets/images/neon-skin-archive-large.png) | [![plum skin](docs/assets/images/plum-skin-archive.png)](docs/assets/images/plum-skin-archive-large.png) |
+### 1. Install micromamba
 
-| `catppuccin_latte` | `catppuccin_mocha` |
-| --- | --- |
-| ![catppuccin_latte skin](docs/assets/images/catppuccin_latte-skin-archive-large.png) | ![catppuccin_mocha skin](docs/assets/images/catppuccin_mocha-skin-archive-large.png) |
-## Demo pages
+On macOS with Homebrew:
 
-| Name                                            | Description                                                   |
-| ----------------------------------------------- | ------------------------------------------------------------- |
-| [Post with Header Image][header-image-post]     | A post with a large header image.                             |
-| [HTML Tags and Formatting Post][html-tags-post] | A variety of common markup showing how the theme styles them. |
-| [Syntax Highlighting Post][syntax-post]         | Post displaying highlighted code.                             |
-| [Post with a Gallery][gallery-post]             | A post showing several images wrapped in `<figure>` elements. |
-| [Sample Collection Page][sample-collection]     | Single page from a collection.                                |
-| [Categories Archive][categories-archive]        | Posts grouped by category.                                    |
-| [Tags Archive][tags-archive]                    | Posts grouped by tag.                                         |
+```bash
+brew install micromamba
+micromamba shell init --shell zsh --root-prefix ~/micromamba
+exec zsh
+```
 
-Additional sample posts are available under [posts archive][year-archive] on the demo site. Source files for these (and the entire demo site) can be found in [`/docs`](docs).
+On Linux, use the official installer and restart your shell when it finishes:
 
-[header-image-post]: https://mmistakes.github.io/minimal-mistakes/layout-header-image-text-readability/
-[gallery-post]: https://mmistakes.github.io/minimal-mistakes/post%20formats/post-gallery/
-[html-tags-post]: https://mmistakes.github.io/minimal-mistakes/markup/markup-html-tags-and-formatting/
-[syntax-post]: https://mmistakes.github.io/minimal-mistakes/markup-syntax-highlighting/
-[sample-collection]: https://mmistakes.github.io/minimal-mistakes/recipes/chocolate-chip-cookies/
-[categories-archive]: https://mmistakes.github.io/minimal-mistakes/categories/
-[tags-archive]: https://mmistakes.github.io/minimal-mistakes/tags/
-[year-archive]: https://mmistakes.github.io/minimal-mistakes/year-archive/
+```bash
+"${SHELL}" <(curl -L micro.mamba.pm/api/micromamba/linux-64/latest)
+```
 
-## Installation
+For Apple Silicon, use the `osx-arm64` micromamba build; for Intel macOS, use `osx-64`. See the [micromamba installation documentation](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) if your platform needs a different build.
 
-There are three ways to install: as a [gem-based theme](https://jekyllrb.com/docs/themes/#understanding-gem-based-themes), as a [remote theme](https://blog.github.com/2017-11-29-use-any-theme-with-github-pages/) (GitHub Pages compatible), or forking/directly copying all of the theme files into your project.
+Check the installation:
 
-### Gem-based method
+```bash
+micromamba --version
+```
 
-With Gem-based themes, directories such as the `assets`, `_layouts`, `_includes`, and `_sass` are stored in the theme’s gem, hidden from your immediate view. Yet all of the necessary directories will be read and processed during Jekyll’s build process.
+### 2. Create the project environment
 
-This allows for easier installation and updating as you don't have to manage any of the theme files. To install:
+From the repository root, create the environment and activate it:
 
-1. Add the following to your `Gemfile`:
+```bash
+micromamba create -n website -c conda-forge ruby=3.3 nodejs git make
+micromamba activate website
+```
 
-   ```ruby
-   gem "minimal-mistakes-jekyll"
-   ```
+Install the Bundler version required by this repository, then install the locked Ruby dependencies into a local bundle directory:
 
-2. Fetch and update bundled gems by running the following [Bundler](http://bundler.io/) command:
+```bash
+gem install bundler -v 2.5.22
+bundle config set path vendor/bundle
+bundle install
+```
 
-   ```bash
-   bundle
-   ```
+The `Gemfile` and `Gemfile.lock` install Jekyll, the Minimal Mistakes theme, Sass support, feed/sitemap plugins, and the other build dependencies. Do not edit `Gemfile.lock` just to work around a local version mismatch; use the Bundler version recorded in its `BUNDLED WITH` section.
 
-3. Set the `theme` in your project's Jekyll `_config.yml` file:
+### 3. Run the website locally
 
-   ```yaml
-   theme: minimal-mistakes-jekyll
-   ```
+Start the development server with live reload:
 
-To update the theme run `bundle update`.
+```bash
+bundle exec jekyll serve --livereload
+```
 
-### Remote theme method
+Open <http://localhost:4000>. The calculator pages are available under `/calculators/`, for example <http://localhost:4000/calculators/lwfa/>.
 
-Remote themes are similar to Gem-based themes, but do not require `Gemfile` changes or whitelisting making them ideal for sites hosted with GitHub Pages.
+Stop the server with `Ctrl-C`. Run the command from the repository root so Jekyll uses the root `_config.yml` and site content.
 
-To install:
+### 4. Run tests and build checks
 
-1. Create/replace the contents of your `Gemfile` with the following:
+Run the JavaScript calculator tests inside the same environment:
 
-   ```ruby
-   source "https://rubygems.org"
+```bash
+node --test test/*.test.js
+```
 
-   gem "github-pages", group: :jekyll_plugins
-   gem "jekyll-include-cache", group: :jekyll_plugins
-   ```
+Build the site without starting a server:
 
-2. Add `jekyll-include-cache` to the `plugins` array of your `_config.yml`.
+```bash
+bundle exec jekyll build
+```
 
-3. Fetch and update bundled gems by running the following [Bundler](https://bundler.io/) command:
+The generated site is written to `_site/`. It is a build artifact and should not be edited manually.
 
-   ```bash
-   bundle
-   ```
+### Optional: graphify development tools
 
-4. Add `remote_theme: "mmistakes/minimal-mistakes@4.28.0"` to your `_config.yml` file. Remove any other `theme:` or `remote_theme:` entry.
+The repository also contains `graphify-out/`, a knowledge graph used for codebase navigation. To install the optional graphify command in the environment:
 
-<!--
-  Dev note: The version number is currently hard-coded in these files:
+```bash
+micromamba install -n website -c conda-forge python=3.12 pip
+micromamba run -n website python -m pip install graphifyy
+```
 
-    - package.json
-    - README.md (this file)
-    - docs/_data/theme.yml
-    - docs/_pages/home.md (in Front Matter "excerpt")
+Then query or refresh the graph from the repository root:
 
-  `package.json` holds the authoritative version number, and the others can be updated with `bundle exec rake version`.
+```bash
+micromamba run -n website graphify query "How does the LWFA calculator render its results?"
+micromamba run -n website graphify update .
+```
 
-  The following files should also be regenerated:
+### Troubleshooting
 
-    - _includes/copyright.html, _includes/copyright.js, _sass/minimal-mistakes/_copyright.scss
-      (Run `bundle exec rake clean` then `bundle exec rake copyright` - all three references `package.json`)
-    - assets/js/main.min.js (Run `bundle exec rake js`, references `_includes/copyright.js`)
-
-  *Tip*: The default Rake task will update all of the above files at once.
-
-  Additionally, the license year is hard-coded in these files and are NOT covered by a Rake task:
-
-    - README.md (this file, near the end)
-    - LICENSE
--->
-
-**Looking for an example?** Use the [Minimal Mistakes remote theme starter](https://github.com/mmistakes/mm-github-pages-starter/generate) for the quickest method of getting a GitHub Pages hosted site up and running. Generate a new repository from the starter, replace sample content with your own, and configure as needed.
-
-## Usage
-
-For detailed instructions on how to configure, customize, add/migrate content, and more read the [theme's documentation](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/).
-
-## Contributing
-
-Found a typo in the documentation or interested in [fixing a bug](https://github.com/mmistakes/minimal-mistakes/issues)? Then by all means [submit an issue](https://github.com/mmistakes/minimal-mistakes/issues/new) or [pull request](https://help.github.com/articles/using-pull-requests/). If this is your first pull request, it may be helpful to read up on the [GitHub Flow](https://guides.github.com/introduction/flow/) first.
-
-For help with using the theme or general Jekyll support questions, please use the [Jekyll Talk forums](https://talk.jekyllrb.com/).
-
-### Pull Requests
-
-When submitting a pull request:
-
-1. Clone the repo.
-2. Create a branch off of `master` and give it a meaningful name (e.g. `my-awesome-new-feature`).
-3. Open a pull request on GitHub and describe the feature or fix.
-
-Theme documentation and demo pages can be found in the [`/docs`](docs) if submitting improvements, typo corrections, etc.
-
-## Development
-
-To set up your environment to develop this theme, run `bundle install`.
-
-To test the theme, run `bundle exec rake preview` and open your browser at `http://localhost:4000/test/`. This starts a Jekyll server using content in the `test/` directory. As modifications are made to the theme and test site, it will regenerate and you should see the changes in the browser after a refresh.
-
-## Credits
-
-### Creator
-
-**Michael Rose**
-
-- <https://mademistakes.com>
-- <https://twitter.com/mmistakes>
-- <https://github.com/mmistakes>
-
-### Icons + Demo Images:
-
-- [The Noun Project](https://thenounproject.com) - Garrett Knoll, Arthur Shlain, and [tracy tam](https://thenounproject.com/tracytam)
-- [Font Awesome](http://fontawesome.io/)
-- [Unsplash](https://unsplash.com/)
-
-### Other:
-
-- [Jekyll](http://jekyllrb.com/)
-- [jQuery](http://jquery.com/)
-- [Susy](http://susy.oddbird.net/)
-- [Breakpoint](http://breakpoint-sass.com/)
-- [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/)
-- [FitVids.JS](http://fitvidsjs.com/)
-- [GreedyNav.js](https://github.com/lukejacksonn/GreedyNav)
-- [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-- [Gumshoe](https://github.com/cferdinandi/gumshoe)
-- [jQuery throttle / debounce](http://benalman.com/projects/jquery-throttle-debounce-plugin/)
-- [Lunr](http://lunrjs.com)
-- [Clipboard.js](https://clipboardjs.com)
+- **`bundle` asks for a different Bundler version:** install `bundler -v 2.5.22` and rerun `bundle install`.
+- **A gem fails to compile:** install the platform build tools, especially a C compiler and `make`, then rerun `bundle install`.
+- **The port is already in use:** run `bundle exec jekyll serve --livereload --port 4001` and open <http://localhost:4001>.
+- **Changes are not visible:** stop and restart the server after changing `_config.yml`, Gemfile files, or Sass configuration; those changes are not always reloaded automatically.
 
 ## License
 
-The MIT License (MIT)
-
-Copyright (c) 2013-2024 Michael Rose and contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-Minimal Mistakes incorporates icons from [The Noun Project](https://thenounproject.com/) 
-creators Garrett Knoll, Arthur Shlain, and tracy tam.
-Icons are distributed under Creative Commons Attribution 3.0 United States (CC BY 3.0 US).
-
-Minimal Mistakes incorporates [Font Awesome](http://fontawesome.io/),
-Copyright (c) 2017 Dave Gandy.
-Font Awesome is distributed under the terms of the [SIL OFL 1.1](http://scripts.sil.org/OFL) 
-and [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates photographs from [Unsplash](https://unsplash.com).
-
-Minimal Mistakes incorporates [Susy](http://susy.oddbird.net/),
-Copyright (c) 2017, Miriam Eric Suzanne.
-Susy is distributed under the terms of the [BSD 3-clause "New" or "Revised" License](https://opensource.org/licenses/BSD-3-Clause).
-
-Minimal Mistakes incorporates [Breakpoint](http://breakpoint-sass.com/).
-Breakpoint is distributed under the terms of the [MIT/GPL Licenses](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [FitVids.js](https://github.com/davatron5000/FitVids.js/),
-Copyright (c) 2013 Dave Rubert and Chris Coyier.
-FitVids is distributed under the terms of the [WTFPL License](http://www.wtfpl.net/).
-
-Minimal Mistakes incorporates [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/),
-Copyright (c) 2014-2016 Dmitry Semenov, http://dimsemenov.com.
-Magnific Popup is distributed under the terms of the MIT License.
-
-Minimal Mistakes incorporates [Smooth Scroll](http://github.com/cferdinandi/smooth-scroll),
-Copyright (c) 2019 Chris Ferdinandi.
-Smooth Scroll is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [Gumshoejs](http://github.com/cferdinandi/gumshoe),
-Copyright (c) 2019 Chris Ferdinandi.
-Gumshoejs is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [jQuery throttle / debounce](http://benalman.com/projects/jquery-throttle-debounce-plugin/),
-Copyright (c) 2010 "Cowboy" Ben Alman.
-jQuery throttle / debounce is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [GreedyNav.js](https://github.com/lukejacksonn/GreedyNav),
-Copyright (c) 2015 Luke Jackson.
-GreedyNav.js is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [Jekyll Group-By-Array](https://github.com/mushishi78/jekyll-group-by-array),
-Copyright (c) 2015 Max White <mushishi78@gmail.com>.
-Jekyll Group-By-Array is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [@allejo's Pure Liquid Jekyll Table of Contents](https://allejo.io/blog/a-jekyll-toc-in-liquid-only/),
-Copyright (c) 2017 Vladimir Jimenez.
-Pure Liquid Jekyll Table of Contents is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [Lunr](http://lunrjs.com),
-Copyright (c) 2018 Oliver Nightingale.
-Lunr is distributed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-Minimal Mistakes incorporates [clipboard.js](https://clipboardjs.com/),
-Copyright (c) 2021 Zeno Rocha.
-Clipboard.js is distributed under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The site-specific calculator code and content are maintained in this repository. The underlying Minimal Mistakes theme is available under the [MIT License](https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE); see the repository files and upstream project for the applicable licensing details.

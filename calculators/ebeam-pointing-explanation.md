@@ -108,14 +108,19 @@ classes: wide
   </div>
 
   <div class="exp-section">
-    <h3>3. 2D Rotated Gaussian Fit & Geometric Divergence</h3>
+    <h3>3. 2D Rotated Profile Fit & Geometric Divergence</h3>
     <p>
-      A 2D rotated Gaussian profile is fitted to the intensity distribution inside the signal ROI:
+      The selected 2D rotated profile is fitted to the intensity distribution inside the signal ROI. The Gaussian option uses:
     </p>
     <div class="math-box">
       $$f(x,y) = z_0 + A \exp\left( - \left[ a (x - x_0)^2 + 2b (x - x_0)(y - y_0) + c (y - y_0)^2 \right] \right)$$
     </div>
-    <p>where the ellipse coefficients $a, b, c$ are parameterized by standard deviations $\sigma_x, \sigma_y$ and rotation angle $\theta$. The spatial major/minor standard deviations (beam envelope sizes) are defined as:</p>
+    <p>The Lorentzian option uses the same rotated ellipse, parameterized by horizontal and vertical half-widths at half maximum (HWHM), $\gamma_x$ and $\gamma_y$:</p>
+    <div class="math-box">
+      $$f(x,y) = z_0 + \frac{A}{1 + \left(\frac{x'^2}{\gamma_x^2} + \frac{y'^2}{\gamma_y^2}\right)}$$
+    </div>
+    <p>Here $(x',y')$ are coordinates rotated by $\theta$. For Gaussian fits the ellipse widths are standard deviations $\sigma_x, \sigma_y$. A mathematical Lorentzian has no finite RMS width, so its reported RMS-equivalent width is $\gamma / \sqrt{2\ln2}$, which makes it directly comparable to the Gaussian RMS scale. The Lorentzian FWHM is $2\gamma$.</p>
+    <p>After applying the horizontal and vertical pixel calibrations, the physical major/minor widths are selected from the transformed covariance. The spatial major/minor Gaussian standard deviations (or Lorentzian RMS-equivalent widths) are defined as:</p>
     <div class="math-box">
       $$\sigma_{\text{maj}} = \max(\sigma_x C_x, \sigma_y C_y), \quad \sigma_{\text{min}} = \min(\sigma_x C_x, \sigma_y C_y)$$
     </div>
@@ -134,6 +139,7 @@ classes: wide
     <div class="math-box">
       $$\theta_{\text{FWHM, min}} = 2\arctan\left(\frac{d_{\text{FWHM, min}}}{2L\times1000}\right)\times1000$$
     </div>
+    <p>Fit quality is reported as $R^2 = 1 - \mathrm{SSE}/\mathrm{SST}$, where values closer to 1 indicate that the model explains more ROI variation, and as normalized root-mean-square error (NRMSE), where lower values are better.</p>
   </div>
 
   <div class="exp-section">

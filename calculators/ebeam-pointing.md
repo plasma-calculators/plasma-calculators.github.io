@@ -69,6 +69,16 @@ classes: wide
         <input type="number" id="dist-source-screen" value="1870" min="1" step="1" class="small-input" required>
       </div>
 
+      <h4 class="input-section-title">Fitting Method</h4>
+      <div class="form-group" style="display: flex; flex-direction: column; gap: 0.4rem;">
+        <label class="radio-label" style="font-size: 0.82rem;">
+          <input type="radio" name="fit-method" value="gaussian" checked style="width: auto; margin-right: 0.35rem;"> 2D Gaussian
+        </label>
+        <label class="radio-label" style="font-size: 0.82rem;">
+          <input type="radio" name="fit-method" value="lorentzian" style="width: auto; margin-right: 0.35rem;"> 2D Lorentzian
+        </label>
+      </div>
+
       <h4 class="input-section-title">Charge Parameters (Optional)</h4>
       <div class="form-group" style="margin-bottom: 0.4rem;">
         <label class="radio-label" style="font-size: 0.78rem; font-weight: 600;">
@@ -203,7 +213,7 @@ classes: wide
       <!-- Overall Statistical Results Table -->
       <div class="results-group" style="padding: 1rem; margin-bottom: 1.5rem;">
         <h3>2. Summary Results (Average & RMS across Images)</h3>
-        <table class="comparison-table">
+        <table class="comparison-table ebeam-fit-summary-table">
           <thead>
             <tr>
               <th style="width: 40%;">Parameter</th>
