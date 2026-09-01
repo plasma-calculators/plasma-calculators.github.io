@@ -206,6 +206,14 @@ classes: wide
           </button>
         </div>
       </div>
+
+      <div id="calc-progress-wrapper" style="display: none; margin-top: 0.85rem; padding: 0.75rem 0.85rem; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px;" aria-live="polite">
+        <div id="calc-progress-label" style="font-size: 0.78rem; font-weight: 600; color: #0369a1; margin-bottom: 0.4rem;">Preparing fits…</div>
+        <div id="calc-progress-track" style="height: 8px; background: #e0f2fe; border-radius: 9999px; overflow: hidden;" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Electron beam fitting progress">
+          <div id="calc-progress-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #6366f1); border-radius: 9999px; transition: width 0.2s ease;"></div>
+        </div>
+        <div id="calc-progress-detail" style="font-size: 0.7rem; color: #64748b; margin-top: 0.3rem;"></div>
+      </div>
     </div>
 
     <!-- Calculated Results Container -->

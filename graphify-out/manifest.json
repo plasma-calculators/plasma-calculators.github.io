@@ -3495,8 +3495,8 @@
     "semantic_hash": ""
   },
   "assets/js/ebeam-pointing.js": {
-    "mtime": 1787312459.7481687,
-    "ast_hash": "abe01ab5576e1fdabb83f9fbe777ad75",
+    "mtime": 1788260391.4685507,
+    "ast_hash": "121596931777f8317b5fb2c2af16f348",
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing-explanation.md": {
@@ -3505,8 +3505,8 @@
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing.md": {
-    "mtime": 1787312443.3281627,
-    "ast_hash": "fce1cf964ee6fc846d2f722a167bfa27",
+    "mtime": 1788260358.3944988,
+    "ast_hash": "4ddb1b8e94d1a1f8c91330b335b971be",
     "semantic_hash": ""
   },
   "assets/images/ebeam_pointing_card.jpg": {
@@ -3617,6 +3617,11 @@
   "assets/images/propagation_card_nf.png": {
     "mtime": 1786365575.7319705,
     "ast_hash": "d87e8beea8cbf4fc1f1a40836dd22a61",
+    "semantic_hash": ""
+  },
+  "test/ebeam-progress.test.js": {
+    "mtime": 1788260400.4195929,
+    "ast_hash": "e8fe9d015c99044efee610da82432271",
     "semantic_hash": ""
   }
 }

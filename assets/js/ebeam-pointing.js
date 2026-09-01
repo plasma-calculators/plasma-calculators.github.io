@@ -43,6 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const calculateBtn = document.getElementById("calculate-btn");
   const fitMethodInputs = document.querySelectorAll('input[name="fit-method"]');
   const errorMessageDiv = document.getElementById("error-message");
+  const progressWrapper = document.getElementById("calc-progress-wrapper");
+  const progressBar = document.getElementById("calc-progress-bar");
+  const progressLabel = document.getElementById("calc-progress-label");
+  const progressDetail = document.getElementById("calc-progress-detail");
+  const progressTrack = document.getElementById("calc-progress-track");
 
   // Post-Processed Results UI Elements
   const resultsContainer = document.getElementById("results-container");
@@ -77,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let loadedImages = []; // Array of { name, width, height, data: Float64Array, minVal, maxVal, fileSize, fitResult: null }
   let currentImageIdx = 0;
   let currentPostIdx = 0;
+  let progressHideTimer = null;
 
   const viewportState = {
     zoom: 1,
@@ -89,6 +95,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const ZOOM_STEP = 0.25;
   const WHEEL_ZOOM_SENSITIVITY = 0.001;
   const MAX_DEVICE_PIXEL_RATIO = 3;
+
+  function showProgress(pct, label, detail) {
+    const value = Math.min(100, Math.max(0, pct));
+    if (progressWrapper) progressWrapper.style.display = "block";
+    if (progressBar) progressBar.style.width = `${value}%`;
+    if (progressTrack) progressTrack.setAttribute("aria-valuenow", String(Math.round(value)));
+    if (progressLabel && label) progressLabel.innerText = label;
+    if (progressDetail && detail !== undefined) progressDetail.innerText = detail;
+  }
+
+  function hideProgress() {
+    if (progressWrapper) progressWrapper.style.display = "none";
+  }
+
+  function yieldToDOM() {
+    return new Promise(resolve => setTimeout(resolve, 15));
+  }
 
   // Dual ROI State (in image pixel coordinates)
   // Default values matching ebeam_pointing_jeti.py and pointing.py
@@ -1008,7 +1031,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------------------------------------------
   // Nelder-Mead Simplex Fitting Engine for 2D Rotated Profiles
   // -------------------------------------------------------------
-  function runCalculations() {
+  async function runCalculations() {
     showError("");
     if (loadedImages.length === 0) {
       showError("Please upload image files first.");
@@ -1038,23 +1061,37 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Process background subtraction and fitting for each image
-    for (let imgObj of loadedImages) {
-      imgObj.fitResult = fit2DEbeam(imgObj, signalRoi, bgRoi, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss, fitMethod);
-    }
+    if (calculateBtn) calculateBtn.disabled = true;
+    if (progressHideTimer) clearTimeout(progressHideTimer);
+    showProgress(0, "Preparing fits…", `${loadedImages.length} image${loadedImages.length === 1 ? "" : "s"}`);
 
-    // Show Results Section
-    resultsContainer.style.display = "block";
+    try {
+      // Process background subtraction and fitting for each image.
+      for (let index = 0; index < loadedImages.length; index++) {
+        const imgObj = loadedImages[index];
+        showProgress(((index + 1) / loadedImages.length) * 100, `Fitting image ${index + 1} / ${loadedImages.length}`, imgObj.name);
+        await yieldToDOM();
+        imgObj.fitResult = fit2DEbeam(imgObj, signalRoi, bgRoi, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss, fitMethod);
+      }
 
-    if (loadedImages.length > 0) {
+      // Show Results Section
+      resultsContainer.style.display = "block";
+
       currentPostIdx = 0;
       postImageSlider.value = 0;
       postImageSliderLabel.innerText = "1 / " + loadedImages.length;
-    }
 
-    // Update Summary Tables & Post-Processed Canvas
-    updateSummaryTables(isChargeEnabled);
-    renderPostRoiCanvas();
+      // Update Summary Tables & Post-Processed Canvas
+      updateSummaryTables(isChargeEnabled);
+      renderPostRoiCanvas();
+      showProgress(100, "Done!", `${loadedImages.length} image${loadedImages.length === 1 ? "" : "s"} fitted`);
+      progressHideTimer = setTimeout(hideProgress, 3500);
+    } catch (error) {
+      showError(error && error.message ? error.message : "Could not complete the electron-beam fits.");
+      hideProgress();
+    } finally {
+      if (calculateBtn) calculateBtn.disabled = false;
+    }
   }
 
   function fit2DEbeam(imgObj, sigBox, backgroundBox, calibX, calibY, distSourceScreen_mm, isChargeEnabled, screenYield, distCamScreen_mm, cameraCalib, lensFocal, lensFnumber, transmissionLoss, fitMethod) {
