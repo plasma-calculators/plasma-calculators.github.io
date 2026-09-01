@@ -37,6 +37,32 @@
     if (!Number.isFinite(value) || value <= 0) throw new Error(`${label} must be positive.`);
   }
 
+  function computeLaserProfiles(input) {
+    const p = input || {};
+    const durationFs = Number(p.durationFs);
+    const energyJ = Number(p.energyJ);
+    const waistUm = Number(p.waistUm);
+    const wavelengthUm = Number(p.wavelengthUm);
+    const q = Number(p.q);
+    finitePositive(durationFs, "Pulse duration");
+    finitePositive(energyJ, "Pulse energy");
+    finitePositive(waistUm, "Waist radius");
+    finitePositive(wavelengthUm, "Wavelength");
+    if (!Number.isFinite(q) || q < 0 || q > 1) throw new Error("q-factor must be between 0 and 1.");
+
+    const areaUm2 = Math.PI * waistUm * waistUm;
+    const gaussianPowerTW = energyJ / durationFs * Math.sqrt(4 * Math.LN2 / Math.PI) * 1000 * q;
+    const topHatPowerTW = energyJ / durationFs * 1000 * q;
+    const gaussianIntensity18 = 2 * gaussianPowerTW / areaUm2 * 100;
+    const topHatIntensity18 = topHatPowerTW / areaUm2 * 100;
+    const a0 = intensity18 => Math.sqrt(intensity18 * wavelengthUm * wavelengthUm / C.a0IntensityDenominator);
+    return {
+      areaUm2,
+      gaussian: { peakPowerTW: gaussianPowerTW, peakIntensity18: gaussianIntensity18, a0: a0(gaussianIntensity18) },
+      topHat: { peakPowerTW: topHatPowerTW, peakIntensity18: topHatIntensity18, a0: a0(topHatIntensity18) }
+    };
+  }
+
   function compute(input) {
     const p = input || {};
     const durationFs = Number(p.durationFs);
@@ -84,7 +110,8 @@
     const debyeNm = Math.sqrt(C.eps0 * temperatureEv * C.e / (ne * 1e6 * C.e * C.e)) * 1e9;
     const thermalSpeedMps = omegaP * debyeNm * 1e-9;
     const pCritTw = C.criticalPowerGW * 1e9 * Math.pow(omegaLaser / omegaP, 2) / 1e12;
-    const areaUm2 = Math.PI * waistUm * waistUm;
+    const laserProfiles = computeLaserProfiles({ durationFs, energyJ, waistUm, wavelengthUm, q });
+    const areaUm2 = laserProfiles.areaUm2;
     const pulseLengthM = C.c * durationFs * 1e-15;
     const rayleighMm = Math.PI * Math.pow(waistUm * 1e-6, 2) / (wavelengthUm * 1e-6) * 1e3;
 
@@ -131,10 +158,8 @@
       };
     }
 
-    const gaussianPowerTw = energyJ / durationFs * Math.sqrt(4 * Math.LN2 / Math.PI) * 1000 * q;
-    const topHatPowerTw = energyJ / durationFs * 1000 * q;
-    const gaussian = profile("Gaussian", gaussianPowerTw, 2 * gaussianPowerTw / areaUm2 * 100);
-    const topHat = profile("Top-hat", topHatPowerTw, topHatPowerTw / areaUm2 * 100);
+    const gaussian = profile("Gaussian", laserProfiles.gaussian.peakPowerTW, laserProfiles.gaussian.peakIntensity18);
+    const topHat = profile("Top-hat", laserProfiles.topHat.peakPowerTW, laserProfiles.topHat.peakIntensity18);
 
     const warnings = [];
     if (underdenseRatio >= 1) warnings.push("The plasma density is at or above critical density for this wavelength.");
@@ -165,5 +190,5 @@
     };
   }
 
-  return { constants: C, parseDensity, compute };
+  return { constants: C, parseDensity, computeLaserProfiles, compute };
 }));

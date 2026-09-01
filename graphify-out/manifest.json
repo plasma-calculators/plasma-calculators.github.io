@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "assets/js/dispersion-engine.js": {
-    "mtime": 1785395209.8008566,
-    "ast_hash": "2053568872219d8c7ecee41c350eafef",
+    "mtime": 1786361372.5333035,
+    "ast_hash": "5894d05d62a0ffc311fd8151a5d2fc16",
     "semantic_hash": ""
   },
   "assets/js/lunr/lunr-en.js": {
@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "test/dispersion.test.js": {
-    "mtime": 1785395209.9974751,
-    "ast_hash": "a63d8dcda5f5e5ccf771e02153b12fd7",
+    "mtime": 1786361418.4439414,
+    "ast_hash": "8430749af8444d5472443f0a4997f749",
     "semantic_hash": ""
   },
   ".github/CONTRIBUTING.md": {
@@ -165,17 +165,17 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1785395209.7773015,
-    "ast_hash": "4fd9bf589c4e70adaf216703f07f518f",
+    "mtime": 1787064285.0892441,
+    "ast_hash": "360c42da2e36ed562f5ce22ec72f6fbc",
     "semantic_hash": ""
   },
   "_config.yml": {
-    "mtime": 1785395209.7776306,
-    "ast_hash": "40beadf5929d2bf3833ca333e8182aa3",
+    "mtime": 1786111969.7261486,
+    "ast_hash": "7ddb112af2a533fc3e0538acd2f9f5aa",
     "semantic_hash": ""
   },
   "_data/navigation.yml": {
-    "mtime": 1785481986.3646758,
+    "mtime": 1786030292.948952,
     "ast_hash": "52605098efc56c40c0a4a1389139d576",
     "semantic_hash": ""
   },
@@ -335,13 +335,13 @@
     "semantic_hash": ""
   },
   "_includes/head/custom.html": {
-    "mtime": 1785395209.7808645,
-    "ast_hash": "e690e23c491a1abf6d579df5be82d278",
+    "mtime": 1786111917.9054956,
+    "ast_hash": "5776e4d0647906131b55780d647653f1",
     "semantic_hash": ""
   },
   "_includes/masthead.html": {
-    "mtime": 1785395209.7809346,
-    "ast_hash": "319b113a27f86cfa7ad01ed45b649997",
+    "mtime": 1786364844.5193715,
+    "ast_hash": "ce8ecc67f0fde6c7c1045b713e1f7387",
     "semantic_hash": ""
   },
   "_includes/page__date.html": {
@@ -565,33 +565,33 @@
     "semantic_hash": ""
   },
   "calculators/dispersion-explanation.md": {
-    "mtime": 1785395209.8135107,
-    "ast_hash": "cabb4aed1103ad6b328582476b519852",
+    "mtime": 1786361490.510654,
+    "ast_hash": "f2ebfc0c198865e5de1cd7b579181250",
     "semantic_hash": ""
   },
   "calculators/dispersion.md": {
-    "mtime": 1785395209.8135953,
-    "ast_hash": "8c430bf006b29439d75c70405efa1976",
+    "mtime": 1786362626.9099226,
+    "ast_hash": "993073e008146abc3e1d98fa33c7254e",
     "semantic_hash": ""
   },
   "calculators/laser-spot-size-explanation.md": {
-    "mtime": 1785395209.8140953,
-    "ast_hash": "93eacf97603f4caff00c5f7fadc1a8b2",
+    "mtime": 1788254413.781403,
+    "ast_hash": "d66bc5e47aaa5b86cf6ca3620c494ebf",
     "semantic_hash": ""
   },
   "calculators/laser-spot-size.md": {
-    "mtime": 1785395209.8141794,
-    "ast_hash": "eaa36395d5337a9a14e02ddd7f5069b3",
+    "mtime": 1788254404.7733986,
+    "ast_hash": "d78657ec7aa7bb05e820599b599a046b",
     "semantic_hash": ""
   },
   "calculators/lwfa-explanation.md": {
-    "mtime": 1785395209.814316,
-    "ast_hash": "be01f3882f70cbb0f554231f90864197",
+    "mtime": 1786365541.4093416,
+    "ast_hash": "0b7505c7e3e55a6c08a8ab486a101003",
     "semantic_hash": ""
   },
   "calculators/lwfa.md": {
-    "mtime": 1785395209.814387,
-    "ast_hash": "5982b8f2e8581a2772fbf1f765b97a0e",
+    "mtime": 1788254582.371903,
+    "ast_hash": "f1345f5213a1f461a590acb923862562",
     "semantic_hash": ""
   },
   "docs/_config.dev.yml": {
@@ -1610,8 +1610,8 @@
     "semantic_hash": ""
   },
   "index.md": {
-    "mtime": 1785479874.5858407,
-    "ast_hash": "9aeab0a8812d82e17a7e9efbb5a3daa0",
+    "mtime": 1786365579.7415686,
+    "ast_hash": "eb792906762477cfc8e99f5a392ca510",
     "semantic_hash": ""
   },
   "staticman.yml": {
@@ -3465,8 +3465,8 @@
     "semantic_hash": ""
   },
   "assets/js/focal-spot-calculator.js": {
-    "mtime": 1785606000.0322244,
-    "ast_hash": "63271733eb59be9dd4ed6e3444049758",
+    "mtime": 1786395902.5814679,
+    "ast_hash": "a59dfbc011b70ddbd10634d6d90b5e02",
     "semantic_hash": ""
   },
   "assets/js/vendor/utif.js": {
@@ -3475,13 +3475,13 @@
     "semantic_hash": ""
   },
   "calculators/focal-spot-calculator.md": {
-    "mtime": 1785605977.8065977,
-    "ast_hash": "331f110d8c0cd003aa840e4aad00d743",
+    "mtime": 1786395004.5125074,
+    "ast_hash": "d6b67a4a5787fa6553ba43bbe079af3a",
     "semantic_hash": ""
   },
   "calculators/focal-spot-explanation.md": {
-    "mtime": 1785395209.8139443,
-    "ast_hash": "ce6b93d984a103385c8fb470d9446d38",
+    "mtime": 1786361309.0743365,
+    "ast_hash": "c3bdc6822db82d7cec38a4c7914eeae4",
     "semantic_hash": ""
   },
   "assets/images/focal_spot_card.jpg": {
@@ -3495,23 +3495,23 @@
     "semantic_hash": ""
   },
   "assets/js/ebeam-pointing.js": {
-    "mtime": 1785481521.6765862,
-    "ast_hash": "f8fb4b3a8cc17c25ec98dc1a0b738e09",
+    "mtime": 1787312459.7481687,
+    "ast_hash": "abe01ab5576e1fdabb83f9fbe777ad75",
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing-explanation.md": {
-    "mtime": 1785395209.8137,
-    "ast_hash": "cb87cb3180ce12061418ba537c553de6",
+    "mtime": 1787312088.6884794,
+    "ast_hash": "7ca6c669ec7c936edb7db34fdc1c5250",
     "semantic_hash": ""
   },
   "calculators/ebeam-pointing.md": {
-    "mtime": 1785481662.8060439,
-    "ast_hash": "afee7741646bd23efa78d63880e35759",
+    "mtime": 1787312443.3281627,
+    "ast_hash": "fce1cf964ee6fc846d2f722a167bfa27",
     "semantic_hash": ""
   },
   "assets/images/ebeam_pointing_card.jpg": {
-    "mtime": 1785395209.7983072,
-    "ast_hash": "65152eef08885cbb98230d23738fba92",
+    "mtime": 1786364766.4575808,
+    "ast_hash": "0f545924126ba29c9bcaa236dfd7fe2f",
     "semantic_hash": ""
   },
   "example_files/ebeam_pointing/386_LWFA_Zelle_He5N2_Pointing_ESpeklow_182542_.png": {
@@ -3587,6 +3587,36 @@
   "calculators/caustic-parameters-explanation.md": {
     "mtime": 1785414641.176868,
     "ast_hash": "f878a6b3466349235a6ec16fe0953658",
+    "semantic_hash": ""
+  },
+  "assets/js/lwfa-engine.js": {
+    "mtime": 1788254383.8919184,
+    "ast_hash": "ffe22c616ddc72d25b0c3579c62126e8",
+    "semantic_hash": ""
+  },
+  "test/fit-physics.test.js": {
+    "mtime": 1787312100.5137904,
+    "ast_hash": "b1f14f3d7910dadff85729150a28fe72",
+    "semantic_hash": ""
+  },
+  "test/lwfa.test.js": {
+    "mtime": 1788254442.2602756,
+    "ast_hash": "71b8c263718015988fcc3ee4d3b7e2b1",
+    "semantic_hash": ""
+  },
+  "apple-touch-icon-precomposed.png": {
+    "mtime": 1786111917.932439,
+    "ast_hash": "428bcd1a15ef65f6472d05880cac45cd",
+    "semantic_hash": ""
+  },
+  "apple-touch-icon.png": {
+    "mtime": 1786111917.9294915,
+    "ast_hash": "428bcd1a15ef65f6472d05880cac45cd",
+    "semantic_hash": ""
+  },
+  "assets/images/propagation_card_nf.png": {
+    "mtime": 1786365575.7319705,
+    "ast_hash": "d87e8beea8cbf4fc1f1a40836dd22a61",
     "semantic_hash": ""
   }
 }

@@ -204,10 +204,11 @@ classes: wide
 
     <h4>B. Peak Focal Intensity ($I_0$)</h4>
     <p>
-      For a focused spatial Gaussian beam with $1/e$ field waist radius $w_0$:
+      The Gaussian profile uses a spatial Gaussian beam with $1/e$ field waist radius $w_0$;
+      the top-hat profile uses a uniform disk with the same numeric radius $w_0$.
     </p>
     <div class="eq-block">
-      $$I_0 = \frac{2 P_{\text{peak}}}{\pi w_0^2} = \frac{8 P_{\text{peak}}}{\pi d_{1/e^2}^2}$$
+      $$I_{0,G} = \frac{2 P_G}{\pi w_0^2},\qquad I_{0,TH} = \frac{P_{TH}}{\pi w_0^2}$$
     </div>
 
     <h4>C. Normalized Vector Potential ($a_0$)</h4>

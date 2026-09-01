@@ -17,6 +17,7 @@ classes: wide
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script src="/assets/js/lwfa-engine.js"></script>
 
 <div class="calculator-container compact-mode">
   <div class="calculator-sidebar">
@@ -141,8 +142,8 @@ classes: wide
         <thead>
           <tr>
             <th style="width: 40%;">Parameter</th>
-            <th style="width: 30%;">Gaussian Pulse</th>
-            <th style="width: 30%;">Top-Hat Pulse</th>
+            <th style="width: 30%;">Gaussian Profile</th>
+            <th style="width: 30%;">Top-Hat Profile</th>
           </tr>
         </thead>
         <tbody>
@@ -317,17 +318,15 @@ document.addEventListener("DOMContentLoaded", function () {
       resQfactorGauss.innerText = q.toFixed(2);
       resQfactorTophat.innerText = q.toFixed(2);
 
-      // Peak Power P_gauss = (energy_J / duration_fs) / sqrt(pi) * 2 * ln(2) * 1000 * q
-      const P_gauss_TW = (energy_J / duration_fs) / Math.sqrt(Math.PI) * 2 * Math.LN2 * 1000 * q;
-      const P_tophat_TW = (energy_J / duration_fs) * 1000 * q;
+      const profiles = LWFAEngine.computeLaserProfiles({ durationFs: duration_fs, energyJ: energy_J, waistUm: w0_um, wavelengthUm: lambda_nm / 1000, q });
+      const P_gauss_TW = profiles.gaussian.peakPowerTW;
+      const P_tophat_TW = profiles.topHat.peakPowerTW;
 
       resPowerGauss.innerText = `${P_gauss_TW.toFixed(2)} TW`;
       resPowerTophat.innerText = `${P_tophat_TW.toFixed(2)} TW`;
 
-      // Peak Intensity I_0 (10^18 W/cm^2) = 2 * P_TW / (pi * w0_um^2) * 100
-      const spotsize = Math.PI * w0_um * w0_um; // um^2
-      const I0_gauss_1e18 = (2 * P_gauss_TW / spotsize) * 100;
-      const I0_tophat_1e18 = (2 * P_tophat_TW / spotsize) * 100;
+      const I0_gauss_1e18 = profiles.gaussian.peakIntensity18;
+      const I0_tophat_1e18 = profiles.topHat.peakIntensity18;
 
       if (I0_gauss_1e18 >= 0.01) {
         resIntensityGauss.innerText = `${I0_gauss_1e18.toFixed(2)} × 10¹⁸ W/cm²`;
@@ -341,10 +340,8 @@ document.addEventListener("DOMContentLoaded", function () {
         resIntensityTophat.innerText = `${(I0_tophat_1e18 * 1e18).toExponential(2)} W/cm²`;
       }
 
-      // Normalized vector potential: a0_gauss = 0.86 * lambda_um * sqrt(I0_gauss), a0_tophat = 0.85 * lambda_um * sqrt(I0_tophat)
-      const lambda_um = lambda_nm / 1000;
-      const a0_gauss = 0.86 * lambda_um * Math.sqrt(I0_gauss_1e18);
-      const a0_tophat = 0.85 * lambda_um * Math.sqrt(I0_tophat_1e18);
+      const a0_gauss = profiles.gaussian.a0;
+      const a0_tophat = profiles.topHat.a0;
 
       resA0Gauss.innerText = a0_gauss.toFixed(2);
       resA0Tophat.innerText = a0_tophat.toFixed(2);
